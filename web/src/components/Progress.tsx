@@ -8,10 +8,10 @@ export function Progress({ blocks, current }: { blocks: Block[]; current: number
     <ol className={s.steps} aria-label={`Question ${current + 1} of 5`}>
       {Array.from({ length: 5 }, (_, i) => {
         const b = blocks[i];
-        const cls = b ? s[closeness(b)] : i === current ? s.current : s.upcoming;
+        const cls = `${b ? s[closeness(b)] : i === current ? s.current : s.upcoming} ${i === current ? s.here : ''}`;
         const label = b ? `Question ${i + 1}: ${closenessLabel[closeness(b)]}` : i === current ? `Question ${i + 1}: current` : `Question ${i + 1}: not yet`;
         return (
-          <li key={i} className={`${s.step} ${cls}`}>
+          <li key={i} className={`${s.step} ${cls}`} aria-current={i === current ? 'step' : undefined}>
             <span className="visually-hidden">{label}</span>
           </li>
         );

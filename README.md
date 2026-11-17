@@ -151,6 +151,7 @@ Run it with `cloudflared tunnel run percentle`, or install it as a service. If c
   - web-haptics `light` fires at every 10% crossed, and `heavy` at 0, 50 and 100.
   - Lock-in gets `heavy`, and a bullseye gets `success`.
   - Nothing fires before the first tap, since browsers block that anyway.
+  - **iPhone:** every iOS browser (Safari, Chrome, Firefox) is WebKit, which has no Vibration API. web-haptics' iOS 18 switch trick only works inside a tap (click/pointerup), so on iPhone you feel the release of the glass and Lock in. The 10% ticks during a drag can't work there.
 - **Head-to-head copy uses no pronouns.** It says "Expect to hear about it" instead of "She's…".
 
 **Accessibility**

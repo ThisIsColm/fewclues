@@ -3,8 +3,8 @@ import { fmt } from '../lib/format';
 import s from './RevealGlass.module.css';
 
 /**
- * Short glass for the reveal: tangerine fill at the guess, then (phase ≥ 1)
- * a cyan answer line drops in on a spring, with the gap hatched in cyan.
+ * Narrow glass for the reveal hero card: tangerine fill at the guess, then
+ * (phase ≥ 1) a cyan answer line drops in on a spring, with the gap hatched.
  * `skipped` renders the end state at once.
  */
 export function RevealGlass({ guess, answer, phase, skipped }: { guess: number; answer: number; phase: number; skipped: boolean }) {
@@ -12,10 +12,11 @@ export function RevealGlass({ guess, answer, phase, skipped }: { guess: number; 
   const instant = skipped || reduced;
   const lo = Math.min(guess, answer);
   const hi = Math.max(guess, answer);
-  const close = Math.abs(guess - answer) < 14; // labels would collide
-
   return (
     <div className={s.glass} role="img" aria-label={`Your guess ${guess}%. The answer ${fmt(answer)}%.`}>
+      {[25, 50, 75].map((t) => (
+        <i key={t} className={s.tick} style={{ bottom: `${t}%` }} aria-hidden="true" />
+      ))}
       <motion.div
         className={s.liquid}
         initial={instant ? false : { height: '0%' }}
@@ -28,11 +29,6 @@ export function RevealGlass({ guess, answer, phase, skipped }: { guess: number; 
           </svg>
         </div>
       </motion.div>
-
-      <div className={`${s.label} ${s.guessLabel} ${guess > 85 ? s.labelInside : ''}`} style={{ bottom: `${guess}%` }} aria-hidden="true">
-        <span className="num">{guess}%</span> Your guess
-      </div>
-
       {phase >= 1 && (
         <>
           <motion.div
@@ -46,15 +42,11 @@ export function RevealGlass({ guess, answer, phase, skipped }: { guess: number; 
           <motion.div
             className={s.answerLine}
             style={{ bottom: `${answer}%` }}
-            initial={instant ? false : { y: -320, opacity: 0 }}
+            initial={instant ? false : { y: -240, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ type: 'spring', stiffness: 380, damping: 22, mass: 0.8 }}
             aria-hidden="true"
-          >
-            <span className={`${s.answerPill} ${close && answer < guess ? s.pillBelow : ''}`}>
-              Answer <span className="num">{fmt(answer)}%</span>
-            </span>
-          </motion.div>
+          />
         </>
       )}
     </div>

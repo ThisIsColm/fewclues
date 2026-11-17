@@ -49,7 +49,7 @@
 .stack {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .qSmall {
@@ -489,4 +489,83 @@
   font-family: var(--display);
   font-size: 16px;
   font-weight: 700;
+}
+
+/* ---------------------------------------------------------------- reveal hero (glass + result) */
+
+.revealHero {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 18px;
+  padding: 14px 18px 14px 14px;
+  border-radius: var(--r-hero);
+  background: var(--surface);
+  min-height: 232px;
+}
+
+.revealGlassCol {
+  display: flex;
+}
+
+.revealStats {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.verdictSlot {
+  height: 30px;
+  margin-bottom: 8px;
+}
+
+.revealStats .offNum {
+  font-size: 60px;
+  line-height: 1;
+  margin: 0 0 2px;
+}
+
+.legendList {
+  margin: auto 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.legendList div {
+  display: flex;
+  flex-direction: column;
+}
+
+.legendList dt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.legendList dd {
+  margin: 2px 0 0;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.swGuess,
+.swAnswer {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.swGuess {
+  background: var(--tangerine);
+}
+
+.swAnswer {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--cyan);
 }

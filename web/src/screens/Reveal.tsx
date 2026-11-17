@@ -9,6 +9,7 @@ import { RevealGlass } from '../components/RevealGlass';
 import { TopBar } from '../components/TopBar';
 import { Button, Card, ui } from '../components/ui';
 import { celebrate } from '../lib/confetti';
+import { fmt } from '../lib/format';
 import { haptic } from '../lib/haptics';
 import s from './screens.module.css';
 
@@ -87,33 +88,53 @@ export function Reveal(props: {
         {q.question}
       </p>
 
-      <div className={s.resultRow}>
-        <div>
+      <section className={s.revealHero} aria-label="Your result">
+        <div className={s.revealGlassCol}>
+          <RevealGlass guess={r.guess} answer={r.answer} phase={phase} skipped={skipped} />
+        </div>
+        <div className={s.revealStats}>
+          <div className={s.verdictSlot} aria-hidden="true">
+            <AnimatePresence>
+              {showResult && (
+                <motion.span
+                  className={`${s.verdict} ${r.bullseye ? s.verdictBullseye : ''}`}
+                  initial={skipped ? false : { scale: 0.6, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 22 }}
+                >
+                  {r.bullseye ? 'Bullseye' : verdict}
+                </motion.span>
+              )}
+            </AnimatePresence>
+          </div>
           <span className={s.offLabel}>Off by</span>
-          <h1 className={`${s.offNum} ${showResult ? '' : s.pendingNum}`} tabIndex={-1} data-autofocus aria-label={`Off by ${r.offBy}. ${verdict}. ${r.points} points.`}>
+          <h1
+            className={`${s.offNum} ${showResult ? '' : s.pendingNum}`}
+            tabIndex={-1}
+            data-autofocus
+            aria-label={`Off by ${r.offBy}. ${verdict}. ${r.points} points.`}
+          >
             <Num value={showResult ? r.offBy : 0} format={{ maximumFractionDigits: 1 }} />
           </h1>
-        </div>
-        <div className={s.resultRight} aria-hidden="true">
-          <AnimatePresence>
-            {showResult && (
-              <motion.span
-                className={`${s.verdict} ${r.bullseye ? s.verdictBullseye : ''}`}
-                initial={skipped ? false : { scale: 0.6, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ type: 'spring', stiffness: 500, damping: 22 }}
-              >
-                {verdict}
-              </motion.span>
-            )}
-          </AnimatePresence>
-          <span className={s.pts}>
+          <span className={s.pts} aria-hidden="true">
             +<Num value={showResult ? r.points : 0} /> pts
           </span>
+          <dl className={s.legendList}>
+            <div>
+              <dt>
+                <i className={s.swGuess} aria-hidden="true" /> You
+              </dt>
+              <dd className="num">{r.guess}%</dd>
+            </div>
+            <div>
+              <dt>
+                <i className={s.swAnswer} aria-hidden="true" /> Answer
+              </dt>
+              <dd className="num">{showResult || phase >= 1 ? `${fmt(r.answer)}%` : '··'}</dd>
+            </div>
+          </dl>
         </div>
-      </div>
-
-      <RevealGlass guess={r.guess} answer={r.answer} phase={phase} skipped={skipped} />
+      </section>
 
       <Card aria-labelledby="hist-title">
         <div className={s.cardHead}>

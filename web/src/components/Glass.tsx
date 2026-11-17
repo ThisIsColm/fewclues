@@ -49,7 +49,7 @@ export const Glass = memo(function Glass({ value, frozen = false, sloshKey = 0, 
 
   // Slosh: tilt follows vertical velocity through a wobbly spring, plus a kick channel.
   const velocity = useVelocity(spring);
-  const tiltTarget = useTransform(velocity, (v) => (reduced ? 0 : Math.max(-7, Math.min(7, -v * 0.035))));
+  const tiltTarget = useTransform(velocity, (v) => (reduced ? 0 : Math.max(-5, Math.min(5, -v * 0.03))));
   const tilt = useSpring(tiltTarget, { stiffness: 160, damping: 7, mass: 0.6 });
   const kick = useMotionValue(0);
   const rotate = useTransform(() => (reduced ? 0 : tilt.get() + kick.get()));
@@ -112,6 +112,9 @@ export const Glass = memo(function Glass({ value, frozen = false, sloshKey = 0, 
     drag.current = null;
     dragging.set(0);
     value.set(Math.round(value.get()));
+    // A release thump. On iPhone this is the only drag haptic WebKit allows:
+    // it plays haptics only inside a tap (pointerup/click), never on pointermove.
+    haptic('medium', 0);
     if (!reduced) animate(kick, [0, 2.5, -1.5, 0], { duration: 0.5 });
   };
 
@@ -130,6 +133,8 @@ export const Glass = memo(function Glass({ value, frozen = false, sloshKey = 0, 
           <svg className={`${s.wave} ${reduced ? '' : s.waveMoving}`} viewBox="0 0 200 36" preserveAspectRatio="none">
             <path d="M0 18 Q12.5 11 25 18 T50 18 T75 18 T100 18 T125 18 T150 18 T175 18 T200 18 V36 H0 Z" />
           </svg>
+          {/* Solid tail: when the surface tilts, its edges can't lift clear of the body. */}
+          <div className={s.tail} />
         </motion.div>
         <div className={s.body}>
           {/* Dark copy of the ticks, visible only where the liquid covers them. */}

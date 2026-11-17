@@ -1,20 +1,38 @@
 .steps {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
+  gap: 8px;
   list-style: none;
-  margin: 4px 0 0;
-  padding: 0;
+  margin: 6px 0 0;
+  padding: 4px 3px;
 }
 
 .step {
-  height: 6px;
-  border-radius: 3px;
+  height: 8px;
+  border-radius: 4px;
+  transition: background-color 200ms ease, box-shadow 200ms ease;
 }
 
 .current { background: var(--paper); }
 .upcoming { background: var(--raised); }
 .c1 { background: var(--c1); }
 .c2 { background: var(--c2); }
-.c3 { background: var(--c3); }
-.c4 { box-shadow: inset 0 0 0 1.5px var(--c4-line); }
+.c3 { background: #4a505c; }
+.c4 { box-shadow: inset 0 0 0 2px var(--c4-line); }
+
+/* "You are here": a paper ring that stays on the current question, including on its reveal. */
+.here {
+  animation: here 260ms cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  outline: 2px solid var(--paper);
+  outline-offset: 2px;
+}
+
+.current.here {
+  outline: none;
+}
+
+@keyframes here {
+  from {
+    transform: scaleX(0.6);
+  }
+}
