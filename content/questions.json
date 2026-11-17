@@ -1,0 +1,345 @@
+[
+  {
+    "id": "ie-0001",
+    "date": "2026-12-01",
+    "order": 1,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland have never been on a plane?",
+    "answer": 12,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "easy",
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "PLACEHOLDER country A",
+        "value": 36
+      },
+      {
+        "label": "PLACEHOLDER country B",
+        "value": 65
+      },
+      {
+        "label": "PLACEHOLDER country C",
+        "value": 94
+      }
+    ],
+    "category": "Travel"
+  },
+  {
+    "id": "ie-0002",
+    "date": "2026-12-01",
+    "order": 2,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland can speak Irish well enough to hold a conversation?",
+    "answer": 35,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "medium",
+    "status": "draft",
+    "category": "Language"
+  },
+  {
+    "id": "ie-0003",
+    "date": "2026-12-01",
+    "order": 3,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland cycle to work at least once a week?",
+    "answer": 7,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "medium",
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "PLACEHOLDER country A",
+        "value": 21
+      },
+      {
+        "label": "PLACEHOLDER country B",
+        "value": 45
+      }
+    ],
+    "category": "Commuting"
+  },
+  {
+    "id": "ie-0004",
+    "date": "2026-12-01",
+    "order": 4,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland own a dog?",
+    "answer": 48,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "easy",
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "PLACEHOLDER country A",
+        "value": 43
+      },
+      {
+        "label": "PLACEHOLDER country B",
+        "value": 7
+      },
+      {
+        "label": "PLACEHOLDER country C",
+        "value": 72
+      },
+      {
+        "label": "PLACEHOLDER country D",
+        "value": 36
+      },
+      {
+        "label": "PLACEHOLDER country E",
+        "value": 0
+      }
+    ],
+    "category": "Pets"
+  },
+  {
+    "id": "ie-0005",
+    "date": "2026-12-01",
+    "order": 5,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland were born outside Ireland?",
+    "answer": 22,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "medium",
+    "status": "draft",
+    "category": "People"
+  },
+  {
+    "id": "ie-0006",
+    "date": "2026-12-02",
+    "order": 1,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland drink tea every day?",
+    "answer": 81,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "easy",
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "PLACEHOLDER country A",
+        "value": 41
+      }
+    ],
+    "category": "Food & drink"
+  },
+  {
+    "id": "ie-0007",
+    "date": "2026-12-02",
+    "order": 2,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland have a passport from another EU country?",
+    "answer": 4,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "hard",
+    "status": "draft",
+    "category": "People"
+  },
+  {
+    "id": "ie-0008",
+    "date": "2026-12-02",
+    "order": 3,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland live in the same county they were born in?",
+    "answer": 63,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "medium",
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "PLACEHOLDER country A",
+        "value": 88
+      },
+      {
+        "label": "PLACEHOLDER country B",
+        "value": 67
+      },
+      {
+        "label": "PLACEHOLDER country C",
+        "value": 46
+      },
+      {
+        "label": "PLACEHOLDER country D",
+        "value": 25
+      },
+      {
+        "label": "PLACEHOLDER country E",
+        "value": 4
+      }
+    ],
+    "category": "Home"
+  },
+  {
+    "id": "ie-0009",
+    "date": "2026-12-02",
+    "order": 4,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland work from home at least one day a week?",
+    "answer": 29,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "medium",
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "PLACEHOLDER country A",
+        "value": 87
+      },
+      {
+        "label": "PLACEHOLDER country B",
+        "value": 32
+      },
+      {
+        "label": "PLACEHOLDER country C",
+        "value": 78
+      }
+    ],
+    "category": "Work"
+  },
+  {
+    "id": "ie-0010",
+    "date": "2026-12-02",
+    "order": 5,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland have swum in the sea in winter?",
+    "answer": 16,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "hard",
+    "status": "draft",
+    "category": "Outdoors"
+  },
+  {
+    "id": "ie-0011",
+    "date": "2026-12-03",
+    "order": 1,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland say they trust the news media?",
+    "answer": 41,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "hard",
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "PLACEHOLDER country A",
+        "value": 22
+      },
+      {
+        "label": "PLACEHOLDER country B",
+        "value": 80
+      }
+    ],
+    "category": "Media"
+  },
+  {
+    "id": "ie-0012",
+    "date": "2026-12-03",
+    "order": 2,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland have donated blood?",
+    "answer": 55,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "medium",
+    "status": "draft",
+    "category": "Health"
+  },
+  {
+    "id": "ie-0013",
+    "date": "2026-12-03",
+    "order": 3,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland own their home outright?",
+    "answer": 33,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "hard",
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "PLACEHOLDER country A",
+        "value": 99
+      },
+      {
+        "label": "PLACEHOLDER country B",
+        "value": 48
+      },
+      {
+        "label": "PLACEHOLDER country C",
+        "value": 98
+      }
+    ],
+    "category": "Home"
+  },
+  {
+    "id": "ie-0014",
+    "date": "2026-12-03",
+    "order": 4,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland go to Mass weekly?",
+    "answer": 18,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "medium",
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "PLACEHOLDER country A",
+        "value": 54
+      }
+    ],
+    "category": "Belief"
+  },
+  {
+    "id": "ie-0015",
+    "date": "2026-12-03",
+    "order": 5,
+    "edition": "ie",
+    "question": "PLACEHOLDER — What % of adults in Ireland have visited all 32 counties?",
+    "answer": 3,
+    "year": 2024,
+    "source_name": "PLACEHOLDER source (not real data)",
+    "source_url": "https://example.com/PLACEHOLDER",
+    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "difficulty": "hard",
+    "status": "draft",
+    "category": "Travel"
+  }
+]

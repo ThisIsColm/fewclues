@@ -1,0 +1,29 @@
+services:
+  percentle:
+    build: .
+    image: percentle:latest
+    container_name: percentle
+    restart: unless-stopped
+    # Bound to localhost only: Cloudflare Tunnel (cloudflared on this host) is
+    # the only way in, so the CF-Connecting-IP header can be trusted.
+    ports:
+      - "127.0.0.1:8787:8787"
+    environment:
+      SITE_URL: https://percentle.ie
+      LAUNCH_DATE: "2026-12-01"
+      EDITION: ie
+      TZ: Europe/Dublin
+      # Local testing only — never in production:
+      # ALLOW_DRAFTS: "1"
+      # DEV_DATE: "2026-12-01"
+    volumes:
+      - percentle-data:/data
+      # Edit questions without rebuilding; the server re-reads the file on change.
+      - ./content:/app/content:ro
+    mem_limit: 192m
+    read_only: true
+    tmpfs:
+      - /tmp
+
+volumes:
+  percentle-data:
