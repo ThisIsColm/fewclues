@@ -1,5 +1,5 @@
 import { Hono, type Context } from 'hono';
-import { secureHeaders } from 'hono/secure-headers';
+import { NONCE, secureHeaders } from 'hono/secure-headers';
 import { randomInt, randomUUID } from 'node:crypto';
 import { addDays, dublinDate, nextRollover, puzzleNumber, startOfDublinDay, weekStart } from '../shared/day';
 import {
@@ -156,7 +156,8 @@ export function createApp({ config, store, content, now = () => new Date(), remo
     contentSecurityPolicy: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'"],
-      styleSrc: ["'self'"],
+      // NumberFlow injects a <style> into its shadow root; it carries this per-request nonce.
+      styleSrc: ["'self'", NONCE],
       imgSrc: ["'self'", 'data:'],
       connectSrc: ["'self'"],
       objectSrc: ["'none'"],

@@ -1,4 +1,5 @@
 import { serve } from '@hono/node-server';
+import type { Context } from 'hono';
 import { getConnInfo } from '@hono/node-server/conninfo';
 import { serveStatic } from '@hono/node-server/serve-static';
 import { existsSync, readFileSync } from 'node:fs';
@@ -21,9 +22,11 @@ const indexPath = join(config.staticDir, 'index.html');
 if (existsSync(indexPath)) {
   const esc = (s: string) => s.replace(/[&<>"]/g, (ch) => `&#${ch.charCodeAt(0)};`);
   const indexHtml = readFileSync(indexPath, 'utf8').replaceAll('__SITE_URL__', esc(config.siteUrl));
-  const sendIndex = () =>
-    new Response(indexHtml, {
-      headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-cache' },
+  // Per-request CSP nonce (set by secureHeaders) is handed to the page for NumberFlow's <style>.
+  const sendIndex = (c: Context) =>
+    c.body(indexHtml.replace('__CSP_NONCE__', c.get('secureHeadersNonce') ?? ''), 200, {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-cache',
     });
   app.get('/', sendIndex);
   app.get('/index.html', sendIndex);

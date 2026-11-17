@@ -1,0 +1,155 @@
+/* Self-hosted fonts (no runtime CDN): Bricolage Grotesque for display, Inter for body. */
+@import '@fontsource/bricolage-grotesque/latin-500.css';
+@import '@fontsource/bricolage-grotesque/latin-700.css';
+@import '@fontsource/bricolage-grotesque/latin-800.css';
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+
+:root {
+  --bg: #0f1115;
+  --surface: #1a1d24;
+  --raised: #262a33;
+  --line: #2e333d;
+  --text: #f4f1ea;
+  --text-2: #c9cdd4;
+  --muted: #9aa0aa;
+  --tangerine: #ff6b2c;
+  --tangerine-deep: #2a1a12;
+  --cyan: #39d3f2;
+  --cyan-dark: #2a8fa6;
+  --paper: #f4f1ea;
+  --ink: #0f1115;
+  --paper-label: #8a3a12;
+  --outline: #3a3f49;
+  --bar-other: #4a505c;
+
+  /* closeness scale */
+  --c1: var(--cyan);
+  --c2: var(--cyan-dark);
+  --c3: #3a3f49;
+  --c4-line: #9aa0aa;
+
+  --r-hero: 28px;
+  --r-card: 20px;
+  --r-btn: 16px;
+
+  --display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --body: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  color-scheme: dark;
+  font-family: var(--body);
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  min-height: 100dvh;
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+#root {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding: env(safe-area-inset-top) max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+  display: flex;
+  flex-direction: column;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.display {
+  font-family: var(--display);
+}
+
+.num {
+  font-family: var(--display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+}
+
+.noscript {
+  padding: 40px 16px;
+  text-align: center;
+}
+
+/* NumberFlow inherits font; keep digits tabular. */
+number-flow-react {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+.link-btn {
+  background: none;
+  border: 0;
+  padding: 10px 4px;
+  min-height: 44px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}

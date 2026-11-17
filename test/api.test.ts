@@ -155,3 +155,14 @@ describe('GET /api/health', () => {
     expect(await res.json()).toMatchObject({ ok: true, questionsToday: 5 });
   });
 });
+
+describe('security headers', () => {
+  it('uses a strict CSP: scripts self-only, styles self + per-request nonce', async () => {
+    const a = (await app.request('/api/health')).headers.get('content-security-policy')!;
+    const b = (await app.request('/api/health')).headers.get('content-security-policy')!;
+    expect(a).toMatch(/script-src 'self';/);
+    expect(a).toMatch(/style-src 'self' 'nonce-[A-Za-z0-9+/=_-]+'/);
+    expect(a).not.toMatch(/unsafe-inline/);
+    expect(a).not.toBe(b); // fresh nonce each response
+  });
+});

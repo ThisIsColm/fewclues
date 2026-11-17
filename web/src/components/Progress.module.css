@@ -1,0 +1,20 @@
+.steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+}
+
+.step {
+  height: 6px;
+  border-radius: 3px;
+}
+
+.current { background: var(--paper); }
+.upcoming { background: var(--raised); }
+.c1 { background: var(--c1); }
+.c2 { background: var(--c2); }
+.c3 { background: var(--c3); }
+.c4 { box-shadow: inset 0 0 0 1.5px var(--c4-line); }

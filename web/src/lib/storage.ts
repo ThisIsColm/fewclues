@@ -1,4 +1,4 @@
-import type { Block } from '../../shared/types';
+import type { Block } from '../../../shared/types';
 
 const KEY = 'percentle.v1';
 
@@ -22,6 +22,10 @@ export interface Saved {
   history: Record<string, DayRecord>; // keyed by YYYY-MM-DD
   cursor?: Cursor;
   seenHelp?: boolean;
+  /** Last display name used for a league, to prefill the next one. */
+  displayName?: string;
+  /** League last viewed. */
+  leagueId?: string;
 }
 
 /** crypto.randomUUID needs a secure context; fall back for plain-http LAN testing. */
