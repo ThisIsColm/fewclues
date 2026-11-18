@@ -7,23 +7,31 @@ import { Store } from '../server/db';
 import { addDays } from '../shared/day';
 import { makeDay } from './fixtures';
 
-const ANSWERS = [10, 25, 50, 75, 90];
+const ANSWERS = ['kerry', 'cork', 'mayo', 'meath', 'antrim'];
 let clock: Date;
 let app: ReturnType<typeof createApp>;
 
 function setup(env: Record<string, string> = {}) {
   const config = loadConfig({ LAUNCH_DATE: '2026-11-01', PERCENTILE_MIN_PLAYERS: '2', RATE_LIMIT_PER_MINUTE: '10000', LEAGUE_CREATES_PER_HOUR: '1000', LEAGUE_JOINS_PER_HOUR: '1000', ...env });
   const days = Array.from({ length: 14 }, (_, i) => makeDay(addDays('2026-11-16', i), ANSWERS)).flat();
-  app = createApp({ config, store: new Store(':memory:'), content: ContentStore.fromQuestions(days, 'ie', false), now: () => clock });
+  app = createApp({ config, store: new Store(':memory:'), content: ContentStore.fromRounds(days, 'ie', false), now: () => clock });
 }
 
 const post = (path: string, body: unknown, headers: Record<string, string> = {}) =>
   app.request(path, { method: 'POST', headers: { 'Content-Type': 'application/json', ...headers }, body: JSON.stringify(body) });
 const get = async (path: string, player: string) => (await app.request(path, { headers: { 'X-Player-Id': player } })).json();
 const date = () => clock.toISOString().slice(0, 10);
-async function play(player: string, guesses: number[]) {
+/** outcomes[i] = clue the round is solved on (1–4), or 0 to miss it. */
+async function play(player: string, outcomes: number[]) {
+  const wrong = ['dublin', 'wexford', 'sligo', 'tyrone'];
   let last: any;
-  for (let i = 0; i < 5; i++) last = await (await post('/api/guess', { player_id: player, question_id: `${date()}-${i + 1}`, guess: guesses[i] })).json();
+  for (let i = 0; i < 5; i++) {
+    const at = outcomes[i];
+    const rid = `${date()}-${i + 1}`;
+    const send = async (place: string) => (await post('/api/guess', { player_id: player, round_id: rid, place })).json();
+    for (let k = 0; k < (at === 0 ? 4 : at - 1); k++) last = await send(wrong[k]);
+    if (at !== 0) last = await send(ANSWERS[i]);
+  }
   return last;
 }
 async function create(player: string, name = 'Kitchen', display = 'Colm') {
@@ -99,23 +107,23 @@ describe('leagues', () => {
     await post('/api/leagues/join', { player_id: b, code: league.code, display_name: 'Niamh' });
     expect((await app.request(`/api/leagues/${league.id}/standings`, { headers: { 'X-Player-Id': outsider } })).status).toBe(404);
 
-    await play(b, [13, 25, 50, 75, 90]); // off 3 on q1 → 488
+    await play(b, [1, 1, 1, 1, 2]); // 460
     let s = await get(`/api/leagues/${league.id}/standings`, a);
     expect(s.viewerFinished).toBe(false);
     expect(s.headToHead).toBeNull();
     expect(s.rows).toEqual([
-      { rank: 1, name: 'Niamh', isMe: false, total: 488, blocks: ['green', 'green', 'green', 'green', 'green'] },
+      { rank: 1, name: 'Niamh', isMe: false, total: 460, blocks: ['green', 'green', 'green', 'green', 'yellow'] },
       { rank: null, name: 'Colm', isMe: true, total: null, blocks: null },
     ]);
     // Nothing in standings carries answers or guesses.
-    expect(JSON.stringify(s)).not.toMatch(/answer|guess/);
+    expect(JSON.stringify(s)).not.toMatch(/answer|kerry|place/);
 
-    await play(a, [41, 25, 50, 75, 90]); // off 31 on q1 → 0 pts → 400
+    await play(a, [0, 1, 1, 1, 1]); // missed round 1 → 400
     s = await get(`/api/leagues/${league.id}/standings`, a);
     expect(s.viewerFinished).toBe(true);
-    expect(s.rows.map((r: any) => [r.rank, r.name, r.total])).toEqual([[1, 'Niamh', 488], [2, 'Colm', 400]]);
+    expect(s.rows.map((r: any) => [r.rank, r.name, r.total])).toEqual([[1, 'Niamh', 460], [2, 'Colm', 400]]);
     expect(s.rows[1].blocks).toEqual(['red', 'green', 'green', 'green', 'green']);
-    expect(s.headToHead).toEqual({ mate: 'Niamh', order: 1, myOff: 31, mateOff: 3, mateBetter: true });
+    expect(s.headToHead).toEqual({ mate: 'Niamh', order: 1, mySolved: 0, mateSolved: 1, mateBetter: true });
   });
 
   it('ties share a rank', async () => {
@@ -123,8 +131,8 @@ describe('leagues', () => {
     const b = randomUUID();
     const { league } = await create(a);
     await post('/api/leagues/join', { player_id: b, code: league.code, display_name: 'Niamh' });
-    await play(a, ANSWERS);
-    await play(b, ANSWERS);
+    await play(a, [1, 1, 1, 1, 1]);
+    await play(b, [1, 1, 1, 1, 1]);
     const s = await get(`/api/leagues/${league.id}/standings`, a);
     expect(s.rows.map((r: any) => r.rank)).toEqual([1, 1]);
     expect(s.headToHead).toBeNull(); // no gap to report
@@ -137,13 +145,13 @@ describe('leagues', () => {
     await post('/api/leagues/join', { player_id: b, code: league.code, display_name: 'Niamh' });
     // Sun 22 Nov: a plays. Mon 23, Tue 24: a and b play.
     clock = new Date('2026-11-22T12:00:00Z');
-    await play(a, ANSWERS);
+    await play(a, [1, 1, 1, 1, 1]);
     clock = new Date('2026-11-23T12:00:00Z');
-    await play(a, ANSWERS);
-    await play(b, [20, 25, 50, 75, 90]); // 460
+    await play(a, [1, 1, 1, 1, 1]);
+    await play(b, [2, 1, 1, 1, 1]); // 460
     clock = new Date('2026-11-24T12:00:00Z');
-    await play(a, [20, 25, 50, 75, 90]); // 460
-    await play(b, ANSWERS);
+    await play(a, [2, 1, 1, 1, 1]); // 460
+    await play(b, [1, 1, 1, 1, 1]);
     let s = await get(`/api/leagues/${league.id}/standings?period=week`, a);
     expect(s).toMatchObject({ period: 'week', from: '2026-11-23', to: '2026-11-24' });
     expect(s.rows.map((r: any) => [r.rank, r.name, r.total, r.daysPlayed])).toEqual([[1, 'Colm', 960, 2], [1, 'Niamh', 960, 2]]);
@@ -158,17 +166,3 @@ describe('leagues', () => {
   });
 });
 
-describe('reveal and completion extras', () => {
-  it('closerThan and gap of the day', async () => {
-    const [a, b, c] = [randomUUID(), randomUUID(), randomUUID()];
-    await play(a, [10, 25, 50, 75, 90]);
-    await play(b, [40, 25, 50, 75, 60]);
-    const last = await play(c, [30, 26, 50, 75, 0]);
-    // q5 answer 90: c off 90, b off 30, a off 0 → c closer than nobody
-    expect(last.reveal.closerThan).toBe(0);
-    // q1: 2 of 3 off by >10 (67%); q5: 2 of 3 too → lowest order wins the tie
-    expect(last.completion.gapOfDay).toEqual({ order: 1, question_id: `${date()}-1`, fooledPct: 67 });
-    const first = await (await post('/api/guess', { player_id: a, question_id: `${date()}-1`, guess: 10 })).json();
-    expect(first.reveal.closerThan).toBe(100);
-  });
-});

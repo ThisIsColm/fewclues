@@ -13,7 +13,7 @@ FROM node:22-alpine
 ENV NODE_ENV=production \
     PORT=8787 \
     DB_PATH=/data/percentle.db \
-    CONTENT_PATH=/app/content/questions.json \
+    CONTENT_PATH=/app/content/rounds.json \
     STATIC_DIR=/app/dist/public \
     NODE_OPTIONS=--max-old-space-size=96
 WORKDIR /app

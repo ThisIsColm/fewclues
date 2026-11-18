@@ -1,11 +1,12 @@
 import Database from 'better-sqlite3';
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
-import { HISTOGRAM_BINS } from '../shared/scoring';
 
-export interface GuessRow {
-  question_id: string;
-  guess: number;
+export interface AttemptRow {
+  round_id: string;
+  n: number;
+  place: string;
+  correct: number;
 }
 
 export interface LeagueRow {
@@ -63,20 +64,22 @@ export class Store {
         PRIMARY KEY (league_id, player_id)
       ) WITHOUT ROWID;
       CREATE INDEX IF NOT EXISTS league_members_by_player ON league_members (player_id);
+
+      -- Clue ladder: each guess a player makes on a round (n = 1..4).
+      CREATE TABLE IF NOT EXISTS attempts (
+        player_id  TEXT    NOT NULL,
+        date       TEXT    NOT NULL,
+        round_id   TEXT    NOT NULL,
+        n          INTEGER NOT NULL CHECK (n BETWEEN 1 AND 4),
+        place      TEXT    NOT NULL,
+        correct    INTEGER NOT NULL CHECK (correct IN (0, 1)),
+        created_at INTEGER NOT NULL,
+        PRIMARY KEY (player_id, round_id, n)
+      ) WITHOUT ROWID;
+      CREATE INDEX IF NOT EXISTS attempts_by_round ON attempts (round_id, correct, n);
+      CREATE INDEX IF NOT EXISTS attempts_by_player_date ON attempts (player_id, date);
     `);
     this.stmts = {
-      insertGuess: this.db.prepare(
-        'INSERT OR IGNORE INTO guesses (player_id, date, question_id, guess, created_at) VALUES (?, ?, ?, ?, ?)',
-      ),
-      getGuess: this.db.prepare<[string, string], { guess: number }>(
-        'SELECT guess FROM guesses WHERE player_id = ? AND question_id = ?',
-      ),
-      playerGuesses: this.db.prepare<[string, string], GuessRow>(
-        'SELECT question_id, guess FROM guesses WHERE player_id = ? AND date = ?',
-      ),
-      histogram: this.db.prepare<[string], { bin: number; n: number }>(
-        'SELECT MIN(guess / 10, 9) AS bin, COUNT(*) AS n FROM guesses WHERE question_id = ? GROUP BY bin',
-      ),
       insertCompletion: this.db.prepare(
         'INSERT OR IGNORE INTO completions (player_id, date, total, created_at) VALUES (?, ?, ?, ?)',
       ),
@@ -87,9 +90,25 @@ export class Store {
         'SELECT COUNT(*) AS players, SUM(total < ?) AS below FROM completions WHERE date = ?',
       ),
       ping: this.db.prepare('SELECT 1'),
-      // How many guessers on a question were further off than `off`.
-      further: this.db.prepare<[number, number, string], { players: number; further: number | null }>(
-        'SELECT COUNT(*) AS players, SUM(ABS(guess - ?) > ? + 1e-9) AS further FROM guesses WHERE question_id = ?',
+      insertAttempt: this.db.prepare(
+        'INSERT OR IGNORE INTO attempts (player_id, date, round_id, n, place, correct, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      ),
+      playerAttempts: this.db.prepare<[string, string], AttemptRow>(
+        'SELECT round_id, n, place, correct FROM attempts WHERE player_id = ? AND date = ? ORDER BY round_id, n',
+      ),
+      // Outcome per player who finished a round: solved on clue n, or missed (4 wrong).
+      roundOutcomes: this.db.prepare<[string], { solved: number; n: number }>(
+        `SELECT CASE WHEN MAX(correct) = 1 THEN MIN(CASE WHEN correct = 1 THEN n END) ELSE 0 END AS solved, COUNT(*) AS n
+           FROM attempts WHERE round_id = ? GROUP BY player_id
+         HAVING MAX(correct) = 1 OR COUNT(*) >= 4`,
+      ),
+      topWrong: this.db.prepare<[string], { place: string; n: number }>(
+        'SELECT place, COUNT(*) AS n FROM attempts WHERE round_id = ? AND correct = 0 GROUP BY place ORDER BY n DESC, place LIMIT 3',
+      ),
+      leagueAttempts: this.db.prepare<[string, string], AttemptRow & { player_id: string }>(
+        `SELECT a.player_id, a.round_id, a.n, a.place, a.correct FROM attempts a
+           JOIN league_members m ON m.player_id = a.player_id AND m.league_id = ?
+          WHERE a.date = ?`,
       ),
       insertLeague: this.db.prepare(
         'INSERT INTO leagues (id, name, invite_code, created_by, created_at) VALUES (?, ?, ?, ?, ?)',
@@ -126,24 +145,9 @@ export class Store {
     };
   }
 
-  /** Returns true if inserted, false if this player already guessed this question. */
-  insertGuess(playerId: string, date: string, questionId: string, guess: number, at: number): boolean {
-    return this.stmts.insertGuess.run(playerId, date, questionId, guess, at).changes === 1;
-  }
 
-  getGuess(playerId: string, questionId: string): number | undefined {
-    return this.stmts.getGuess.get(playerId, questionId)?.guess;
-  }
 
-  playerGuesses(playerId: string, date: string): GuessRow[] {
-    return this.stmts.playerGuesses.all(playerId, date);
-  }
 
-  histogram(questionId: string): number[] {
-    const bins = new Array<number>(HISTOGRAM_BINS).fill(0);
-    for (const { bin, n } of this.stmts.histogram.all(questionId)) bins[bin] = n;
-    return bins;
-  }
 
   insertCompletion(playerId: string, date: string, total: number, at: number): void {
     this.stmts.insertCompletion.run(playerId, date, total, at);
@@ -158,11 +162,6 @@ export class Store {
     return { players: r.players, below: r.below ?? 0 };
   }
 
-  /** Players who guessed a question, and how many were further off than `off`. */
-  further(questionId: string, answer: number, off: number): { players: number; further: number } {
-    const r = this.stmts.further.get(answer, off, questionId)!;
-    return { players: r.players, further: r.further ?? 0 };
-  }
 
   // ---- leagues
   insertLeague(id: string, name: string, code: string, createdBy: string, at: number) {
@@ -194,6 +193,26 @@ export class Store {
   }
   leagueGuesses(leagueId: string, date: string) {
     return this.stmts.leagueGuesses.all(leagueId, date);
+  }
+
+  // ---- clue ladder
+  insertAttempt(playerId: string, date: string, roundId: string, n: number, place: string, correct: boolean, at: number): boolean {
+    return this.stmts.insertAttempt.run(playerId, date, roundId, n, place, correct ? 1 : 0, at).changes === 1;
+  }
+  playerAttempts(playerId: string, date: string): AttemptRow[] {
+    return this.stmts.playerAttempts.all(playerId, date);
+  }
+  /** [solved on 1, 2, 3, 4, missed] among players who finished the round. */
+  roundDist(roundId: string): [number, number, number, number, number] {
+    const d: [number, number, number, number, number] = [0, 0, 0, 0, 0];
+    for (const r of this.stmts.roundOutcomes.all(roundId)) d[r.solved === 0 ? 4 : r.solved - 1]++;
+    return d;
+  }
+  topWrong(roundId: string) {
+    return this.stmts.topWrong.all(roundId);
+  }
+  leagueAttempts(leagueId: string, date: string) {
+    return this.stmts.leagueAttempts.all(leagueId, date);
   }
 
   transaction<T>(fn: () => T): T {

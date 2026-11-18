@@ -1,25 +1,25 @@
 import { Num } from '../components/Num';
 import { motion, useReducedMotion } from 'motion/react';
 import { useEffect, useState } from 'react';
-import { MAX_TOTAL, formatBias } from '../../../shared/scoring';
+import { MAX_TOTAL } from '../../../shared/scoring';
 import { shareText } from '../../../shared/share';
-import type { Completion, Reveal, TodayResponse } from '../../../shared/types';
+import type { Completion, RoundReveal, TodayResponse } from '../../../shared/types';
 import { TopBar } from '../components/TopBar';
 import { Button, Card, Icon, IconButton, toast } from '../components/ui';
 import { clockSkew } from '../lib/api';
-import { closeness, closenessLabel } from '../lib/closeness';
+import { closeness } from '../lib/closeness';
 import { celebrate } from '../lib/confetti';
-import { fmt } from '../lib/format';
 import { haptic } from '../lib/haptics';
 import { shareOrCopy } from '../lib/share';
 import s from './screens.module.css';
 
 export function Results(props: {
   today: TodayResponse;
-  reveals: Reveal[];
+  reveals: RoundReveal[];
   completion: Completion | null;
   streak: number;
-  bias: number | null;
+  /** All-time share of rounds solved on the first clue, or null before any games. */
+  firstClueRate: number | null;
   onOpenReveal: (index: number) => void;
   onLeagues: () => void;
   onStats: () => void;
@@ -96,7 +96,7 @@ export function Results(props: {
         {reveals.map((r, i) => {
           const c = closeness(r.block);
           return (
-            <li key={r.question_id} className={s.tile} aria-label={`Question ${i + 1}: ${r.points} points, ${closenessLabel[c]} (off by ${fmt(r.offBy)})`}>
+            <li key={i} className={s.tile} aria-label={`Round ${i + 1}: ${r.points} points, ${r.solvedAt ? `solved on clue ${r.solvedAt}` : 'missed'}`}>
               <motion.span
                 className={`${s.tileBox} ${s[c]}`}
                 initial={false}
@@ -107,7 +107,7 @@ export function Results(props: {
                 {r.points}
               </motion.span>
               <span className={s.tileOff} aria-hidden="true">
-                Off {fmt(r.offBy)}
+                {r.solvedAt ? `Clue ${r.solvedAt}` : 'Missed'}
               </span>
             </li>
           );
@@ -122,8 +122,8 @@ export function Results(props: {
           </p>
         </Card>
         <Card>
-          <p className={s.statLabel}>Your bias</p>
-          <p className={s.statValue}>{props.bias === null ? '—' : formatBias(props.bias)}</p>
+          <p className={s.statLabel}>First-clue hits</p>
+          <p className={s.statValue}>{props.firstClueRate === null ? '—' : `${props.firstClueRate}%`}</p>
         </Card>
       </div>
 
@@ -132,7 +132,7 @@ export function Results(props: {
           <span>
             <span className={s.gapTitle}>Gap of the day</span>
             <span className={s.gapText}>
-              Question {gap.order} fooled {gap.fooledPct}% of players
+              Round {gap.order} stumped {gap.missedPct}% of players
             </span>
           </span>
           <Icon name="chevron" />
@@ -149,7 +149,7 @@ export function Results(props: {
       </div>
       <Countdown to={today.nextRolloverAt} />
       <p className={s.privacy}>
-        Privacy: no ads, no trackers, no accounts. Your browser keeps a random ID; we store your guesses to draw the crowd charts, and your
+        Privacy: no ads, no trackers, no accounts. Your browser keeps a random ID; we store your guesses to draw the crowd stats, and your
         league name only if you join a league.
       </p>
     </div>

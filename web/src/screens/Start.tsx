@@ -9,7 +9,7 @@ export function Start({ today, started, onPlay, onHelp }: { today: TodayResponse
       <div className={s.start}>
         <Wordmark size={44} />
         <h1 className={s.startTitle} tabIndex={-1} data-autofocus>
-          How well do you know {today.editionName}?
+          Five clues. Five counties. How few do you need?
         </h1>
         <p className={s.startMeta}>
           <Pill>{today.edition.toUpperCase()}</Pill>
@@ -17,33 +17,33 @@ export function Start({ today, started, onPlay, onHelp }: { today: TodayResponse
             #{today.puzzle} · {formatLongDate(today.date)}
           </span>
         </p>
-        <div className={s.startGlass} aria-hidden="true">
-          <div>
-            <svg viewBox="0 0 200 20" preserveAspectRatio="none">
-              <path d="M0 10 Q12.5 5 25 10 T50 10 T75 10 T100 10 T125 10 T150 10 T175 10 T200 10 V20 H0 Z" />
-            </svg>
-          </div>
-          <strong className="num">46%</strong>
-        </div>
+        <ol className={s.startClues} aria-hidden="true">
+          <li>
+            <span>Clue 1</span>Ireland’s highest mountain range is here.
+          </li>
+          <li>
+            <span>Clue 2</span>It’s in Munster.
+          </li>
+        </ol>
         <Button onClick={onPlay}>{started ? `Continue (${started}/5)` : 'Play'}</Button>
         <Button variant="ghost" onClick={onHelp}>
           How to play
         </Button>
       </div>
       <p className={s.privacy}>
-        Privacy: no ads, no trackers, no accounts. Your browser keeps a random ID; we store your guesses to draw the crowd charts, and your
+        Privacy: no ads, no trackers, no accounts. Your browser keeps a random ID; we store your guesses to draw the crowd stats, and your
         league name only if you join a league.
       </p>
     </div>
   );
 }
 
-export function HowTo({ editionName }: { editionName: string }) {
+export function HowTo() {
   return (
     <ol className={s.howto}>
-      <li>Five questions a day about {editionName}: “What % of people…?”</li>
-      <li>Drag up or down on the glass to pour your guess, then lock it in.</li>
-      <li>The closer you get, the more points: up to 100 a question, 500 a day.</li>
+      <li>Each day there are five rounds. Each one is a county of Ireland, and you get one clue to start.</li>
+      <li>Type your guess. Every wrong guess reveals an easier clue, up to four.</li>
+      <li>The fewer clues you need, the more points: 100, 60, 30 or 10. 500 is a perfect day.</li>
     </ol>
   );
 }

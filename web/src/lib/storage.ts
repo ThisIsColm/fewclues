@@ -6,7 +6,8 @@ export interface DayRecord {
   puzzle: number;
   total: number;
   points: number[];
-  signedErrors: number[]; // guess − answer, per question
+  /** Clue each round was solved on (1–4), 0 = missed. */
+  solved: number[];
   blocks: Block[];
 }
 

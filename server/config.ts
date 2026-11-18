@@ -36,7 +36,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     port: int(env.PORT, 8787),
     host: env.HOST || '0.0.0.0',
     dbPath: env.DB_PATH || 'data/percentle.db',
-    contentPath: env.CONTENT_PATH || 'content/questions.json',
+    contentPath: env.CONTENT_PATH || 'content/rounds.json',
     staticDir: env.STATIC_DIR || 'dist/public',
     launchDate,
     edition: env.EDITION || 'ie',

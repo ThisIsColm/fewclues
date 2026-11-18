@@ -1,36 +1,32 @@
+import { randomInt, randomUUID } from 'node:crypto';
 import { Hono, type Context } from 'hono';
 import { NONCE, secureHeaders } from 'hono/secure-headers';
-import { randomInt, randomUUID } from 'node:crypto';
 import { addDays, dublinDate, nextRollover, puzzleNumber, startOfDublinDay, weekStart } from '../shared/day';
-import {
-  binFor,
-  isBullseye,
-  blockFor,
-  offBy,
-  percentileFromCounts,
-  QUESTIONS_PER_DAY,
-  scoreGuess,
-} from '../shared/scoring';
+import { blockForSolve, buildLadder, MAX_CLUES, pointsFor } from '../shared/ladder';
+import { PLACE_SETS, placeById } from '../shared/places';
+import { percentileFromCounts } from '../shared/scoring';
 import { editionInfo } from '../shared/share';
 import type {
   Block,
   Completion,
+  CrowdStats,
   GuessResponse,
   HeadToHead,
   LeagueSummary,
-  Question,
-  Reveal,
+  Round,
+  RoundView,
   StandingRow,
   StandingsResponse,
   TodayResponse,
 } from '../shared/types';
+import { ROUNDS_PER_DAY } from '../shared/validate';
 import type { Config } from './config';
 import type { ContentStore } from './content';
-import type { Store } from './db';
+import type { AttemptRow, Store } from './db';
 import { RateLimiter } from './ratelimit';
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-const HISTOGRAM_TTL_MS = 30_000;
+const CROWD_TTL_MS = 30_000;
 const LEAGUE_MAX_MEMBERS = 50;
 const LEAGUES_PER_PLAYER = 20;
 const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no 0/O, 1/I
@@ -42,12 +38,20 @@ export function cleanName(v: unknown, max: number): string | null {
   return s.length >= 1 && [...s].length <= max ? s : null;
 }
 
+/** A player's progress on one round, from their attempts (ordered by n). */
+export function roundProgress(attempts: { n: number; place: string; correct: number }[]) {
+  const sorted = [...attempts].sort((a, b) => a.n - b.n);
+  const hit = sorted.find((a) => a.correct === 1);
+  const solvedAt = hit ? hit.n : 0;
+  const done = !!hit || sorted.length >= MAX_CLUES;
+  return { solvedAt, done, wrong: sorted.filter((a) => a.correct === 0).map((a) => a.place), tries: sorted.length };
+}
+
 export interface AppDeps {
   config: Config;
   store: Store;
   content: ContentStore;
   now?: () => Date;
-  /** Fallback client address when no proxy header is present. */
   remoteAddr?: (c: Context) => string | undefined;
 }
 
@@ -57,68 +61,71 @@ export function createApp({ config, store, content, now = () => new Date(), remo
   const createLimiter = new RateLimiter(config.leagueCreatesPerHour, 3_600_000);
   const joinLimiter = new RateLimiter(config.leagueJoinsPerHour, 3_600_000);
   const edition = editionInfo(config.edition);
-
-  // ---- Histogram cache: recomputed from SQLite at most every 30 s per
-  // question; new guesses bump the cached bin so the player always sees
-  // their own guess counted.
-  const histCache = new Map<string, { bins: number[]; at: number }>();
-  function histogram(questionId: string): number[] {
-    const t = Date.now();
-    const hit = histCache.get(questionId);
-    if (hit && t - hit.at < HISTOGRAM_TTL_MS) return hit.bins.slice();
-    const bins = store.histogram(questionId);
-    histCache.set(questionId, { bins, at: t });
-    if (histCache.size > 200) histCache.delete(histCache.keys().next().value!);
-    return bins.slice();
-  }
-  function bumpHistogram(questionId: string, guess: number) {
-    const hit = histCache.get(questionId);
-    if (hit) hit.bins[binFor(guess)]++;
-  }
-
   const today = () => config.devDate ?? dublinDate(now());
 
-  function reveal(q: Question, guess: number): Reveal {
-    const off = offBy(guess, q.answer);
-    return {
-      question_id: q.id,
-      order: q.order,
-      guess,
-      answer: q.answer,
-      offBy: off,
-      signedError: Math.round((guess - q.answer) * 10) / 10,
-      points: scoreGuess(guess, q.answer),
-      bullseye: isBullseye(guess, q.answer),
-      block: blockFor(off),
-      year: q.year,
-      source_name: q.source_name,
-      source_url: q.source_url,
-      nugget: q.nugget,
-      comparisons: q.comparisons ?? [],
-      histogram: histogram(q.id),
-      closerThan: closerThan(q, guess),
+  // ---- Crowd stats per round, cached 30 s (and dropped when that round changes).
+  const crowdCache = new Map<string, { stats: CrowdStats; at: number }>();
+  function crowd(r: Round): CrowdStats {
+    const hit = crowdCache.get(r.id);
+    if (hit && Date.now() - hit.at < CROWD_TTL_MS) return hit.stats;
+    const set = PLACE_SETS[r.set];
+    const dist = store.roundDist(r.id);
+    const stats: CrowdStats = {
+      dist,
+      players: dist.reduce((a, b) => a + b, 0),
+      topWrong: store.topWrong(r.id).map((w) => ({ place: w.place, name: placeById(set, w.place)?.name ?? w.place, n: w.n })),
     };
+    crowdCache.set(r.id, { stats, at: Date.now() });
+    if (crowdCache.size > 200) crowdCache.delete(crowdCache.keys().next().value!);
+    return stats;
   }
 
-  function closerThan(q: Question, guess: number): number | null {
-    const { players, further } = store.further(q.id, q.answer, offBy(guess, q.answer));
-    return percentileFromCounts(further, players, config.percentileMinPlayers);
+  /** Share of other finishers with a worse outcome (missed counts as worst). */
+  function beat(stats: CrowdStats, solvedAt: number): number | null {
+    const rank = (s: number) => (s === 0 ? 5 : s); // lower is better
+    const worse = stats.dist.reduce((acc, n, i) => acc + (rank(i === 4 ? 0 : i + 1) > rank(solvedAt) ? n : 0), 0);
+    return percentileFromCounts(worse, stats.players, config.percentileMinPlayers);
   }
 
-  // ---- Gap of the day: the question with the largest share of guesses off by >10.
+  function view(r: Round, attempts: AttemptRow[]): RoundView {
+    const set = PLACE_SETS[r.set];
+    const ladder = buildLadder(set, r.answer, r.clues);
+    const p = roundProgress(attempts);
+    const shown = p.done ? ladder : ladder.slice(0, Math.min(MAX_CLUES, p.tries + 1));
+    let reveal: RoundView['reveal'] = null;
+    if (p.done) {
+      const stats = crowd(r);
+      reveal = {
+        answer: r.answer,
+        answerName: placeById(set, r.answer)!.name,
+        solvedAt: p.solvedAt,
+        points: pointsFor(p.solvedAt),
+        block: blockForSolve(p.solvedAt),
+        ladder,
+        fact: r.fact,
+        source_name: r.source_name,
+        source_url: r.source_url,
+        crowd: stats,
+        beat: beat(stats, p.solvedAt),
+      };
+    }
+    return { id: r.id, order: r.order, category: r.category, clues: shown, wrong: p.wrong, done: p.done, reveal };
+  }
+
+  // ---- Gap of the day: the round with the highest share of misses.
   const gapCache = new Map<string, { gap: Completion['gapOfDay']; at: number }>();
   function gapOfDay(date: string): Completion['gapOfDay'] {
     const hit = gapCache.get(date);
-    if (hit && Date.now() - hit.at < HISTOGRAM_TTL_MS) return hit.gap;
+    if (hit && Date.now() - hit.at < CROWD_TTL_MS) return hit.gap;
     let gap: Completion['gapOfDay'] = null;
-    for (const q of content.forDate(date)) {
-      const { players, further } = store.further(q.id, q.answer, 10);
+    for (const r of content.forDate(date)) {
+      const d = store.roundDist(r.id);
+      const players = d.reduce((a, b) => a + b, 0);
       if (!players) continue;
-      const fooledPct = Math.round((further / players) * 100);
-      if (!gap || fooledPct > gap.fooledPct) gap = { order: q.order, question_id: q.id, fooledPct };
+      const missedPct = Math.round((d[4] / players) * 100);
+      if (!gap || missedPct > gap.missedPct) gap = { order: r.order, round_id: r.id, missedPct };
     }
     gapCache.set(date, { gap, at: Date.now() });
-    if (gapCache.size > 10) gapCache.delete(gapCache.keys().next().value!);
     return gap;
   }
 
@@ -126,62 +133,54 @@ export function createApp({ config, store, content, now = () => new Date(), remo
     const total = store.getCompletion(playerId, date);
     if (total === undefined) return null;
     const { players, below } = store.rank(date, total);
-    return {
-      total,
-      players,
-      percentile: percentileFromCounts(below, players, config.percentileMinPlayers),
-      gapOfDay: gapOfDay(date),
-    };
+    return { total, players, percentile: percentileFromCounts(below, players, config.percentileMinPlayers), gapOfDay: gapOfDay(date) };
   }
 
-  /** Which puzzle dates currently accept guesses: today, plus yesterday just after midnight. */
   function openDates(): string[] {
     const d = today();
     if (config.devDate) return [d].filter((x) => x >= config.launchDate);
-    const sinceMidnight = now().getTime() - startOfDublinDay(d).getTime();
-    const dates = sinceMidnight < config.rolloverGraceMs ? [d, addDays(d, -1)] : [d];
-    return dates.filter((x) => x >= config.launchDate);
+    const since = now().getTime() - startOfDublinDay(d).getTime();
+    return (since < config.rolloverGraceMs ? [d, addDays(d, -1)] : [d]).filter((x) => x >= config.launchDate);
   }
 
   function clientIp(c: Context): string {
-    return (
-      c.req.header('cf-connecting-ip') ||
-      c.req.header('x-forwarded-for')?.split(',')[0]?.trim() ||
-      remoteAddr?.(c) ||
-      'unknown'
-    );
+    return c.req.header('cf-connecting-ip') || c.req.header('x-forwarded-for')?.split(',')[0]?.trim() || remoteAddr?.(c) || 'unknown';
   }
 
-  app.use('*', secureHeaders({
-    contentSecurityPolicy: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      // NumberFlow injects a <style> into its shadow root; it carries this per-request nonce.
-      styleSrc: ["'self'", NONCE],
-      imgSrc: ["'self'", 'data:'],
-      connectSrc: ["'self'"],
-      objectSrc: ["'none'"],
-      baseUri: ["'self'"],
-      frameAncestors: ["'none'"],
-    },
-    referrerPolicy: 'strict-origin-when-cross-origin',
-    crossOriginEmbedderPolicy: false,
-    crossOriginResourcePolicy: 'cross-origin', // let link previews embed og.png
-  }));
+  const byRound = (rows: AttemptRow[]) => {
+    const m = new Map<string, AttemptRow[]>();
+    for (const a of rows) m.set(a.round_id, [...(m.get(a.round_id) ?? []), a]);
+    return m;
+  };
 
+  app.use(
+    '*',
+    secureHeaders({
+      contentSecurityPolicy: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        // NumberFlow injects a <style> into its shadow root; it carries this per-request nonce.
+        styleSrc: ["'self'", NONCE],
+        imgSrc: ["'self'", 'data:'],
+        connectSrc: ["'self'"],
+        objectSrc: ["'none'"],
+        baseUri: ["'self'"],
+        frameAncestors: ["'none'"],
+      },
+      referrerPolicy: 'strict-origin-when-cross-origin',
+      crossOriginEmbedderPolicy: false,
+      crossOriginResourcePolicy: 'cross-origin',
+    }),
+  );
   app.use('/api/*', async (c, next) => {
     await next();
     c.header('Cache-Control', 'no-store');
   });
-
   app.post('/api/*', async (c, next) => {
-    if (!limiter.take(clientIp(c))) {
-      c.header('Retry-After', '10');
-      return c.json({ error: 'Too many requests — slow down a little.' }, 429);
-    }
+    const ip = clientIp(c);
     const path = c.req.path;
     const special = path === '/api/leagues' ? createLimiter : path === '/api/leagues/join' ? joinLimiter : null;
-    if (special && !special.take(clientIp(c))) {
+    if (!limiter.take(ip) || (special && !special.take(ip))) {
       c.header('Retry-After', '10');
       return c.json({ error: 'Too many requests — slow down a little.' }, 429);
     }
@@ -190,21 +189,14 @@ export function createApp({ config, store, content, now = () => new Date(), remo
 
   app.get('/api/health', (c) => {
     const ok = store.ping();
-    return c.json({ ok, date: today(), questionsToday: content.forDate(today()).length }, ok ? 200 : 503);
+    return c.json({ ok, date: today(), roundsToday: content.forDate(today()).length }, ok ? 200 : 503);
   });
 
   app.get('/api/today', (c) => {
     const date = today();
     const playerId = c.req.header('x-player-id') ?? '';
-    const launched = date >= config.launchDate;
-    const questions = launched ? content.forDate(date) : [];
-    let reveals: Reveal[] = [];
-    let done: Completion | null = null;
-    if (UUID.test(playerId) && questions.length) {
-      const guesses = new Map(store.playerGuesses(playerId, date).map((g) => [g.question_id, g.guess]));
-      reveals = questions.filter((q) => guesses.has(q.id)).map((q) => reveal(q, guesses.get(q.id)!));
-      done = completion(playerId, date);
-    }
+    const rounds = date >= config.launchDate ? content.forDate(date) : [];
+    const mine = UUID.test(playerId) ? byRound(store.playerAttempts(playerId, date)) : new Map<string, AttemptRow[]>();
     const body: TodayResponse = {
       date,
       puzzle: Math.max(0, puzzleNumber(date, config.launchDate)),
@@ -214,50 +206,52 @@ export function createApp({ config, store, content, now = () => new Date(), remo
       flag: edition.flag,
       siteHost: config.siteHost,
       nextRolloverAt: nextRollover(now()).toISOString(),
-      questions: questions.map((q) => ({ id: q.id, order: q.order, question: q.question, category: q.category })),
-      reveals,
-      completion: done,
+      set: rounds[0]?.set ?? 'ie-counties',
+      rounds: rounds.map((r) => view(r, mine.get(r.id) ?? [])),
+      completion: UUID.test(playerId) ? completion(playerId, date) : null,
     };
     return c.json(body);
   });
 
   app.post('/api/guess', async (c) => {
-    let body: Record<string, unknown>;
-    try {
-      body = await c.req.json();
-    } catch {
-      return c.json({ error: 'Expected a JSON body.' }, 400);
-    }
-    const { player_id: playerId, question_id: questionId, guess } = body ?? {};
+    const b = await body(c);
+    const playerId = b?.player_id;
     if (typeof playerId !== 'string' || !UUID.test(playerId)) return c.json({ error: 'Invalid player_id.' }, 400);
-    if (typeof questionId !== 'string') return c.json({ error: 'Invalid question_id.' }, 400);
-    if (typeof guess !== 'number' || !Number.isInteger(guess) || guess < 0 || guess > 100)
-      return c.json({ error: 'guess must be a whole number from 0 to 100.' }, 400);
-
-    const q = content.get(questionId);
-    if (!q) return c.json({ error: 'Unknown question.' }, 404);
-    if (!openDates().includes(q.date) || !content.forDate(q.date).some((x) => x.id === q.id))
+    const r = typeof b?.round_id === 'string' ? content.get(b.round_id) : undefined;
+    if (!r) return c.json({ error: 'Unknown round.' }, 404);
+    if (!openDates().includes(r.date) || !content.forDate(r.date).some((x) => x.id === r.id))
       return c.json({ error: 'That puzzle is closed — a new one is ready.', code: 'stale' }, 409);
+    const set = PLACE_SETS[r.set];
+    const place = typeof b?.place === 'string' ? placeById(set, b.place) : undefined;
+    if (!place) return c.json({ error: `Pick a ${set.noun} from the list.` }, 400);
 
     const t = now().getTime();
-    const result = store.transaction(() => {
-      const inserted = store.insertGuess(playerId, q.date, q.id, guess, t);
-      const stored = inserted ? guess : store.getGuess(playerId, q.id)!;
-      const mine = store.playerGuesses(playerId, q.date);
-      if (mine.length === QUESTIONS_PER_DAY && store.getCompletion(playerId, q.date) === undefined) {
-        const byId = new Map(content.forDate(q.date).map((x) => [x.id, x]));
-        const total = mine.reduce((sum, g) => sum + scoreGuess(g.guess, byId.get(g.question_id)!.answer), 0);
-        store.insertCompletion(playerId, q.date, total, t);
-      }
-      return { inserted, stored };
+    const out = store.transaction(() => {
+      const before = byRound(store.playerAttempts(playerId, r.date)).get(r.id) ?? [];
+      const p = roundProgress(before);
+      if (p.done) return { alreadyDone: true, correct: p.solvedAt > 0 };
+      const correct = place.id === r.answer;
+      store.insertAttempt(playerId, r.date, r.id, p.tries + 1, place.id, correct, t);
+      // Finished all five rounds? Record the day's total once.
+      const all = byRound(store.playerAttempts(playerId, r.date));
+      const day = content.forDate(r.date);
+      const states = day.map((x) => roundProgress(all.get(x.id) ?? []));
+      if (states.length === ROUNDS_PER_DAY && states.every((s) => s.done) && store.getCompletion(playerId, r.date) === undefined)
+        store.insertCompletion(playerId, r.date, states.reduce((sum, s) => sum + pointsFor(s.solvedAt), 0), t);
+      return { alreadyDone: false, correct };
     });
-    if (result.inserted) {
-      bumpHistogram(q.id, guess);
-      gapCache.delete(q.date);
+    if (!out.alreadyDone) {
+      crowdCache.delete(r.id);
+      gapCache.delete(r.date);
     }
-
-    const res: GuessResponse = { reveal: reveal(q, result.stored), completion: completion(playerId, q.date) };
-    return c.json({ ...res, alreadyGuessed: !result.inserted });
+    const attempts = byRound(store.playerAttempts(playerId, r.date)).get(r.id) ?? [];
+    const res: GuessResponse = {
+      round: view(r, attempts),
+      completion: completion(playerId, r.date),
+      correct: out.correct,
+      alreadyDone: out.alreadyDone,
+    };
+    return c.json(res);
   });
 
   // ================================================================ leagues
@@ -359,20 +353,18 @@ export function createApp({ config, store, content, now = () => new Date(), remo
     const members = store.members(leagueId);
     const comps = store.leagueCompletions(leagueId, from, date);
     const viewerFinished = comps.some((x) => x.player_id === playerId && x.date === date);
-
-    // Per-member offs on today's questions — only for members who finished.
-    const questions = content.forDate(date);
     const finishedToday = new Set(comps.filter((x) => x.date === date).map((x) => x.player_id));
-    const offs = new Map<string, number[]>();
-    if (period === 'day' && questions.length) {
-      const byQ = new Map(questions.map((q, i) => [q.id, { q, i }]));
-      for (const g of store.leagueGuesses(leagueId, date)) {
-        if (!finishedToday.has(g.player_id)) continue;
-        const hit = byQ.get(g.question_id);
-        if (!hit) continue;
-        const arr = offs.get(g.player_id) ?? new Array<number>(questions.length).fill(NaN);
-        arr[hit.i] = offBy(g.guess, hit.q.answer);
-        offs.set(g.player_id, arr);
+
+    // Per-member outcome on each of today's rounds — only for members who finished.
+    const rounds = content.forDate(date);
+    const solved = new Map<string, number[]>();
+    if (period === 'day' && rounds.length) {
+      const byPlayer = new Map<string, AttemptRow[]>();
+      for (const a of store.leagueAttempts(leagueId, date)) byPlayer.set(a.player_id, [...(byPlayer.get(a.player_id) ?? []), a]);
+      for (const [pid, rows] of byPlayer) {
+        if (!finishedToday.has(pid)) continue;
+        const m = byRound(rows);
+        solved.set(pid, rounds.map((r) => roundProgress(m.get(r.id) ?? []).solvedAt));
       }
     }
 
@@ -383,52 +375,44 @@ export function createApp({ config, store, content, now = () => new Date(), remo
       t.days += 1;
       totals.set(x.player_id, t);
     }
-
     const rows: StandingRow[] = members.map((m) => {
       const t = totals.get(m.player_id);
-      const o = offs.get(m.player_id);
+      const s = solved.get(m.player_id);
       return {
         rank: null,
         name: m.display_name,
         isMe: m.player_id === playerId,
         total: t ? t.total : null,
-        blocks: period === 'day' && o ? o.map((x) => blockFor(x) as Block) : null,
+        blocks: period === 'day' && s ? s.map((x) => blockForSolve(x) as Block) : null,
         ...(period === 'week' ? { daysPlayed: t?.days ?? 0 } : {}),
       };
     });
-    // Rank by total, ties share a rank (1, 1, 3); unfinished players go last.
     rows.sort((a, b) => (b.total ?? -1) - (a.total ?? -1) || Number(b.isMe) - Number(a.isMe) || a.name.localeCompare(b.name));
     rows.forEach((r, i) => {
       if (r.total === null) return;
       r.rank = i > 0 && rows[i - 1].total === r.total ? rows[i - 1].rank : i + 1;
     });
 
-    // Head-to-head: biggest gap on a single question, only once the viewer has finished.
+    // Head-to-head: the round with the biggest gap in clues needed, once the viewer has finished.
     let headToHead: HeadToHead | null = null;
-    const mine = offs.get(playerId);
+    const mine = solved.get(playerId);
+    const cost = (s: number) => (s === 0 ? 5 : s);
     if (period === 'day' && viewerFinished && mine) {
+      let best = 0;
       for (const m of members) {
         if (m.player_id === playerId) continue;
-        const theirs = offs.get(m.player_id);
+        const theirs = solved.get(m.player_id);
         if (!theirs) continue;
-        theirs.forEach((mateOff, i) => {
-          const gap = Math.abs(mateOff - mine[i]);
-          if (!Number.isFinite(gap) || gap === 0) return;
-          if (!headToHead || gap > Math.abs(headToHead.mateOff - headToHead.myOff))
-            headToHead = { mate: m.display_name, order: i + 1, myOff: mine[i], mateOff, mateBetter: mateOff < mine[i] };
+        theirs.forEach((mateSolved, i) => {
+          const gap = Math.abs(cost(mateSolved) - cost(mine[i]));
+          if (gap > best) {
+            best = gap;
+            headToHead = { mate: m.display_name, order: i + 1, mySolved: mine[i], mateSolved, mateBetter: cost(mateSolved) < cost(mine[i]) };
+          }
         });
       }
     }
-
-    const res: StandingsResponse = {
-      league: summary(leagueId, playerId),
-      period,
-      from,
-      to: date,
-      viewerFinished,
-      rows,
-      headToHead,
-    };
+    const res: StandingsResponse = { league: summary(leagueId, playerId), period, from, to: date, viewerFinished, rows, headToHead };
     return c.json(res);
   });
 

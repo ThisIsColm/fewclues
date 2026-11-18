@@ -5,7 +5,7 @@ import type { LeagueSummary, StandingsResponse } from '../../../shared/types';
 import { Button, Card, IconButton, Sheet, toast, ui } from '../components/ui';
 import { ApiError, createLeague, getLeagues, getStandings, joinLeague } from '../lib/api';
 import { closeness, closenessLabel } from '../lib/closeness';
-import { fmt, initial, ordinal } from '../lib/format';
+import { initial, ordinal } from '../lib/format';
 import { shareOrCopy } from '../lib/share';
 import s from './Leagues.module.css';
 
@@ -87,7 +87,7 @@ export function Leagues(props: {
 
       {leagues && leagues.length === 0 && (
         <div className={s.stack}>
-          <p className={s.lede}>Start a league, send the link, and see who really knows {`Ireland`}. Scores only — nobody sees answers before they've played.</p>
+          <p className={s.lede}>Start a league, send the link, and see who really knows Ireland. Scores only — nobody sees answers before they've played.</p>
           <LeagueForms playerId={props.playerId} displayName={props.displayName} onDone={created} />
         </div>
       )}
@@ -177,20 +177,22 @@ function Standings({ data }: { data: StandingsResponse }) {
   );
 }
 
+const needed = (n: number) => (n === 0 ? 'missed it' : n === 1 ? 'got it from the first clue' : `needed ${n} clues`);
+
 function HeadToHead({ h }: { h: NonNullable<StandingsResponse['headToHead']> }) {
   return (
     <section className={ui.paper} aria-labelledby="h2h-title">
       <h2 className={ui.paperLabel} id="h2h-title">
-        Head to head · Question {h.order}
+        Head to head · Round {h.order}
       </h2>
       <p className={s.h2h}>
         {h.mateBetter ? (
           <>
-            {h.mate} was off by <b>{fmt(h.mateOff)}</b>. You were off by <b>{fmt(h.myOff)}</b>. Expect to hear about it.
+            {h.mate} <b>{needed(h.mateSolved)}</b>. You <b>{needed(h.mySolved)}</b>. Expect to hear about it.
           </>
         ) : (
           <>
-            You were off by <b>{fmt(h.myOff)}</b>. {h.mate} was off by <b>{fmt(h.mateOff)}</b>. Feel free to mention it.
+            You <b>{needed(h.mySolved)}</b>. {h.mate} <b>{needed(h.mateSolved)}</b>. Feel free to mention it.
           </>
         )}
       </p>

@@ -3,14 +3,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { addDays, formatLongDate } from '../../shared/day';
 import { QUESTIONS_PER_DAY } from '../../shared/scoring';
 import { streaks } from '../../shared/streak';
-import type { Completion, GuessResponse, LeagueSummary, Reveal as RevealData, TodayResponse } from '../../shared/types';
+import type { Block, Completion, GuessResponse, LeagueSummary, RoundView, TodayResponse } from '../../shared/types';
 import { Button, Sheet, ToastHost, Wordmark } from './components/ui';
 import { getToday, previewInvite } from './lib/api';
 import { load, save, type Saved } from './lib/storage';
-import { Guess } from './screens/Guess';
 import { LeagueForms, Leagues } from './screens/Leagues';
 import { Results } from './screens/Results';
 import { Reveal } from './screens/Reveal';
+import { Round } from './screens/Round';
 import { HowTo, Start } from './screens/Start';
 import { StatsBody } from './screens/StatsSheet';
 import s from './screens/screens.module.css';
@@ -19,7 +19,7 @@ type Route =
   | { name: 'loading' }
   | { name: 'message'; title: string; body: string; retry?: boolean }
   | { name: 'start' }
-  | { name: 'guess'; index: number }
+  | { name: 'round'; index: number }
   | { name: 'reveal'; index: number; review?: boolean }
   | { name: 'results' }
   | { name: 'leagues'; back: Route };
@@ -31,7 +31,7 @@ export function App() {
   const st = stateRef.current;
   const persist = useCallback(() => save(stateRef.current), []);
   const [today, setToday] = useState<TodayResponse | null>(null);
-  const [reveals, setReveals] = useState<RevealData[]>([]);
+  const [rounds, setRounds] = useState<RoundView[]>([]);
   const [completion, setCompletion] = useState<Completion | null>(null);
   const [route, setRoute] = useState<Route>({ name: 'loading' });
   const [sheet, setSheet] = useState<'help' | 'stats' | null>(null);
@@ -41,8 +41,8 @@ export function App() {
   // ---------------------------------------------------------------- navigation
   const go = useCallback(
     (r: Route) => {
-      if (today && (r.name === 'guess' || (r.name === 'reveal' && !r.review))) {
-        stateRef.current.cursor = { date: today.date, index: r.index, phase: r.name === 'guess' ? 'question' : 'reveal' };
+      if (today && (r.name === 'round' || (r.name === 'reveal' && !r.review))) {
+        stateRef.current.cursor = { date: today.date, index: r.index, phase: r.name === 'round' ? 'question' : 'reveal' };
         persist();
       }
       if (today && r.name === 'results') {
@@ -55,16 +55,16 @@ export function App() {
     [today, persist],
   );
 
-  /** Mirror server results into local history once the day is finished. */
+  /** Mirror the finished day into local history (streaks, stats). */
   const record = useCallback(
-    (t: TodayResponse, rs: RevealData[], c: Completion | null) => {
-      if (!c || rs.length !== QUESTIONS_PER_DAY) return;
+    (t: TodayResponse, rs: RoundView[], c: Completion | null) => {
+      if (!c || !rs.length || !rs.every((r) => r.reveal)) return;
       stateRef.current.history[t.date] = {
         puzzle: t.puzzle,
         total: c.total,
-        points: rs.map((r) => r.points),
-        signedErrors: rs.map((r) => r.signedError),
-        blocks: rs.map((r) => r.block),
+        points: rs.map((r) => r.reveal!.points),
+        solved: rs.map((r) => r.reveal!.solvedAt),
+        blocks: rs.map((r) => r.reveal!.block),
       };
       persist();
     },
@@ -74,8 +74,7 @@ export function App() {
   // ---------------------------------------------------------------- boot
   useEffect(() => {
     void (async () => {
-      const params = new URLSearchParams(location.search);
-      const join = params.get('join');
+      const join = new URLSearchParams(location.search).get('join');
       let t: TodayResponse;
       try {
         t = await getToday(st.playerId);
@@ -84,9 +83,9 @@ export function App() {
         return;
       }
       setToday(t);
-      setReveals(t.reveals);
+      setRounds(t.rounds);
       setCompletion(t.completion);
-      record(t, t.reveals, t.completion);
+      record(t, t.rounds, t.completion);
       if (st.cursor && st.cursor.date !== t.date) delete st.cursor;
       const cutoff = addDays(t.date, -400);
       for (const d of Object.keys(st.history)) if (d < cutoff) delete st.history[d];
@@ -98,29 +97,30 @@ export function App() {
           .then((p) => setInvite({ code: join.toUpperCase(), ...p }))
           .catch(() => setInvite({ code: join.toUpperCase(), name: '', members: 0, full: false }));
       }
-
       if (t.date < t.launchDate) {
         setRoute({ name: 'message', title: 'Coming soon', body: `The first Percentle is on ${formatLongDate(t.launchDate)}.` });
         return;
       }
-      if (!t.questions.length) {
-        setRoute({ name: 'message', title: 'No puzzle today', body: 'Today’s questions aren’t ready yet. Check back soon.' });
+      if (!t.rounds.length) {
+        setRoute({ name: 'message', title: 'No puzzle today', body: 'Today’s rounds aren’t ready yet. Check back soon.' });
         return;
       }
-      const n = t.reveals.length;
+      // Resume: an unfinished round, else the reveal you were reading, else results.
+      const firstOpen = t.rounds.findIndex((r) => !r.done);
       const c = st.cursor;
-      if (n > 0 && c?.phase === 'reveal' && c.index === n - 1) setRoute({ name: 'reveal', index: n - 1 });
-      else if (n >= QUESTIONS_PER_DAY) setRoute({ name: 'results' });
-      else if (n > 0 || c) setRoute({ name: 'guess', index: n });
+      const started = t.rounds.some((r) => r.done || r.wrong.length) || c;
+      if (c?.phase === 'reveal' && t.rounds[c.index]?.done && (firstOpen === -1 || firstOpen === c.index + 1))
+        setRoute({ name: 'reveal', index: c.index });
+      else if (firstOpen === -1) setRoute({ name: 'results' });
+      else if (started) setRoute({ name: 'round', index: firstOpen });
       else setRoute({ name: 'start' });
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Move focus to the new screen's heading for screen-reader users.
+  // Move focus to the new screen's heading for screen-reader users (unless they've already moved on).
   useEffect(() => {
     const t = setTimeout(() => {
-      // Don't steal focus from something the user has already moved to (e.g. the slider).
       const a = document.activeElement;
       if (a && a !== document.body && document.querySelector('main')?.contains(a)) return;
       document.querySelector<HTMLElement>('[data-autofocus]')?.focus({ preventScroll: true });
@@ -128,20 +128,20 @@ export function App() {
     return () => clearTimeout(t);
   }, [route]);
 
-  const finished = useMemo(() => Object.keys(st.history), [st.history, reveals, completion]); // eslint-disable-line react-hooks/exhaustive-deps
+  const finished = useMemo(() => Object.keys(st.history), [st.history, rounds, completion]); // eslint-disable-line react-hooks/exhaustive-deps
   const streak = useMemo(() => (today ? streaks(finished, today.date) : { current: 0, max: 0 }), [finished, today]);
-  const bias = useMemo(() => {
-    const errs = Object.values(st.history).flatMap((r) => r.signedErrors);
-    return errs.length ? errs.reduce((a, b) => a + b, 0) / errs.length : null;
+  const firstClueRate = useMemo(() => {
+    const solves = Object.values(st.history).flatMap((r) => r.solved ?? []);
+    return solves.length ? Math.round((solves.filter((x) => x === 1).length / solves.length) * 100) : null;
   }, [st.history, completion]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onLocked = (index: number) => (res: GuessResponse) => {
-    const next = [...reveals];
-    next[index] = res.reveal;
-    setReveals(next);
+  const apply = (index: number) => (res: GuessResponse) => {
+    const next = [...rounds];
+    next[index] = res.round;
+    setRounds(next);
     setCompletion(res.completion);
     if (today) record(today, next, res.completion);
-    go({ name: 'reveal', index });
+    return next;
   };
 
   const openLeagues = () => go({ name: 'leagues', back: route.name === 'leagues' ? { name: 'results' } : route });
@@ -155,8 +155,12 @@ export function App() {
   };
 
   // ---------------------------------------------------------------- render
+  const blocks: Block[] = rounds.map((r) => r.reveal?.block).filter(Boolean) as Block[];
+  const nextOpen = (from: number) => {
+    const i = rounds.findIndex((r, k) => k > from && !r.done);
+    return i === -1 ? rounds.findIndex((r) => !r.done) : i;
+  };
   let screen: React.ReactNode = null;
-  const blocks = reveals.map((r) => r.block);
   if (route.name === 'loading') screen = <div className={s.screen} aria-busy="true" />;
   else if (route.name === 'message')
     screen = (
@@ -172,46 +176,60 @@ export function App() {
       </div>
     );
   else if (today && route.name === 'start')
-    screen = <Start today={today} started={reveals.length} onPlay={() => go({ name: 'guess', index: reveals.length })} onHelp={() => setSheet('help')} />;
-  else if (today && route.name === 'guess')
     screen = (
-      <Guess
-        q={today.questions[route.index]}
+      <Start
+        today={today}
+        started={rounds.filter((r) => r.done).length}
+        onPlay={() => go({ name: 'round', index: Math.max(0, rounds.findIndex((r) => !r.done)) })}
+        onHelp={() => setSheet('help')}
+      />
+    );
+  else if (today && route.name === 'round' && rounds[route.index])
+    screen = (
+      <Round
+        key={rounds[route.index].id}
+        round={rounds[route.index]}
         index={route.index}
+        set={today.set}
         blocks={blocks}
         puzzle={today.puzzle}
         edition={today.edition}
         streak={streak.current}
         playerId={st.playerId}
-        onLocked={onLocked(route.index)}
+        onUpdate={apply(route.index)}
+        onDone={(res) => {
+          apply(route.index)(res);
+          go({ name: 'reveal', index: route.index });
+        }}
         onStale={() => setTimeout(() => location.reload(), 1500)}
       />
     );
-  else if (today && route.name === 'reveal' && reveals[route.index])
+  else if (today && route.name === 'reveal' && rounds[route.index]?.reveal)
     screen = (
       <Reveal
-        q={today.questions[route.index]}
-        r={reveals[route.index]}
+        round={rounds[route.index]}
         index={route.index}
+        set={today.set}
         blocks={blocks}
         puzzle={today.puzzle}
         edition={today.edition}
-        editionName={today.editionName}
         streak={streak.current}
         review={!!route.review}
-        onNext={() =>
-          route.review ? go({ name: 'results' }) : route.index + 1 >= QUESTIONS_PER_DAY ? go({ name: 'results' }) : go({ name: 'guess', index: route.index + 1 })
-        }
+        onNext={() => {
+          if (route.review) return go({ name: 'results' });
+          const n = nextOpen(route.index);
+          go(n === -1 ? { name: 'results' } : { name: 'round', index: n });
+        }}
       />
     );
   else if (today && route.name === 'results')
     screen = (
       <Results
         today={today}
-        reveals={reveals}
+        reveals={rounds.map((r) => r.reveal!).filter(Boolean)}
         completion={completion}
         streak={streak.current}
-        bias={bias}
+        firstClueRate={firstClueRate}
         onOpenReveal={(i) => go({ name: 'reveal', index: i, review: true })}
         onLeagues={openLeagues}
         onStats={() => setSheet('stats')}
@@ -251,7 +269,7 @@ export function App() {
       </AnimatePresence>
 
       <Sheet title="How to play" open={sheet === 'help'} onClose={() => setSheet(null)}>
-        <HowTo editionName={today?.editionName ?? 'Ireland'} />
+        <HowTo />
       </Sheet>
       <Sheet title="Your stats" open={sheet === 'stats'} onClose={() => setSheet(null)}>
         <StatsBody history={st.history} today={today?.date ?? ''} current={streak.current} max={streak.max} />

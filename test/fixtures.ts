@@ -1,18 +1,19 @@
-import type { Question } from '../shared/types';
+import type { Round } from '../shared/types';
 
-export function makeDay(date: string, answers: number[], status: Question['status'] = 'approved', idPrefix = date): Question[] {
+/** Five rounds for a date; answers default to five distinct counties. */
+export function makeDay(date: string, answers = ['kerry', 'cork', 'mayo', 'meath', 'antrim'], status: Round['status'] = 'approved'): Round[] {
   return answers.map((answer, i) => ({
-    id: `${idPrefix}-${i + 1}`,
+    id: `${date}-${i + 1}`,
     date,
     order: i + 1,
     edition: 'ie',
-    question: `Question ${i + 1}?`,
+    set: 'ie-counties',
     answer,
-    year: 2024,
+    category: 'Test',
+    clues: [`Hard clue ${i + 1}.`],
+    fact: 'Test fact.',
     source_name: 'Test source',
     source_url: 'https://example.com/source',
-    nugget: 'Test nugget.',
-    comparisons: [{ label: 'EU', value: 50 }],
     difficulty: 'easy',
     status,
   }));

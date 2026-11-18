@@ -1,226 +1,166 @@
+import { motion, useReducedMotion } from 'motion/react';
+import { useEffect } from 'react';
+import { verdictForSolve } from '../../../shared/ladder';
+import { PLACE_SETS, placeById } from '../../../shared/places';
+import type { Block, RoundView } from '../../../shared/types';
 import { Num } from '../components/Num';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useEffect, useState } from 'react';
-import { binLabel, missLabel, modeBin, verdictFor } from '../../../shared/scoring';
-import type { Block, PublicQuestion, Reveal as RevealData } from '../../../shared/types';
-import { Compare, Histogram } from '../components/Charts';
 import { Progress } from '../components/Progress';
-import { RevealGlass } from '../components/RevealGlass';
 import { TopBar } from '../components/TopBar';
 import { Button, Card, Icon, ui } from '../components/ui';
-import { closeness } from '../lib/closeness';
 import { celebrate } from '../lib/confetti';
-import { fmt } from '../lib/format';
 import { haptic } from '../lib/haptics';
 import s from './screens.module.css';
+import r from './Reveal.module.css';
 
-const BEAT_MS = 250; // pause before the answer drops in
-const LAND_MS = 260; // the verdict lands as the line settles (~0.5 s in)
+/** Tier colour for the result card: first clue, second, third/fourth, missed. */
+const tierFor = (solvedAt: number) => (solvedAt === 1 ? 'c1' : solvedAt === 2 ? 'c2' : solvedAt === 0 ? 'c4' : 'c3');
 
 export function Reveal(props: {
-  q: PublicQuestion;
-  r: RevealData;
+  round: RoundView;
   index: number;
+  set: string;
   blocks: Block[];
   puzzle: number;
   edition: string;
-  editionName: string;
   streak: number;
   review: boolean;
   onNext: () => void;
 }) {
-  const { q, r, index } = props;
+  const { round, index } = props;
+  const rv = round.reveal!;
+  const set = PLACE_SETS[props.set];
   const reduced = useReducedMotion() ?? false;
-  // Phases: 0 = guess only, 1 = answer dropping, 2 = landed (points, verdict).
-  const [phase, setPhase] = useState(reduced || props.review ? 2 : 0);
-  const [skipped, setSkipped] = useState(reduced || props.review);
-  const verdict = verdictFor(r.guess, r.answer);
-  const miss = missLabel(r.guess, r.answer);
-  const tier = closeness(r.block); // c1 ≤3 · c2 ≤10 · c3 ≤20 · c4 >20
-  const wayOff = tier === 'c4';
+  const tier = tierFor(rv.solvedAt);
+  const animate = !props.review && !reduced;
   const last = index === 4;
 
   useEffect(() => {
-    if (phase >= 2) return;
-    const t1 = setTimeout(() => setPhase(1), BEAT_MS);
-    const t2 = setTimeout(() => setPhase(2), BEAT_MS + LAND_MS);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-    };
+    if (props.review) return;
+    if (rv.solvedAt === 1) void celebrate();
+    if (rv.solvedAt === 0) haptic('heavy', 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (phase !== 2 || props.review) return;
-    if (r.bullseye) {
-      haptic('success', 0);
-      void celebrate();
-    } else if (wayOff) haptic('error', 0);
-    else haptic(tier === 'c1' ? 'success' : 'medium', 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase]);
-
-  // Tap anywhere to skip the intro.
-  const skip = () => {
-    if (phase < 2) {
-      setSkipped(true);
-      setPhase(2);
-    }
-  };
-
-  const total = r.histogram.reduce((a, b) => a + b, 0);
-  const mode = modeBin(r.histogram);
-  const tied = r.histogram.filter((n) => n === r.histogram[mode]).length > 1;
-  const crowd =
-    total <= 1 ? "You're the first to guess this one today." : tied ? 'Guesses are spread out — no clear favourite yet.' : `Most people went for ${binLabel(mode)}.`;
-  const closer =
-    r.closerThan === null || total <= 1
-      ? ''
-      : r.closerThan === 100
-        ? ' Nobody got closer than you.'
-        : r.closerThan === 0
-          ? ' Everyone else was closer.'
-          : ` You were closer than ${r.closerThan}% of players.`;
-  const showResult = phase >= 2;
+  const total = rv.crowd.players;
+  const labels = ['Clue 1', 'Clue 2', 'Clue 3', 'Clue 4', 'Missed'];
+  const mine = rv.solvedAt === 0 ? 4 : rv.solvedAt - 1;
+  const max = Math.max(1, ...rv.crowd.dist);
+  const topWrong = rv.crowd.topWrong[0];
+  const verdict = verdictForSolve(rv.solvedAt);
 
   return (
-    <div className={`${s.screen} ${s.stack}`} onPointerDownCapture={skip}>
+    <div className={`${s.screen} ${s.stack}`}>
       <TopBar puzzle={props.puzzle} edition={props.edition} streak={props.streak} />
       <Progress blocks={props.blocks} current={index} />
-      <p className={s.qSmall}>
-        <span className="visually-hidden">Question {index + 1}: </span>
-        {q.question}
-      </p>
 
-      {/* The result card takes the closeness colour the moment the verdict lands. */}
       <motion.section
-        className={`${s.revealHero} ${showResult ? s[`tier_${tier}`] : ''}`}
+        className={`${r.hero} ${r[`tier_${tier}`]}`}
         aria-label="Your result"
+        initial={animate ? { scale: 0.96, opacity: 0 } : false}
         animate={
-          showResult && !skipped && !reduced
-            ? r.bullseye
-              ? { scale: [1, 1.05, 0.99, 1] }
-              : tier === 'c1'
-                ? { scale: [1, 1.03, 1] }
-                : { scale: 1 }
-            : { scale: 1 }
+          animate && rv.solvedAt === 0
+            ? { scale: 1, opacity: 1, x: [0, -12, 11, -8, 6, -3, 0] }
+            : animate && rv.solvedAt === 1
+              ? { opacity: 1, scale: [0.96, 1.04, 1] }
+              : { scale: 1, opacity: 1 }
         }
-        transition={{ duration: 0.38, ease: 'easeOut' }}
+        transition={{ duration: 0.42, ease: 'easeOut' }}
       >
-        <motion.div
-          className={s.revealGlassCol}
-          animate={showResult && wayOff && !skipped && !reduced ? { x: [0, -12, 11, -9, 7, -4, 2, 0] } : { x: 0 }}
-          transition={{ duration: 0.42, ease: 'easeOut' }}
-        >
-          <RevealGlass guess={r.guess} answer={r.answer} phase={phase} skipped={skipped} />
-        </motion.div>
-        <div className={s.revealStats}>
-          <h1
-            className={s.verdictBig}
-            tabIndex={-1}
-            data-autofocus
-            data-reveal
-            aria-label={`${verdict}. ${miss.text}. ${r.points} points. You said ${r.guess}%, the answer is ${fmt(r.answer)}%.`}
-          >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={showResult ? 'v' : 'p'}
-                initial={skipped ? false : { y: 14, opacity: 0, scale: 0.92 }}
-                animate={{ y: 0, opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, transition: { duration: 0.08 } }}
-                transition={{ type: 'spring', stiffness: 600, damping: 26 }}
-                className={showResult ? '' : s.pendingText}
-              >
-                {showResult ? verdict : 'And the answer is…'}
-              </motion.span>
-            </AnimatePresence>
-          </h1>
-          <p className={`${s.missLine} ${showResult ? '' : s.pendingNum}`} aria-hidden="true">
-            {miss.direction !== 'exact' && (
-              <span className={s.arrow}>
-                <Icon name={miss.direction === 'high' ? 'up' : 'down'} />
+        <p className={r.verdict}>{verdict}</p>
+        <h1 className={r.answer} tabIndex={-1} data-autofocus data-reveal aria-label={`${verdict} The answer is ${rv.answerName}. ${rv.points} points.`}>
+          {rv.answerName}
+        </h1>
+        <p className={r.pts} aria-hidden="true">
+          +<Num value={rv.points} /> pts
+        </p>
+        {round.wrong.length > 0 && (
+          <p className={r.tries}>
+            Your guesses:{' '}
+            {round.wrong.map((id) => (
+              <span key={id} className={r.triedWrong}>
+                {placeById(set, id)?.name ?? id}
               </span>
-            )}
-            {miss.direction === 'exact' ? (
-              <span className={s.missNum}>Spot on</span>
-            ) : (
-              <>
-                <span className={s.missNum}>
-                  <Num value={showResult ? r.offBy : 0} format={{ maximumFractionDigits: 1 }} />
-                </span>
-                <span className={s.missWord}>too {miss.direction}</span>
-              </>
-            )}
+            ))}
+            {rv.solvedAt > 0 && <span className={r.triedRight}>{rv.answerName}</span>}
           </p>
-          <span className={s.pts} aria-hidden="true">
-            +<Num value={showResult ? r.points : 0} /> pts
-          </span>
-          <dl className={s.legendList} aria-hidden="true">
-            <div>
-              <dt>
-                <i className={s.swGuess} /> You
-              </dt>
-              <dd className="num">{r.guess}%</dd>
-            </div>
-            <div>
-              <dt>
-                <i className={s.swAnswer} /> Answer
-              </dt>
-              <dd className="num">{phase >= 1 ? `${fmt(r.answer)}%` : '··'}</dd>
-            </div>
-          </dl>
-        </div>
+        )}
       </motion.section>
 
       <motion.section
         className={`${ui.paper} ${s.fact}`}
         aria-labelledby="dyk-title"
-        initial={skipped ? false : { opacity: 0, y: 12 }}
-        animate={showResult ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
-        transition={{ type: 'spring', stiffness: 420, damping: 34, delay: skipped ? 0 : 0.12 }}
+        initial={animate ? { opacity: 0, y: 12 } : false}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 420, damping: 34, delay: animate ? 0.15 : 0 }}
       >
         <h2 className={ui.paperLabel} id="dyk-title">
           Did you know?
         </h2>
-        <p className={s.nugget}>{r.nugget}</p>
-        <a className={s.sourceLink} href={r.source_url} target="_blank" rel="noopener noreferrer">
+        <p className={s.nugget}>{rv.fact}</p>
+        <a className={s.sourceLink} href={rv.source_url} target="_blank" rel="noopener noreferrer">
           <span>
-            Source: <b>{r.source_name}</b>
-            {r.source_name.includes(String(r.year)) ? '' : ` · ${r.year} data`}
+            Source: <b>{rv.source_name}</b>
           </span>
           <Icon name="external" />
         </a>
       </motion.section>
 
-      <Card aria-labelledby="hist-title">
+      <Card aria-labelledby="crowd-title">
         <div className={s.cardHead}>
-          <h2 className={ui.cardTitle} id="hist-title">
-            Where everyone guessed
+          <h2 className={ui.cardTitle} id="crowd-title">
+            How everyone did
           </h2>
           <span className={s.cardMeta}>
             {total.toLocaleString('en-IE')} {total === 1 ? 'player' : 'players'}
           </span>
         </div>
-        <Histogram bins={r.histogram} guess={r.guess} answer={r.answer} instant={skipped} />
+        <ul className={r.dist}>
+          {rv.crowd.dist.map((n, i) => (
+            <li key={i} className={i === mine ? r.distMine : ''}>
+              <span>
+                {labels[i]}
+                {i === mine ? <span className="visually-hidden"> (you)</span> : null}
+              </span>
+              <span className={r.distTrack} aria-hidden="true">
+                <motion.i
+                  style={{ width: `${n ? Math.max(3, (n / max) * 100) : 0}%`, originX: 0 }}
+                  initial={animate ? { scaleX: 0 } : false}
+                  animate={{ scaleX: 1 }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 28, delay: animate ? 0.2 + i * 0.04 : 0 }}
+                />
+              </span>
+              <span className="num">{total ? `${Math.round((n / total) * 100)}%` : '–'}</span>
+            </li>
+          ))}
+        </ul>
         <p className={s.cardSub}>
-          {crowd}
-          {closer}
+          {total <= 1
+            ? "You're the first to finish this round today."
+            : rv.beat === null
+              ? `${Math.round((rv.crowd.dist[0] / total) * 100)}% got it from the first clue.`
+              : rv.beat === 100
+                ? 'Nobody did better than you.'
+                : `You did better than ${rv.beat}% of players.`}
+          {topWrong ? ` Most common wrong guess: ${topWrong.name}.` : ''}
         </p>
       </Card>
 
-
-      {r.comparisons.length > 0 && (
-        <Card aria-labelledby="cmp-title">
-          <h2 className={ui.cardTitle} id="cmp-title">
-            How {props.editionName} compares
-          </h2>
-          <Compare home={props.editionName} answer={r.answer} comparisons={r.comparisons} instant={skipped} />
-        </Card>
-      )}
+      <Card aria-labelledby="ladder-title">
+        <h2 className={ui.cardTitle} id="ladder-title">
+          The clues
+        </h2>
+        <ol className={r.ladder}>
+          {rv.ladder.map((c, i) => (
+            <li key={i} className={rv.solvedAt === i + 1 ? r.ladderHit : ''}>
+              <span className={r.ladderNo}>{i + 1}</span>
+              <span>{c}</span>
+            </li>
+          ))}
+        </ol>
+      </Card>
 
       <div className={s.stickyNext}>
-        <Button onClick={props.onNext}>{props.review ? 'Back to results' : last ? 'See results' : 'Next question'}</Button>
+        <Button onClick={props.onNext}>{props.review ? 'Back to results' : last ? 'See results' : 'Next round'}</Button>
       </div>
     </div>
   );

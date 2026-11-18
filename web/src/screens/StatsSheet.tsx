@@ -1,4 +1,3 @@
-import { formatBias } from '../../../shared/scoring';
 import type { DayRecord } from '../lib/storage';
 import s from './screens.module.css';
 
@@ -6,8 +5,9 @@ export function StatsBody({ history, today, current, max }: { history: Record<st
   const days = Object.entries(history);
   const played = days.length;
   const avg = played ? Math.round(days.reduce((a, [, r]) => a + r.total, 0) / played) : null;
-  const errs = days.flatMap(([, r]) => r.signedErrors);
-  const bias = errs.length ? errs.reduce((a, b) => a + b, 0) / errs.length : null;
+  const solves = days.flatMap(([, r]) => r.solved ?? []);
+  const firstRate = solves.length ? Math.round((solves.filter((x) => x === 1).length / solves.length) * 100) : null;
+  const missRate = solves.length ? Math.round((solves.filter((x) => x === 0).length / solves.length) * 100) : null;
   const bands = ['0–99', '100–199', '200–299', '300–399', '400–500'];
   const counts = bands.map(() => 0);
   for (const [, r] of days) counts[Math.min(4, Math.floor(r.total / 100))]++;
@@ -39,13 +39,11 @@ export function StatsBody({ history, today, current, max }: { history: Record<st
           </li>
         ))}
       </ul>
-      <h3 className={s.sheetSub}>Your bias</h3>
+      <h3 className={s.sheetSub}>Clues</h3>
       <p className={s.statLabel} style={{ marginTop: 6, fontSize: 15, color: 'var(--text-2)' }}>
-        {bias === null
-          ? 'Play a game to see whether you guess high or low.'
-          : Math.round(bias) === 0
-            ? 'Spot on — no lean either way.'
-            : `${formatBias(bias)} on average. You ${bias > 0 ? 'overestimate' : 'underestimate'}.`}
+        {firstRate === null
+          ? 'Play a game to see how many clues you usually need.'
+          : `You get ${firstRate}% of rounds from the first clue, and miss ${missRate}%.`}
       </p>
     </>
   );

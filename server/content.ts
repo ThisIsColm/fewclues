@@ -1,16 +1,15 @@
 import { readFileSync, statSync } from 'node:fs';
 import { dublinDate } from '../shared/day';
-import type { Question } from '../shared/types';
-import { validateContent } from '../shared/validate';
+import type { Round } from '../shared/types';
+import { ROUNDS_PER_DAY, validateContent } from '../shared/validate';
 
 /**
- * Holds the playable questions in memory. Re-reads the file when it changes
- * (checked at most once every 30 s), so new questions go live without a
- * restart. A bad edit is logged and the previous good content is kept.
+ * Playable rounds in memory. Re-reads the file when it changes (checked at
+ * most every 30 s); a bad edit is logged and the last good content kept.
  */
 export class ContentStore {
-  private byDate = new Map<string, Question[]>();
-  private byId = new Map<string, Question>();
+  private byDate = new Map<string, Round[]>();
+  private byId = new Map<string, Round>();
   private mtimeMs = 0;
   private lastCheck = 0;
 
@@ -20,28 +19,24 @@ export class ContentStore {
     private allowDrafts: boolean,
     private log: (msg: string) => void = console.log,
   ) {
-    const ok = this.reload();
-    if (!ok) throw new Error(`Content in ${path} failed validation; refusing to start`);
+    if (!this.reload()) throw new Error(`Content in ${path} failed validation; refusing to start`);
   }
 
-  /** Build directly from an array (tests). */
-  static fromQuestions(questions: Question[], edition: string, allowDrafts: boolean): ContentStore {
+  static fromRounds(rounds: Round[], edition: string, allowDrafts: boolean): ContentStore {
     const store = Object.create(ContentStore.prototype) as ContentStore;
     Object.assign(store, { byDate: new Map(), byId: new Map(), path: '', edition, allowDrafts, mtimeMs: 0, lastCheck: Infinity, log: () => {} });
-    store.index(questions);
+    store.index(rounds);
     return store;
   }
 
-  private index(questions: Question[]) {
-    const byDate = new Map<string, Question[]>();
-    const byId = new Map<string, Question>();
-    for (const q of questions) {
-      if (q.edition !== this.edition) continue;
-      if (q.status !== 'approved' && !(this.allowDrafts && q.status === 'draft')) continue;
-      byId.set(q.id, q);
-      const list = byDate.get(q.date) ?? [];
-      list.push(q);
-      byDate.set(q.date, list);
+  private index(rounds: Round[]) {
+    const byDate = new Map<string, Round[]>();
+    const byId = new Map<string, Round>();
+    for (const r of rounds) {
+      if (r.edition !== this.edition) continue;
+      if (r.status !== 'approved' && !(this.allowDrafts && r.status === 'draft')) continue;
+      byId.set(r.id, r);
+      byDate.set(r.date, [...(byDate.get(r.date) ?? []), r]);
     }
     for (const list of byDate.values()) list.sort((a, b) => a.order - b.order);
     this.byDate = byDate;
@@ -51,8 +46,7 @@ export class ContentStore {
   reload(): boolean {
     try {
       const mtimeMs = statSync(this.path).mtimeMs;
-      const data = JSON.parse(readFileSync(this.path, 'utf8'));
-      const { errors, warnings, questions } = validateContent(data, {
+      const { errors, warnings, rounds } = validateContent(JSON.parse(readFileSync(this.path, 'utf8')), {
         today: dublinDate(new Date()),
         allowDrafts: this.allowDrafts,
       });
@@ -61,9 +55,9 @@ export class ContentStore {
         for (const e of errors) this.log(`content ERROR: ${e}`);
         return false;
       }
-      this.index(questions);
+      this.index(rounds);
       this.mtimeMs = mtimeMs;
-      this.log(`content: loaded ${this.byId.size} playable questions over ${this.byDate.size} days${this.allowDrafts ? ' (drafts allowed)' : ''}`);
+      this.log(`content: loaded ${this.byId.size} playable rounds over ${this.byDate.size} days${this.allowDrafts ? ' (drafts allowed)' : ''}`);
       return true;
     } catch (e) {
       this.log(`content ERROR: ${(e as Error).message}`);
@@ -78,18 +72,17 @@ export class ContentStore {
     try {
       if (statSync(this.path).mtimeMs !== this.mtimeMs) this.reload();
     } catch {
-      /* keep serving what we have */
+      /* keep serving */
     }
   }
 
-  /** The day's five questions in order, or [] if the day isn't complete. */
-  forDate(date: string): Question[] {
+  forDate(date: string): Round[] {
     this.maybeReload();
     const list = this.byDate.get(date) ?? [];
-    return list.length === 5 ? list : [];
+    return list.length === ROUNDS_PER_DAY ? list : [];
   }
 
-  get(id: string): Question | undefined {
+  get(id: string): Round | undefined {
     this.maybeReload();
     return this.byId.get(id);
   }

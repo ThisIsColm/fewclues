@@ -1,0 +1,266 @@
+[
+  {
+    "id": "ie-c001",
+    "date": "2026-12-01",
+    "order": 1,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "kerry",
+    "category": "Landscape",
+    "clues": [
+      "Home to MacGillycuddy’s Reeks, the highest mountain range in Ireland.",
+      "Carrauntoohil, Ireland’s highest mountain, is here."
+    ],
+    "fact": "Carrauntoohil stands 1,038.6 metres tall, the central peak of MacGillycuddy’s Reeks on the Iveragh Peninsula.",
+    "source_name": "Wikipedia: Carrauntoohil",
+    "source_url": "https://en.wikipedia.org/wiki/Carrauntoohil",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ie-c002",
+    "date": "2026-12-01",
+    "order": 2,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "leitrim",
+    "category": "People",
+    "clues": [
+      "Fewer people live here than in any other county on the island: 35,199 in 2022."
+    ],
+    "fact": "Leitrim had 35,199 people in Census 2022. Next smallest: Longford (46,751) and Carlow (61,968).",
+    "source_name": "Wikipedia: Irish counties by population",
+    "source_url": "https://en.wikipedia.org/wiki/List_of_Irish_counties_by_population",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ie-c003",
+    "date": "2026-12-01",
+    "order": 3,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "antrim",
+    "category": "Landmarks",
+    "clues": [
+      "About 40,000 interlocking basalt columns stand on its north coast.",
+      "The Giant’s Causeway, a UNESCO World Heritage Site since 1986, is here."
+    ],
+    "fact": "The Giant’s Causeway’s roughly 40,000 basalt columns were declared a UNESCO World Heritage Site in 1986.",
+    "source_name": "Wikipedia: Giant’s Causeway",
+    "source_url": "https://en.wikipedia.org/wiki/Giant%27s_Causeway",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ie-c004",
+    "date": "2026-12-01",
+    "order": 4,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "kilkenny",
+    "category": "Sport",
+    "clues": [
+      "Its hurlers have won a record 36 All-Ireland senior titles."
+    ],
+    "fact": "Kilkenny’s 36 All-Ireland Senior Hurling Championships are a national record, making it the most successful county in the history of hurling.",
+    "source_name": "Wikipedia: Kilkenny GAA",
+    "source_url": "https://en.wikipedia.org/wiki/Kilkenny_GAA",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ie-c005",
+    "date": "2026-12-01",
+    "order": 5,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "cork",
+    "category": "Landscape",
+    "clues": [
+      "At 7,508 km², it’s the largest county in Ireland."
+    ],
+    "fact": "Cork covers 7,508 km², well ahead of Galway (6,151 km²) and Mayo (5,588 km²).",
+    "source_name": "Wikipedia: Irish counties by area",
+    "source_url": "https://en.wikipedia.org/wiki/List_of_Irish_counties_by_area",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ie-c006",
+    "date": "2026-12-02",
+    "order": 1,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "meath",
+    "category": "Landmarks",
+    "clues": [
+      "A 5,000-year-old tomb here lights up for about 17 minutes at the winter solstice.",
+      "Newgrange is here."
+    ],
+    "fact": "Newgrange was built around 3100 BC. At the winter solstice the rising sun shines through its roofbox and floods the inner chamber for about 17 minutes.",
+    "source_name": "Wikipedia: Newgrange",
+    "source_url": "https://en.wikipedia.org/wiki/Newgrange",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ie-c007",
+    "date": "2026-12-02",
+    "order": 2,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "louth",
+    "category": "Landscape",
+    "clues": [
+      "The smallest county in Ireland, at just 826 km²."
+    ],
+    "fact": "Louth covers just 826 km². Carlow (897 km²) and Dublin (922 km²) are the next smallest.",
+    "source_name": "Wikipedia: Irish counties by area",
+    "source_url": "https://en.wikipedia.org/wiki/List_of_Irish_counties_by_area",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ie-c008",
+    "date": "2026-12-02",
+    "order": 3,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "fermanagh",
+    "category": "Landmarks",
+    "clues": [
+      "Its caves anchor the world’s first international, cross-border geopark.",
+      "The Marble Arch Caves are here, near Florencecourt."
+    ],
+    "fact": "The Marble Arch Caves Global Geopark joined UNESCO’s geopark network in 2004. In 2008 it stretched across the border into Cavan, becoming the first international geopark in the world.",
+    "source_name": "Wikipedia: Marble Arch Caves",
+    "source_url": "https://en.wikipedia.org/wiki/Marble_Arch_Caves",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ie-c009",
+    "date": "2026-12-02",
+    "order": 4,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "mayo",
+    "category": "People",
+    "clues": [
+      "It has the highest share of unpaid carers in the Republic: 7% of its people."
+    ],
+    "fact": "In Census 2022, 7% of people in Mayo were unpaid carers, the highest rate in the country. Dublin City was lowest, at 5%.",
+    "source_name": "CSO Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/healthdisabilitycaringandvolunteering/",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ie-c010",
+    "date": "2026-12-02",
+    "order": 5,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "clare",
+    "category": "Landmarks",
+    "clues": [
+      "Its sea cliffs run for about 14 km and reach 214 metres high.",
+      "The Cliffs of Moher are here, on the edge of the Burren."
+    ],
+    "fact": "The Cliffs of Moher run for about 14 km and peak at 214 metres, just north of O’Brien’s Tower. They get around 1.5 million visits a year.",
+    "source_name": "Wikipedia: Cliffs of Moher",
+    "source_url": "https://en.wikipedia.org/wiki/Cliffs_of_Moher",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ie-c011",
+    "date": "2026-12-03",
+    "order": 1,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "cavan",
+    "category": "Landscape",
+    "clues": [
+      "The River Shannon traditionally rises here.",
+      "The Shannon Pot is here."
+    ],
+    "fact": "The Shannon Pot, a small pool in the hills, is the traditional source of the River Shannon.",
+    "source_name": "Wikipedia: Shannon Pot",
+    "source_url": "https://en.wikipedia.org/wiki/Shannon_Pot",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ie-c012",
+    "date": "2026-12-03",
+    "order": 2,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "tipperary",
+    "category": "History",
+    "clues": [
+      "Brian Boru was crowned King of Munster here in 977.",
+      "The Rock of Cashel is here."
+    ],
+    "fact": "The Rock of Cashel was the seat of the kings of Munster. Legend says it landed there when St Patrick banished Satan from a cave in the Devil’s Bit mountain.",
+    "source_name": "Wikipedia: Rock of Cashel",
+    "source_url": "https://en.wikipedia.org/wiki/Rock_of_Cashel",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ie-c013",
+    "date": "2026-12-03",
+    "order": 3,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "donegal",
+    "category": "Landscape",
+    "clues": [
+      "The most northerly point of mainland Ireland is here.",
+      "Malin Head is here, on the Inishowen peninsula."
+    ],
+    "fact": "Malin Head is the most northerly point of mainland Ireland. The tiny island of Inishtrahull lies further north still.",
+    "source_name": "Wikipedia: Malin Head",
+    "source_url": "https://en.wikipedia.org/wiki/Malin_Head",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ie-c014",
+    "date": "2026-12-03",
+    "order": 4,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "offaly",
+    "category": "History",
+    "clues": [
+      "St Ciarán founded a monastery on the Shannon here in 544.",
+      "Clonmacnoise is here, south of Athlone."
+    ],
+    "fact": "St Ciarán founded Clonmacnoise in 544, on the River Shannon south of Athlone.",
+    "source_name": "Wikipedia: Clonmacnoise",
+    "source_url": "https://en.wikipedia.org/wiki/Clonmacnoise",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ie-c015",
+    "date": "2026-12-03",
+    "order": 5,
+    "edition": "ie",
+    "set": "ie-counties",
+    "answer": "longford",
+    "category": "People",
+    "clues": [
+      "It had the lowest share of homes with broadband in Census 2022: 72%."
+    ],
+    "fact": "Broadband ranged from 91% of homes in Dún Laoghaire-Rathdown to 72% here. Nationally it was almost 80%.",
+    "source_name": "CSO Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/dwellingcharacteristics/",
+    "difficulty": "hard",
+    "status": "draft"
+  }
+]

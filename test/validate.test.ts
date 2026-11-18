@@ -6,97 +6,59 @@ import { makeDay } from './fixtures';
 const today = '2026-12-01';
 const run = (data: unknown, allowDrafts = false) => validateContent(data, { today, allowDrafts });
 
-describe('validateContent', () => {
+describe('validateContent (rounds)', () => {
   it('accepts a full approved day', () => {
-    const r = run(makeDay(today, [1, 2, 3, 4, 5]));
-    expect(r.errors).toEqual([]);
-    expect(r.questions).toHaveLength(5);
+    expect(run(makeDay(today)).errors).toEqual([]);
   });
-
   it('rejects a non-array', () => {
     expect(run({}).errors[0]).toMatch(/array/);
   });
-
-  it('requires exactly 5 approved questions per date', () => {
-    expect(run(makeDay(today, [1, 2, 3, 4])).errors.join()).toMatch(/has 4 approved questions/);
-    const six = [...makeDay(today, [1, 2, 3, 4, 5]), { ...makeDay(today, [6])[0], id: 'extra', order: 5 }];
-    expect(run(six).errors.join()).toMatch(/has 6 approved/);
+  it('requires exactly 5 rounds per date with orders 1–5', () => {
+    expect(run(makeDay(today).slice(0, 4)).errors.join()).toMatch(/has 4 approved rounds/);
+    const d = makeDay(today);
+    d[4].order = 4;
+    expect(run(d).errors.join()).toMatch(/orders must be 1–5/);
   });
-
-  it('ignores drafts unless drafts are allowed', () => {
-    const day = makeDay(today, [1, 2, 3, 4, 5]);
-    day[4].status = 'draft';
-    expect(run(day).errors.join()).toMatch(/has 4 approved/);
-    expect(run(makeDay(today, [1, 2, 3, 4, 5], 'draft')).errors).toEqual([]);
-    expect(run(day, true).errors).toEqual([]);
+  it('requires the answer to be a real place and unique within the day', () => {
+    const d = makeDay(today);
+    d[0].answer = 'atlantis';
+    expect(run(d).errors.join()).toMatch(/not a place/);
+    expect(run(makeDay(today, ['kerry', 'kerry', 'mayo', 'meath', 'cork'])).errors.join()).toMatch(/same answer appears twice/);
   });
-
-  it('requires orders 1–5 with no repeats', () => {
-    const day = makeDay(today, [1, 2, 3, 4, 5]);
-    day[4].order = 4;
-    expect(run(day).errors.join()).toMatch(/orders must be 1–5/);
+  it('refuses a clue that names the answer', () => {
+    const d = makeDay(today);
+    d[0].clues = ['The Kingdom of Kerry, famously.'];
+    expect(run(d).errors.join()).toMatch(/clue 1 names the answer/);
+    d[0].clues = ['Kerrygold is not a clue word match.'];
+    expect(run(d).errors).toEqual([]); // whole words only
   });
-
-  it('flags duplicate ids', () => {
-    const day = makeDay(today, [1, 2, 3, 4, 5]);
-    day[1].id = day[0].id;
-    expect(run(day).errors.join()).toMatch(/duplicate id/);
+  it('checks clue count, fact, source and enums', () => {
+    const d = makeDay(today) as any[];
+    d[0].clues = [];
+    d[1].clues = ['a', 'b', 'c'];
+    d[2].source_url = 'javascript:alert(1)';
+    d[3].fact = '';
+    d[4].status = 'live';
+    const e = run(d).errors.join('\n');
+    expect(e).toMatch(/clues must be 1–2/);
+    expect(e).toMatch(/source_url/);
+    expect(e).toMatch(/fact must be/);
+    expect(e).toMatch(/status must be/);
   });
-
-  it('checks answers and comparison values are 0–100 with ≤1 decimal', () => {
-    for (const bad of [-1, 100.1, 12.34, NaN, '50']) {
-      const day = makeDay(today, [1, 2, 3, 4, 5]);
-      (day[0] as any).answer = bad;
-      expect(run(day).errors.join()).toMatch(/answer must be/);
-    }
-    const ok = makeDay(today, [0, 100, 12.5, 4, 5]);
-    expect(run(ok).errors).toEqual([]);
-    const day = makeDay(today, [1, 2, 3, 4, 5]);
-    day[2].comparisons = [{ label: 'UK', value: 101 }];
-    expect(run(day).errors.join()).toMatch(/comparisons\[0\]\.value/);
+  it('flags duplicate ids and ignores drafts unless allowed', () => {
+    const d = makeDay(today);
+    d[1].id = d[0].id;
+    expect(run(d).errors.join()).toMatch(/duplicate id/);
+    expect(run(makeDay(today, undefined, 'draft')).errors).toEqual([]);
+    expect(run(makeDay(today, undefined, 'draft')).warnings.join()).toMatch(/only draft rounds/);
   });
-
-  it('limits comparisons to 5', () => {
-    const day = makeDay(today, [1, 2, 3, 4, 5]);
-    day[0].comparisons = Array.from({ length: 6 }, (_, i) => ({ label: `C${i}`, value: i }));
-    expect(run(day).errors.join()).toMatch(/at most 5/);
-  });
-
-  it('checks required fields, enums and URLs', () => {
-    const day = makeDay(today, [1, 2, 3, 4, 5]) as any[];
-    day[0].question = '';
-    day[1].difficulty = 'impossible';
-    day[2].source_url = 'javascript:alert(1)';
-    day[3].date = '2026-02-30';
-    day[4].status = 'live';
-    const errs = run(day).errors.join('\n');
-    expect(errs).toMatch(/question must be/);
-    expect(errs).toMatch(/difficulty must be/);
-    expect(errs).toMatch(/source_url must be/);
-    expect(errs).toMatch(/date must be/);
-    expect(errs).toMatch(/status must be/);
-  });
-
-  it('refuses approved questions that still say PLACEHOLDER', () => {
-    const day = makeDay(today, [1, 2, 3, 4, 5]);
-    day[0].nugget = 'PLACEHOLDER text';
-    expect(run(day).errors.join()).toMatch(/PLACEHOLDER/);
-  });
-
   it('warns about empty dates in the next 14 days', () => {
-    const r = run(makeDay(today, [1, 2, 3, 4, 5]));
-    expect(r.errors).toEqual([]);
-    expect(r.warnings.join()).toMatch(/13 of the next 14 days/);
-    expect(r.warnings.join()).toContain('2026-12-14');
-    expect(r.warnings.join()).not.toContain('2026-12-15');
+    expect(run(makeDay(today)).warnings.join()).toMatch(/13 of the next 14 days/);
   });
-
-  it('the shipped content is valid, sourced, and playable with drafts allowed', () => {
-    const seed = JSON.parse(readFileSync(new URL('../content/questions.json', import.meta.url), 'utf8'));
-    expect(seed).toHaveLength(15);
-    expect(seed.some((q: any) => JSON.stringify(q).includes('PLACEHOLDER'))).toBe(false);
-    expect(seed.every((q: any) => /^https:\/\//.test(q.source_url))).toBe(true);
-    expect(run(seed).errors).toEqual([]);
-    expect(run(seed, true).errors).toEqual([]);
+  it('the shipped rounds are valid, sourced, with 15 distinct answers', () => {
+    const rounds = JSON.parse(readFileSync(new URL('../content/rounds.json', import.meta.url), 'utf8'));
+    expect(rounds).toHaveLength(15);
+    expect(new Set(rounds.map((r: any) => r.answer)).size).toBe(15);
+    expect(run(rounds, true).errors).toEqual([]);
   });
 });

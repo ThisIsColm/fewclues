@@ -1,6 +1,8 @@
 # Percentle
 
-A daily percentage-guessing game. Five questions a day: "What % of people in Ireland…?". Pour your guess into the glass, see how close you got, how everyone else guessed, and how you did against friends in a league.
+A daily place-guessing game. Five rounds a day: each starts with one clue about an Irish county, and every wrong guess unlocks an easier clue (up to four). The fewer clues you need, the more points: 100, 60, 30 or 10. Then see the fact behind it, how everyone else did, and how you did against friends in a league.
+
+> The earlier percentage game is in git history (`main`), and the Read the Room prototype is parked on the `read-the-room` branch.
 
 - **Frontend:** React 19 + Vite + TypeScript, CSS modules. Uses `motion`, `@number-flow/react`, `web-haptics`, and `canvas-confetti` (lazy-loaded). Fonts (Bricolage Grotesque, Inter) are self-hosted. There are no runtime CDNs and no trackers.
 - **Backend:** one Node service (Hono + better-sqlite3) that also serves the built frontend.

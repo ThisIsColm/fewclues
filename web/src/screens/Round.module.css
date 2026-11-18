@@ -1,0 +1,213 @@
+.screen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.worth {
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: var(--tangerine-deep);
+  color: var(--tangerine);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.title {
+  margin: 6px 0 14px;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.clues {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.clue {
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px 16px;
+  border-radius: var(--r-card);
+  background: var(--surface);
+  color: var(--text-2);
+}
+
+.latest {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.clueNo {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.latest .clueNo {
+  color: var(--paper-label);
+}
+
+.clueText {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.latest .clueText {
+  font-weight: 700;
+  font-size: 21px;
+}
+
+.wrong {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.wrong li {
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 12px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1.5px var(--outline);
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: line-through;
+}
+
+.wrong li svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.6;
+  color: var(--tangerine);
+}
+
+/* Input dock sits at the bottom, suggestions open upwards above the keyboard. */
+.dock {
+  position: sticky;
+  bottom: 0;
+  margin-top: auto;
+  padding: 16px 0 calc(12px + env(safe-area-inset-bottom));
+  background: var(--bg);
+}
+
+.options {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 6px;
+  border-radius: var(--r-card);
+  background: var(--raised);
+  display: grid;
+  gap: 2px;
+}
+
+.option {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  border-radius: 14px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.option span {
+  font-family: var(--body);
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.optionActive {
+  background: var(--line);
+}
+
+.optionTried {
+  opacity: 0.45;
+  text-decoration: line-through;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+}
+
+.input {
+  height: 56px;
+  min-width: 0;
+  border-radius: var(--r-btn);
+  border: 1.5px solid var(--outline);
+  background: var(--surface);
+  color: var(--text);
+  padding: 0 16px;
+  font: 700 19px var(--display);
+  letter-spacing: -0.01em;
+}
+
+.input::placeholder {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--cyan);
+}
+
+.go {
+  width: auto;
+  padding: 0 22px;
+}
+
+@media (max-height: 700px) {
+  .title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .clue {
+    padding: 10px 14px 12px;
+  }
+  .latest .clueText {
+    font-size: 19px;
+  }
+}

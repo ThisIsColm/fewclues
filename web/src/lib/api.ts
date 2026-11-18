@@ -28,11 +28,8 @@ const post = (body: unknown): RequestInit => ({ method: 'POST', body: JSON.strin
 
 export const getToday = (playerId: string) => request<TodayResponse>('/api/today', who(playerId));
 
-export const postGuess = (playerId: string, questionId: string, guess: number) =>
-  request<GuessResponse & { alreadyGuessed: boolean }>(
-    '/api/guess',
-    post({ player_id: playerId, question_id: questionId, guess }),
-  );
+export const postGuess = (playerId: string, roundId: string, place: string) =>
+  request<GuessResponse>('/api/guess', post({ player_id: playerId, round_id: roundId, place }));
 
 export const getLeagues = (playerId: string) => request<{ leagues: LeagueSummary[] }>('/api/leagues', who(playerId));
 
