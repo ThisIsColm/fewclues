@@ -93,3 +93,11 @@ export function formatBias(avgSignedError: number): string {
   if (n === 0) return 'Spot on';
   return n > 0 ? `+${n} too high` : `\u2212${-n} too low`;
 }
+
+/** "18 too high" / "4.5 too low" / "Spot on" — which way the guess missed. */
+export function missLabel(guess: number, answer: number): { direction: 'high' | 'low' | 'exact'; text: string } {
+  if (isBullseye(guess, answer)) return { direction: 'exact', text: 'Spot on' };
+  const off = offBy(guess, answer);
+  const n = Number.isInteger(off) ? String(off) : off.toFixed(1);
+  return guess > answer ? { direction: 'high', text: `${n} too high` } : { direction: 'low', text: `${n} too low` };
+}

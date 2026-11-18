@@ -1,20 +1,21 @@
 import { Num } from '../components/Num';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useEffect, useState } from 'react';
-import { binLabel, modeBin, verdictFor } from '../../../shared/scoring';
+import { binLabel, missLabel, modeBin, verdictFor } from '../../../shared/scoring';
 import type { Block, PublicQuestion, Reveal as RevealData } from '../../../shared/types';
 import { Compare, Histogram } from '../components/Charts';
 import { Progress } from '../components/Progress';
 import { RevealGlass } from '../components/RevealGlass';
 import { TopBar } from '../components/TopBar';
-import { Button, Card, ui } from '../components/ui';
+import { Button, Card, Icon, ui } from '../components/ui';
+import { closeness } from '../lib/closeness';
 import { celebrate } from '../lib/confetti';
 import { fmt } from '../lib/format';
 import { haptic } from '../lib/haptics';
 import s from './screens.module.css';
 
-const BEAT_MS = 400; // pause before the answer drops in
-const LAND_MS = 380; // spring time for the drop
+const BEAT_MS = 250; // pause before the answer drops in
+const LAND_MS = 260; // the verdict lands as the line settles (~0.5 s in)
 
 export function Reveal(props: {
   q: PublicQuestion;
@@ -34,6 +35,9 @@ export function Reveal(props: {
   const [phase, setPhase] = useState(reduced || props.review ? 2 : 0);
   const [skipped, setSkipped] = useState(reduced || props.review);
   const verdict = verdictFor(r.guess, r.answer);
+  const miss = missLabel(r.guess, r.answer);
+  const tier = closeness(r.block); // c1 ≤3 · c2 ≤10 · c3 ≤20 · c4 >20
+  const wayOff = tier === 'c4';
   const last = index === 4;
 
   useEffect(() => {
@@ -52,7 +56,8 @@ export function Reveal(props: {
     if (r.bullseye) {
       haptic('success', 0);
       void celebrate();
-    } else haptic(verdict === 'Way off' ? 'light' : 'medium', 0);
+    } else if (wayOff) haptic('error', 0);
+    else haptic(tier === 'c1' ? 'success' : 'medium', 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase]);
 
@@ -88,53 +93,85 @@ export function Reveal(props: {
         {q.question}
       </p>
 
-      <section className={s.revealHero} aria-label="Your result">
-        <div className={s.revealGlassCol}>
+      {/* The result card takes the closeness colour the moment the verdict lands. */}
+      <motion.section
+        className={`${s.revealHero} ${showResult ? s[`tier_${tier}`] : ''}`}
+        aria-label="Your result"
+        animate={
+          showResult && !skipped && !reduced
+            ? r.bullseye
+              ? { scale: [1, 1.05, 0.99, 1] }
+              : tier === 'c1'
+                ? { scale: [1, 1.03, 1] }
+                : { scale: 1 }
+            : { scale: 1 }
+        }
+        transition={{ duration: 0.38, ease: 'easeOut' }}
+      >
+        <motion.div
+          className={s.revealGlassCol}
+          animate={showResult && wayOff && !skipped && !reduced ? { x: [0, -12, 11, -9, 7, -4, 2, 0] } : { x: 0 }}
+          transition={{ duration: 0.42, ease: 'easeOut' }}
+        >
           <RevealGlass guess={r.guess} answer={r.answer} phase={phase} skipped={skipped} />
-        </div>
+        </motion.div>
         <div className={s.revealStats}>
-          <div className={s.verdictSlot} aria-hidden="true">
-            <AnimatePresence>
-              {showResult && (
-                <motion.span
-                  className={`${s.verdict} ${r.bullseye ? s.verdictBullseye : ''}`}
-                  initial={skipped ? false : { scale: 0.6, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ type: 'spring', stiffness: 500, damping: 22 }}
-                >
-                  {r.bullseye ? 'Bullseye' : verdict}
-                </motion.span>
-              )}
-            </AnimatePresence>
-          </div>
-          <span className={s.offLabel}>Off by</span>
           <h1
-            className={`${s.offNum} ${showResult ? '' : s.pendingNum}`}
+            className={s.verdictBig}
             tabIndex={-1}
             data-autofocus
-            aria-label={`Off by ${r.offBy}. ${verdict}. ${r.points} points.`}
+            data-reveal
+            aria-label={`${verdict}. ${miss.text}. ${r.points} points. You said ${r.guess}%, the answer is ${fmt(r.answer)}%.`}
           >
-            <Num value={showResult ? r.offBy : 0} format={{ maximumFractionDigits: 1 }} />
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={showResult ? 'v' : 'p'}
+                initial={skipped ? false : { y: 14, opacity: 0, scale: 0.92 }}
+                animate={{ y: 0, opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, transition: { duration: 0.08 } }}
+                transition={{ type: 'spring', stiffness: 600, damping: 26 }}
+                className={showResult ? '' : s.pendingText}
+              >
+                {showResult ? verdict : 'And the answer is…'}
+              </motion.span>
+            </AnimatePresence>
           </h1>
+          <p className={`${s.missLine} ${showResult ? '' : s.pendingNum}`} aria-hidden="true">
+            {miss.direction !== 'exact' && (
+              <span className={s.arrow}>
+                <Icon name={miss.direction === 'high' ? 'up' : 'down'} />
+              </span>
+            )}
+            {miss.direction === 'exact' ? (
+              <span className={s.missNum}>Spot on</span>
+            ) : (
+              <>
+                <span className={s.missNum}>
+                  <Num value={showResult ? r.offBy : 0} format={{ maximumFractionDigits: 1 }} />
+                </span>
+                <span className={s.missWord}>too {miss.direction}</span>
+              </>
+            )}
+          </p>
           <span className={s.pts} aria-hidden="true">
             +<Num value={showResult ? r.points : 0} /> pts
           </span>
-          <dl className={s.legendList}>
+          <dl className={s.legendList} aria-hidden="true">
             <div>
               <dt>
-                <i className={s.swGuess} aria-hidden="true" /> You
+                <i className={s.swGuess} /> You
               </dt>
               <dd className="num">{r.guess}%</dd>
             </div>
             <div>
               <dt>
-                <i className={s.swAnswer} aria-hidden="true" /> Answer
+                <i className={s.swAnswer} /> Answer
               </dt>
-              <dd className="num">{showResult || phase >= 1 ? `${fmt(r.answer)}%` : '··'}</dd>
+              <dd className="num">{phase >= 1 ? `${fmt(r.answer)}%` : '··'}</dd>
             </div>
           </dl>
         </div>
-      </section>
+      </motion.section>
 
       <Card aria-labelledby="hist-title">
         <div className={s.cardHead}>

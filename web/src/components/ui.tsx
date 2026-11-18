@@ -24,6 +24,8 @@ const ICONS = {
   chevron: 'M9 18l6-6-6-6',
   league: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
   plus: 'M12 5v14M5 12h14',
+  up: 'M12 19V5M5 12l7-7 7 7',
+  down: 'M12 5v14M19 12l-7 7-7-7',
 } as const;
 export type IconName = keyof typeof ICONS;
 

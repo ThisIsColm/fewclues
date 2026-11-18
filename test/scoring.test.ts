@@ -86,3 +86,15 @@ describe('bias label', () => {
     expect(formatBias(0.3)).toBe('Spot on');
   });
 });
+
+import { missLabel } from '../shared/scoring';
+
+describe('miss label', () => {
+  it('says which way and how far', () => {
+    expect(missLabel(30, 12)).toEqual({ direction: 'high', text: '18 too high' });
+    expect(missLabel(3, 35)).toEqual({ direction: 'low', text: '32 too low' });
+    expect(missLabel(10, 12.5)).toEqual({ direction: 'low', text: '2.5 too low' });
+    expect(missLabel(12, 12)).toEqual({ direction: 'exact', text: 'Spot on' });
+    expect(missLabel(9, 9.4)).toEqual({ direction: 'exact', text: 'Spot on' });
+  });
+});

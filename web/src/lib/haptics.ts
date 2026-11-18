@@ -18,7 +18,7 @@ function get(): WebHaptics | null {
   return instance;
 }
 
-export type Haptic = 'light' | 'medium' | 'heavy' | 'success';
+export type Haptic = 'light' | 'medium' | 'heavy' | 'success' | 'error';
 
 export function haptic(kind: Haptic, minGapMs = 30) {
   // Browsers refuse vibration before the first tap; don't even try (it logs an intervention).

@@ -495,6 +495,7 @@
 
 .revealHero {
   display: grid;
+  transition: background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
   grid-template-columns: 92px 1fr;
   gap: 18px;
   padding: 14px 18px 14px 14px;
@@ -568,4 +569,113 @@
   height: 4px;
   border-radius: 2px;
   background: var(--cyan);
+}
+
+/* ---------------------------------------------------------------- result tiers (closeness scale) */
+
+.verdictBig {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 34px;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  min-height: 70px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.pendingText {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.missLine {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 4px;
+  transition: opacity 160ms ease;
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgb(244 241 234 / 0.12);
+}
+
+.arrow svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.6;
+}
+
+.missNum {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.missWord {
+  font-weight: 600;
+  font-size: 17px;
+}
+
+/* ≤3 and bullseye: bright cyan card, dark ink */
+.tier_c1 {
+  background: var(--c1);
+  color: var(--ink);
+}
+
+/* ≤10: dark cyan card, dark ink (5.0:1) */
+.tier_c2 {
+  background: var(--c2);
+  color: var(--ink);
+}
+
+/* ≤20: grey card */
+.tier_c3 {
+  background: #3a3f49;
+}
+
+/* >20: stays dark, gets a hard outline */
+.tier_c4 {
+  box-shadow: inset 0 0 0 2px var(--c4-line);
+}
+
+.tier_c1 .pts,
+.tier_c2 .pts,
+.tier_c1 .legendList dt,
+.tier_c2 .legendList dt {
+  color: var(--ink);
+}
+
+.tier_c1 .legendList,
+.tier_c2 .legendList {
+  border-top-color: rgb(15 17 21 / 0.25);
+}
+
+.tier_c1 .arrow,
+.tier_c2 .arrow {
+  background: rgb(15 17 21 / 0.14);
+}
+
+.tier_c1 .swAnswer,
+.tier_c2 .swAnswer {
+  background: var(--ink);
+}
+
+.tier_c1 .swGuess,
+.tier_c2 .swGuess {
+  box-shadow: 0 0 0 1.5px var(--ink);
+}
+
+.tier_c4 .verdictBig {
+  color: var(--tangerine);
 }
