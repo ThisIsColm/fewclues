@@ -2,7 +2,7 @@ import { Num } from '../components/Num';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { binLabel, missLabel, modeBin, verdictFor } from '../../../shared/scoring';
-import type { Block, PublicQuestion, Reveal as RevealData } from '../../../shared/types';
+import type { Block, PublicQuestion, Reveal as RevealData, RoomQuestion } from '../../../shared/types';
 import { Compare, Histogram } from '../components/Charts';
 import { Progress } from '../components/Progress';
 import { RevealGlass } from '../components/RevealGlass';
@@ -25,6 +25,8 @@ export function Reveal(props: {
   puzzle: number;
   edition: string;
   editionName: string;
+  room?: RoomQuestion;
+  roomRevealAt?: string;
   streak: number;
   review: boolean;
   onNext: () => void;
@@ -91,6 +93,7 @@ export function Reveal(props: {
       <p className={s.qSmall}>
         <span className="visually-hidden">Question {index + 1}: </span>
         {q.question}
+        {q.options && r.vote !== undefined && <span className={s.youSaid}>You said {q.options[r.vote]}</span>}
       </p>
 
       {/* The result card takes the closeness colour the moment the verdict lands. */}
@@ -165,7 +168,7 @@ export function Reveal(props: {
             </div>
             <div>
               <dt>
-                <i className={s.swAnswer} /> Answer
+                <i className={s.swAnswer} /> {q.options ? 'Poll' : 'Answer'}
               </dt>
               <dd className="num">{phase >= 1 ? `${fmt(r.answer)}%` : '··'}</dd>
             </div>
@@ -181,9 +184,19 @@ export function Reveal(props: {
         transition={{ type: 'spring', stiffness: 420, damping: 34, delay: skipped ? 0 : 0.12 }}
       >
         <h2 className={ui.paperLabel} id="dyk-title">
-          Did you know?
+          {q.options ? 'The poll' : 'Did you know?'}
         </h2>
+        {q.options && (
+          <p className={s.pollHeadline}>
+            <b>{fmt(r.answer)}%</b> of {q.population} said {q.options[0]}.
+          </p>
+        )}
         <p className={s.nugget}>{r.nugget}</p>
+        {r.pollster && (
+          <p className={s.pollMeta}>
+            {[r.pollster, r.fieldwork, r.sample ? `${r.sample.toLocaleString('en-IE')} asked` : null].filter(Boolean).join(' · ')}
+          </p>
+        )}
         <a className={s.sourceLink} href={r.source_url} target="_blank" rel="noopener noreferrer">
           <span>
             Source: <b>{r.source_name}</b>
@@ -192,6 +205,9 @@ export function Reveal(props: {
           <Icon name="external" />
         </a>
       </motion.section>
+
+      {q.options && <SplitCard q={q} r={r} />}
+      {q.options && <RoomTeaser q={q} room={props.room} revealAt={props.roomRevealAt} />}
 
       <Card aria-labelledby="hist-title">
         <div className={s.cardHead}>
@@ -213,9 +229,9 @@ export function Reveal(props: {
       {r.comparisons.length > 0 && (
         <Card aria-labelledby="cmp-title">
           <h2 className={ui.cardTitle} id="cmp-title">
-            How {props.editionName} compares
+            {r.comparisons_title ?? `How ${props.editionName} compares`}
           </h2>
-          <Compare home={props.editionName} answer={r.answer} comparisons={r.comparisons} instant={skipped} />
+          <Compare home={q.options ? 'Everyone' : props.editionName} answer={r.answer} comparisons={r.comparisons} instant={skipped} />
         </Card>
       )}
 
@@ -223,5 +239,76 @@ export function Reveal(props: {
         <Button onClick={props.onNext}>{props.review ? 'Back to results' : last ? 'See results' : 'Next question'}</Button>
       </div>
     </div>
+  );
+}
+
+/** False consensus: how each side of the vote predicted, against the real figure. */
+function SplitCard({ q, r }: { q: PublicQuestion; r: RevealData }) {
+  const opts = q.options!;
+  if (!r.split)
+    return (
+      <Card aria-labelledby="split-title">
+        <h2 className={ui.cardTitle} id="split-title">
+          How each side guessed
+        </h2>
+        <p className={s.cardSub}>Not enough votes on each side yet. Check back later today.</p>
+      </Card>
+    );
+  const [a, b] = r.split.avgByVote;
+  const mine = r.vote;
+  const row = (i: 0 | 1, avg: number) => (
+    <li className={mine === i ? s.splitMine : ''}>
+      <span className={s.splitLabel}>
+        Said {opts[i]}
+        {mine === i ? ' (you)' : ''}
+      </span>
+      <span className={s.splitTrack} aria-hidden="true">
+        <i style={{ width: `${avg}%` }} />
+        <b style={{ left: `${r.answer}%` }} />
+      </span>
+      <span className={`${s.splitVal} num`}>{avg}%</span>
+    </li>
+  );
+  const gap = Math.abs(a - b);
+  return (
+    <Card aria-labelledby="split-title">
+      <h2 className={ui.cardTitle} id="split-title">
+        How each side guessed
+      </h2>
+      <ul className={s.split}>
+        {row(0, a)}
+        {row(1, b)}
+      </ul>
+      <p className={s.cardSub}>
+        {gap >= 8
+          ? `People assume others think like them: ${opts[0]} voters guessed ${gap} points higher than ${opts[1]} voters. The real figure was ${fmt(r.answer)}%.`
+          : `Both sides read it about the same. The real figure was ${fmt(r.answer)}%.`}
+      </p>
+    </Card>
+  );
+}
+
+/** "How this room voted": hidden until 9pm, then the players' own split next to the poll. */
+function RoomTeaser({ q, room, revealAt }: { q: PublicQuestion; room?: RoomQuestion; revealAt?: string }) {
+  if (!room) return null;
+  const at = revealAt ? new Date(revealAt).toLocaleTimeString('en-IE', { hour: 'numeric', minute: '2-digit', timeZone: 'Europe/Dublin' }) : '9pm';
+  return (
+    <Card aria-labelledby="room-title">
+      <div className={s.cardHead}>
+        <h2 className={ui.cardTitle} id="room-title">
+          How the room voted
+        </h2>
+        <span className={s.cardMeta}>
+          {room.votes.toLocaleString('en-IE')} {room.votes === 1 ? 'vote' : 'votes'}
+        </span>
+      </div>
+      {room.pct === null ? (
+        <p className={s.cardSub}>Revealed tonight at {at}. Come back to see if Percentle players think like the country.</p>
+      ) : (
+        <p className={s.cardSub}>
+          <b className={s.roomPct}>{room.pct}%</b> of players said {q.options![0]}.
+        </p>
+      )}
+    </Card>
   );
 }

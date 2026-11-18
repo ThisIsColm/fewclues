@@ -116,6 +116,22 @@ export function Leagues(props: {
           {standings ? <Standings data={standings} /> : <div className={s.loading} aria-busy="true" />}
 
           {standings?.headToHead && period === 'day' && <HeadToHead h={standings.headToHead} />}
+          {standings?.room && standings.room.length > 0 && (
+            <Card aria-labelledby="lroom-title">
+              <h2 className={ui.cardTitle} id="lroom-title">
+                How {league.name} voted
+              </h2>
+              <ul className={s.lroom}>
+                {standings.room.map((x) => (
+                  <li key={x.question_id}>
+                    <span>Question {x.order}</span>
+                    <span className="num">{x.pct === null ? '–' : `${x.pct}% ${x.label}`}</span>
+                    <span className={s.pending}>{x.votes} {x.votes === 1 ? 'vote' : 'votes'}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          )}
           {standings && period === 'day' && !standings.viewerFinished && (
             <p className={s.note}>Finish today's puzzle to see how you stack up, question by question.</p>
           )}

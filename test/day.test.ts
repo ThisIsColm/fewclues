@@ -110,3 +110,17 @@ describe('weekStart (leagues reset on Monday)', () => {
     expect(weekStart(dublinDate(new Date('2026-03-29T23:00:00Z')))).toBe('2026-03-30');
   });
 });
+
+import { dublinTime, roomRevealAt } from '../shared/day';
+
+describe('room reveal at 9pm Dublin', () => {
+  it('is 21:00 UTC in winter and 20:00 UTC in summer', () => {
+    expect(roomRevealAt('2026-12-01').toISOString()).toBe('2026-12-01T21:00:00.000Z');
+    expect(roomRevealAt('2026-07-01').toISOString()).toBe('2026-07-01T20:00:00.000Z');
+  });
+  it('is right on both DST changeover days', () => {
+    expect(roomRevealAt('2026-03-29').toISOString()).toBe('2026-03-29T20:00:00.000Z'); // 23-hour day
+    expect(roomRevealAt('2026-10-25').toISOString()).toBe('2026-10-25T21:00:00.000Z'); // 25-hour day
+    expect(dublinTime('2026-10-25', 0).toISOString()).toBe('2026-10-24T23:00:00.000Z');
+  });
+});

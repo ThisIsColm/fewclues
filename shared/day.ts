@@ -75,6 +75,20 @@ export function startOfDublinDay(date: string): Date {
   return new Date(instant);
 }
 
+/** The UTC instant of a given local hour (0–23) on a Dublin calendar date. DST-safe. */
+export function dublinTime(date: string, hour: number): Date {
+  const guess = dateToUtcMidnight(date) + hour * 3_600_000;
+  let instant = guess - dublinOffsetMs(guess);
+  instant = guess - dublinOffsetMs(instant);
+  return new Date(instant);
+}
+
+/** When the room's votes are revealed: 9pm Dublin time on the puzzle date. */
+export const ROOM_REVEAL_HOUR = 21;
+export function roomRevealAt(date: string): Date {
+  return dublinTime(date, ROOM_REVEAL_HOUR);
+}
+
 /** The instant the next puzzle unlocks. */
 export function nextRollover(now: Date): Date {
   return startOfDublinDay(addDays(dublinDate(now), 1));

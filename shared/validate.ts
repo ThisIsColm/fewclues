@@ -23,6 +23,7 @@ const STATUSES = ['draft', 'approved'];
 const KNOWN_KEYS = new Set([
   'id', 'date', 'order', 'edition', 'question', 'answer', 'year', 'source_name',
   'source_url', 'nugget', 'comparisons', 'difficulty', 'status', 'category',
+  'options', 'population', 'pollster', 'fieldwork', 'sample', 'comparisons_title',
 ]);
 
 const isObj = (v: unknown): v is Record<string, unknown> =>
@@ -67,6 +68,15 @@ function checkQuestion(q: unknown, where: string, errors: string[], warnings: st
 
   if (q.category !== undefined && (!nonEmpty(q.category) || q.category.length > 24))
     err('category, if present, must be a non-empty string of at most 24 characters');
+  if (q.options !== undefined) {
+    const o = q.options;
+    if (!Array.isArray(o) || o.length !== 2 || !o.every((x) => nonEmpty(x) && x.length <= 24) || o[0] === o[1])
+      err('options, if present, must be two different non-empty strings of at most 24 characters');
+    if (!nonEmpty(q.population)) err('population is required when options are set (e.g. "adults in Ireland")');
+  }
+  for (const k of ['population', 'pollster', 'fieldwork', 'comparisons_title'] as const)
+    if (q[k] !== undefined && !nonEmpty(q[k])) err(`${k}, if present, must be a non-empty string`);
+  if (q.sample !== undefined && (!Number.isInteger(q.sample) || (q.sample as number) < 1)) err('sample must be a positive integer');
   if (q.comparisons !== undefined) {
     if (!Array.isArray(q.comparisons)) err('comparisons must be an array');
     else {

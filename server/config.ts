@@ -16,6 +16,12 @@ export interface Config {
   percentileMinPlayers: number;
   rateLimitPerMinute: number;
   leagueCreatesPerHour: number;
+  /** Minimum votes before a room's split is shown at 9pm. */
+  roomMinVotes: number;
+  /** Minimum voters on each side before the false-consensus split is shown. */
+  splitMinVotes: number;
+  /** 'auto' (9pm), or force the room reveal 'open' / 'closed' for testing. */
+  roomReveal: 'auto' | 'open' | 'closed';
   leagueJoinsPerHour: number;
   /** After midnight, still accept guesses on yesterday's puzzle for this long. */
   rolloverGraceMs: number;
@@ -47,6 +53,9 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     percentileMinPlayers: int(env.PERCENTILE_MIN_PLAYERS, 20),
     rateLimitPerMinute: int(env.RATE_LIMIT_PER_MINUTE, 60),
     leagueCreatesPerHour: int(env.LEAGUE_CREATES_PER_HOUR, 10),
+    roomMinVotes: int(env.ROOM_MIN_VOTES, 50),
+    splitMinVotes: int(env.SPLIT_MIN_VOTES, 10),
+    roomReveal: env.ROOM_REVEAL === 'open' || env.ROOM_REVEAL === 'closed' ? env.ROOM_REVEAL : 'auto',
     leagueJoinsPerHour: int(env.LEAGUE_JOINS_PER_HOUR, 30),
     rolloverGraceMs: int(env.ROLLOVER_GRACE_MINUTES, 60) * 60_000,
   };

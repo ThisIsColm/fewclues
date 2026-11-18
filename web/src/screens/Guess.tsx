@@ -28,9 +28,12 @@ export function Guess(props: {
   const dragging = useMotionValue(0);
   const [frozen, setFrozen] = useState(false);
   const [slosh, setSlosh] = useState(0);
+  const poll = !!q.options;
+  const [vote, setVote] = useState<0 | 1 | null>(null);
+  const needVote = poll && vote === null;
 
   async function lock() {
-    if (frozen) return;
+    if (frozen || needVote) return;
     const guess = Math.round(value.get());
     value.set(guess);
     setFrozen(true);
@@ -38,7 +41,7 @@ export function Guess(props: {
     haptic('heavy', 0);
     const started = performance.now();
     try {
-      const res = await postGuess(props.playerId, q.id, guess);
+      const res = await postGuess(props.playerId, q.id, guess, poll ? (vote as 0 | 1) : undefined);
       const wait = MIN_LOCK_MS - (performance.now() - started);
       if (wait > 0) await new Promise((r) => setTimeout(r, wait));
       props.onLocked(res);
@@ -61,9 +64,36 @@ export function Guess(props: {
       <h1 className={s.qText} tabIndex={-1} data-autofocus>
         {q.question}
       </h1>
-      <Glass value={value} frozen={frozen} sloshKey={slosh} dragging={dragging} />
-      <p className={s.hint}>Drag up or down anywhere on the glass</p>
-      <Button onClick={lock} disabled={frozen} aria-live="off">
+      {poll && (
+        <div className={s.voteRow} role="radiogroup" aria-label="Your answer">
+          {q.options!.map((opt, i) => (
+            <button
+              key={opt}
+              type="button"
+              role="radio"
+              aria-checked={vote === i}
+              className={`${s.voteBtn} ${vote === i ? s.voteOn : ''}`}
+              disabled={frozen}
+              onClick={() => {
+                setVote(i as 0 | 1);
+                haptic('light', 0);
+              }}
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+      )}
+      {poll && (
+        <p className={`${s.pourPrompt} ${needVote ? s.pourPromptDim : ''}`}>
+          {needVote ? 'Pick your answer, then pour:' : 'Now pour:'} what % of {q.population} said <b>{q.options![0]}</b>?
+        </p>
+      )}
+      <div className={`${s.glassWrap} ${needVote ? s.glassLocked : ''}`} aria-disabled={needVote || undefined}>
+        <Glass value={value} frozen={frozen || needVote} sloshKey={slosh} dragging={dragging} />
+      </div>
+      <p className={s.hint}>{needVote ? 'Choose your answer first' : 'Drag up or down anywhere on the glass'}</p>
+      <Button onClick={lock} disabled={frozen || needVote} aria-live="off">
         <LockLabel value={value} dragging={dragging} />
       </Button>
     </div>

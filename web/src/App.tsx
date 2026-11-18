@@ -117,6 +117,19 @@ export function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // At 9pm, quietly refetch so the room results appear without a reload.
+  useEffect(() => {
+    if (!today || today.room.revealed) return;
+    const ms = Date.parse(today.room.revealAt) - Date.now() + 1500;
+    if (ms > 2 ** 31 - 1) return;
+    const t = setTimeout(() => {
+      getToday(st.playerId)
+        .then((t2) => setToday((cur) => (cur && cur.date === t2.date ? { ...cur, room: t2.room } : cur)))
+        .catch(() => {});
+    }, Math.max(0, ms));
+    return () => clearTimeout(t);
+  }, [today, st.playerId]);
+
   // Move focus to the new screen's heading for screen-reader users.
   useEffect(() => {
     const t = setTimeout(() => {
@@ -197,6 +210,8 @@ export function App() {
         puzzle={today.puzzle}
         edition={today.edition}
         editionName={today.editionName}
+        room={today.room.questions.find((x) => x.question_id === today.questions[route.index].id)}
+        roomRevealAt={today.room.revealAt}
         streak={streak.current}
         review={!!route.review}
         onNext={() =>

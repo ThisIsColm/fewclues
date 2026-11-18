@@ -127,6 +127,8 @@ export function Results(props: {
         </Card>
       </div>
 
+      <RoomCard today={today} reveals={reveals} />
+
       {gap && (
         <button type="button" className={s.gapRow} onClick={() => props.onOpenReveal(gap.order - 1)}>
           <span>
@@ -178,5 +180,63 @@ function Countdown({ to }: { to: string }) {
     <p className={s.countdown}>
       Next Percentle in <strong>{hms}</strong>
     </p>
+  );
+}
+
+/** Tonight's room: the players' own votes, next to the poll. Hidden until 9pm. */
+function RoomCard({ today, reveals }: { today: TodayResponse; reveals: Reveal[] }) {
+  const polls = today.questions.filter((q) => q.options);
+  if (!polls.length) return null;
+  const room = today.room;
+  const at = new Date(room.revealAt).toLocaleTimeString('en-IE', { hour: 'numeric', minute: '2-digit', timeZone: 'Europe/Dublin' });
+  const shown = room.questions.filter((x) => x.pct !== null);
+  let withRoom = 0;
+  const rows = polls.map((q) => {
+    const rq = room.questions.find((x) => x.question_id === q.id);
+    const rv = reveals.find((x) => x.question_id === q.id);
+    const majority = rq?.pct == null ? null : rq.pct >= 50 ? 0 : 1;
+    if (majority !== null && rv?.vote === majority) withRoom++;
+    return { q, rq, rv };
+  });
+  return (
+    <section className={s.roomCard} aria-labelledby="roomcard-title">
+      <div className={s.cardHead}>
+        <h2 className={s.roomTitle} id="roomcard-title">
+          The room
+        </h2>
+        <span className={s.cardMeta}>{room.revealed ? 'Revealed' : `Tonight at ${at}`}</span>
+      </div>
+      {!room.revealed || !shown.length ? (
+        <p className={s.cardSub}>
+          {room.revealed
+            ? `Not enough votes yet (we need ${room.minVotes} per question).`
+            : `See how Percentle players voted, next to the polls, tonight at ${at}.`}
+        </p>
+      ) : (
+        <>
+          <ul className={s.roomList}>
+            {rows.map(({ q, rq, rv }) => (
+              <li key={q.id}>
+                <span className={s.roomQ}>
+                  <b>Q{q.order}</b> {q.options![0]}?
+                  {rv?.vote !== undefined && <i> You: {q.options![rv.vote]}</i>}
+                </span>
+                <span className={s.roomNums}>
+                  <span>
+                    Room <b className="num">{rq?.pct ?? '–'}%</b>
+                  </span>
+                  <span>
+                    Poll <b className="num">{rv ? `${fmt(rv.answer)}%` : '–'}</b>
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className={s.cardSub}>
+            You sided with the room on {withRoom} of {shown.length}.
+          </p>
+        </>
+      )}
+    </section>
   );
 }

@@ -63,6 +63,17 @@ export class Store {
         PRIMARY KEY (league_id, player_id)
       ) WITHOUT ROWID;
       CREATE INDEX IF NOT EXISTS league_members_by_player ON league_members (player_id);
+
+      -- Read the Room: each player's own answer to a poll question.
+      CREATE TABLE IF NOT EXISTS votes (
+        player_id   TEXT    NOT NULL,
+        date        TEXT    NOT NULL,
+        question_id TEXT    NOT NULL,
+        choice      INTEGER NOT NULL CHECK (choice IN (0, 1)),
+        created_at  INTEGER NOT NULL,
+        PRIMARY KEY (player_id, question_id)
+      ) WITHOUT ROWID;
+      CREATE INDEX IF NOT EXISTS votes_by_question ON votes (question_id, choice);
     `);
     this.stmts = {
       insertGuess: this.db.prepare(
@@ -117,6 +128,25 @@ export class Store {
         `SELECT c.player_id, c.date, c.total FROM completions c
            JOIN league_members m ON m.player_id = c.player_id AND m.league_id = ?
           WHERE c.date BETWEEN ? AND ?`,
+      ),
+      insertVote: this.db.prepare(
+        'INSERT OR IGNORE INTO votes (player_id, date, question_id, choice, created_at) VALUES (?, ?, ?, ?, ?)',
+      ),
+      getVote: this.db.prepare<[string, string], { choice: number }>(
+        'SELECT choice FROM votes WHERE player_id = ? AND question_id = ?',
+      ),
+      voteCounts: this.db.prepare<[string], { votes: number; first: number | null }>(
+        'SELECT COUNT(*) AS votes, SUM(choice = 0) AS first FROM votes WHERE question_id = ?',
+      ),
+      split: this.db.prepare<[string], { choice: number; avg: number; n: number }>(
+        `SELECT v.choice, AVG(g.guess) AS avg, COUNT(*) AS n FROM votes v
+           JOIN guesses g ON g.player_id = v.player_id AND g.question_id = v.question_id
+          WHERE v.question_id = ? GROUP BY v.choice`,
+      ),
+      leagueVoteCounts: this.db.prepare<[string, string], { votes: number; first: number | null }>(
+        `SELECT COUNT(*) AS votes, SUM(v.choice = 0) AS first FROM votes v
+           JOIN league_members m ON m.player_id = v.player_id AND m.league_id = ?
+          WHERE v.question_id = ?`,
       ),
       leagueGuesses: this.db.prepare<[string, string], { player_id: string; question_id: string; guess: number }>(
         `SELECT g.player_id, g.question_id, g.guess FROM guesses g
@@ -194,6 +224,32 @@ export class Store {
   }
   leagueGuesses(leagueId: string, date: string) {
     return this.stmts.leagueGuesses.all(leagueId, date);
+  }
+
+  // ---- votes
+  insertVote(playerId: string, date: string, questionId: string, choice: 0 | 1, at: number) {
+    this.stmts.insertVote.run(playerId, date, questionId, choice, at);
+  }
+  getVote(playerId: string, questionId: string): 0 | 1 | undefined {
+    const c = this.stmts.getVote.get(playerId, questionId)?.choice;
+    return c === 0 || c === 1 ? c : undefined;
+  }
+  voteCounts(questionId: string): { votes: number; first: number } {
+    const r = this.stmts.voteCounts.get(questionId)!;
+    return { votes: r.votes, first: r.first ?? 0 };
+  }
+  leagueVoteCounts(leagueId: string, questionId: string): { votes: number; first: number } {
+    const r = this.stmts.leagueVoteCounts.get(leagueId, questionId)!;
+    return { votes: r.votes, first: r.first ?? 0 };
+  }
+  /** Average prediction and voter count for each side of the vote. */
+  split(questionId: string): { avg: [number, number]; n: [number, number] } {
+    const out = { avg: [0, 0] as [number, number], n: [0, 0] as [number, number] };
+    for (const r of this.stmts.split.all(questionId)) {
+      out.avg[r.choice] = r.avg;
+      out.n[r.choice] = r.n;
+    }
+    return out;
   }
 
   transaction<T>(fn: () => T): T {

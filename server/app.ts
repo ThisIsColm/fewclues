@@ -1,7 +1,7 @@
 import { Hono, type Context } from 'hono';
 import { NONCE, secureHeaders } from 'hono/secure-headers';
 import { randomInt, randomUUID } from 'node:crypto';
-import { addDays, dublinDate, nextRollover, puzzleNumber, startOfDublinDay, weekStart } from '../shared/day';
+import { addDays, dublinDate, nextRollover, puzzleNumber, roomRevealAt, startOfDublinDay, weekStart } from '../shared/day';
 import {
   binFor,
   isBullseye,
@@ -20,6 +20,8 @@ import type {
   LeagueSummary,
   Question,
   Reveal,
+  RoomQuestion,
+  RoomState,
   StandingRow,
   StandingsResponse,
   TodayResponse,
@@ -78,9 +80,20 @@ export function createApp({ config, store, content, now = () => new Date(), remo
 
   const today = () => config.devDate ?? dublinDate(now());
 
-  function reveal(q: Question, guess: number): Reveal {
+  function reveal(q: Question, guess: number, vote?: 0 | 1): Reveal {
     const off = offBy(guess, q.answer);
+    const poll = q.options
+      ? {
+          pollster: q.pollster,
+          fieldwork: q.fieldwork,
+          sample: q.sample,
+          comparisons_title: q.comparisons_title,
+          vote,
+          split: split(q.id),
+        }
+      : { comparisons_title: q.comparisons_title };
     return {
+      ...poll,
       question_id: q.id,
       order: q.order,
       guess,
@@ -97,6 +110,44 @@ export function createApp({ config, store, content, now = () => new Date(), remo
       comparisons: q.comparisons ?? [],
       histogram: histogram(q.id),
       closerThan: closerThan(q, guess),
+    };
+  }
+
+  /** False consensus: how each side of the vote predicted. Hidden until both sides are big enough. */
+  function split(questionId: string): Reveal['split'] {
+    const { avg, n } = store.split(questionId);
+    if (n[0] < config.splitMinVotes || n[1] < config.splitMinVotes) return null;
+    return { avgByVote: [Math.round(avg[0]), Math.round(avg[1])], voters: n };
+  }
+
+  // ---- The room: how players voted. The split stays hidden until 9pm Dublin.
+  function revealTime(date: string): Date {
+    // With DEV_DATE pinned, use 9pm on the real calendar day so phone tests behave naturally.
+    return roomRevealAt(config.devDate ? dublinDate(now()) : date);
+  }
+  function roomOpen(date: string): boolean {
+    if (config.roomReveal !== 'auto') return config.roomReveal === 'open';
+    return now().getTime() >= revealTime(date).getTime();
+  }
+  function roomQuestion(q: Question, counts: { votes: number; first: number }, open: boolean, min: number): RoomQuestion {
+    return {
+      question_id: q.id,
+      order: q.order,
+      label: q.options?.[0] ?? '',
+      votes: counts.votes,
+      pct: open && counts.votes >= min && counts.votes > 0 ? Math.round((counts.first / counts.votes) * 100) : null,
+    };
+  }
+  function room(date: string): RoomState {
+    const open = roomOpen(date);
+    return {
+      revealAt: revealTime(date).toISOString(),
+      revealed: open,
+      minVotes: config.roomMinVotes,
+      questions: content
+        .forDate(date)
+        .filter((q) => q.options)
+        .map((q) => roomQuestion(q, store.voteCounts(q.id), open, config.roomMinVotes)),
     };
   }
 
@@ -202,7 +253,9 @@ export function createApp({ config, store, content, now = () => new Date(), remo
     let done: Completion | null = null;
     if (UUID.test(playerId) && questions.length) {
       const guesses = new Map(store.playerGuesses(playerId, date).map((g) => [g.question_id, g.guess]));
-      reveals = questions.filter((q) => guesses.has(q.id)).map((q) => reveal(q, guesses.get(q.id)!));
+      reveals = questions
+        .filter((q) => guesses.has(q.id))
+        .map((q) => reveal(q, guesses.get(q.id)!, store.getVote(playerId, q.id)));
       done = completion(playerId, date);
     }
     const body: TodayResponse = {
@@ -214,9 +267,17 @@ export function createApp({ config, store, content, now = () => new Date(), remo
       flag: edition.flag,
       siteHost: config.siteHost,
       nextRolloverAt: nextRollover(now()).toISOString(),
-      questions: questions.map((q) => ({ id: q.id, order: q.order, question: q.question, category: q.category })),
+      questions: questions.map((q) => ({
+        id: q.id,
+        order: q.order,
+        question: q.question,
+        category: q.category,
+        options: q.options,
+        population: q.population,
+      })),
       reveals,
       completion: done,
+      room: room(date),
     };
     return c.json(body);
   });
@@ -236,12 +297,15 @@ export function createApp({ config, store, content, now = () => new Date(), remo
 
     const q = content.get(questionId);
     if (!q) return c.json({ error: 'Unknown question.' }, 404);
+    const vote = body.vote;
+    if (q.options && vote !== 0 && vote !== 1) return c.json({ error: 'Pick an answer before you pour.' }, 400);
     if (!openDates().includes(q.date) || !content.forDate(q.date).some((x) => x.id === q.id))
       return c.json({ error: 'That puzzle is closed — a new one is ready.', code: 'stale' }, 409);
 
     const t = now().getTime();
     const result = store.transaction(() => {
       const inserted = store.insertGuess(playerId, q.date, q.id, guess, t);
+      if (inserted && q.options) store.insertVote(playerId, q.date, q.id, vote as 0 | 1, t);
       const stored = inserted ? guess : store.getGuess(playerId, q.id)!;
       const mine = store.playerGuesses(playerId, q.date);
       if (mine.length === QUESTIONS_PER_DAY && store.getCompletion(playerId, q.date) === undefined) {
@@ -256,7 +320,10 @@ export function createApp({ config, store, content, now = () => new Date(), remo
       gapCache.delete(q.date);
     }
 
-    const res: GuessResponse = { reveal: reveal(q, result.stored), completion: completion(playerId, q.date) };
+    const res: GuessResponse = {
+      reveal: reveal(q, result.stored, q.options ? store.getVote(playerId, q.id) : undefined),
+      completion: completion(playerId, q.date),
+    };
     return c.json({ ...res, alreadyGuessed: !result.inserted });
   });
 
@@ -428,6 +495,10 @@ export function createApp({ config, store, content, now = () => new Date(), remo
       viewerFinished,
       rows,
       headToHead,
+      room:
+        period === 'day' && roomOpen(date)
+          ? questions.filter((q) => q.options).map((q) => roomQuestion(q, store.leagueVoteCounts(leagueId, q.id), true, 2))
+          : null,
     };
     return c.json(res);
   });

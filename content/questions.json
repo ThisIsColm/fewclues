@@ -4,13 +4,21 @@
     "date": "2026-12-01",
     "order": 1,
     "edition": "ie",
-    "category": "Language",
-    "question": "What % of people in Ireland aged 3 and over say they can speak Irish?",
-    "answer": 40,
-    "year": 2022,
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/educationandirishlanguage/",
-    "nugget": "1.87 million people say they can speak Irish. But only 71,968 use it every day outside school or college. That’s fewer people than a full Croke Park.",
+    "category": "Money",
+    "question": "Is tipping in Ireland becoming less voluntary?",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "population": "adults in Ireland",
+    "answer": 67,
+    "year": 2025,
+    "source_name": "Irish Examiner (Echo)",
+    "source_url": "https://www.echolive.ie/nationalnews/arid-41783609.html",
+    "pollster": "Ipsos B&A for the CCPC",
+    "fieldwork": "Oct 2025",
+    "sample": 1048,
+    "nugget": "Three in four want businesses to make it easier to say no to a tip, and 8% have tipped by mistake on a card machine.",
     "difficulty": "medium",
     "status": "draft"
   },
@@ -19,29 +27,55 @@
     "date": "2026-12-01",
     "order": 2,
     "edition": "ie",
-    "category": "People",
-    "question": "What % of people living in Ireland were born outside Ireland?",
-    "answer": 20,
-    "year": 2022,
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/migrationanddiversity/",
-    "nugget": "One in five people living here was born abroad. Ten times as many people speak a language other than English or Irish at home (751,507) as speak Irish daily outside school.",
+    "category": "Food",
+    "question": "Is a hot dog a sandwich?",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "population": "Americans",
+    "answer": 40,
+    "year": 2025,
+    "source_name": "YouGov",
+    "source_url": "https://yougov.com/en-us/articles/53202-accounting-for-taste-12-food-fights-that-split-americans",
+    "pollster": "YouGov",
+    "fieldwork": "Oct 2025",
+    "sample": 1126,
+    "nugget": "Age splits it: 54% of over-65s say it’s a sandwich, but only 35% of under-65s do.",
     "difficulty": "medium",
-    "status": "draft"
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "Under 65",
+        "value": 35
+      },
+      {
+        "label": "65 and over",
+        "value": 54
+      }
+    ],
+    "comparisons_title": "By age"
   },
   {
     "id": "ie-0003",
     "date": "2026-12-01",
     "order": 3,
     "edition": "ie",
-    "category": "Commuting",
-    "question": "What % of primary school children in Ireland go to school by car?",
-    "answer": 55,
-    "year": 2022,
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/employmentoccupationindustryandcommuting/",
-    "nugget": "More than half of primary kids are driven to school. The good news: 88% more primary pupils cycled to school than in 2016.",
-    "difficulty": "easy",
+    "category": "Beliefs",
+    "question": "Could ghosts exist?",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "population": "people in Britain",
+    "answer": 38,
+    "year": 2025,
+    "source_name": "YouGov",
+    "source_url": "https://yougov.com/en-gb/articles/52619-ghosts-magic-do-britons-believe-in-the-supernatural",
+    "pollster": "YouGov",
+    "fieldwork": "Published Jul 2025",
+    "nugget": "12% are certain ghosts exist. Only 8% think vampires might, but 12% won’t rule out the Loch Ness Monster (16% of Scots).",
+    "difficulty": "medium",
     "status": "draft"
   },
   {
@@ -49,80 +83,124 @@
     "date": "2026-12-01",
     "order": 4,
     "edition": "ie",
-    "category": "Health",
-    "question": "What % of people in Ireland smoke, either daily or occasionally?",
-    "answer": 13,
-    "year": 2022,
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/healthdisabilitycaringandvolunteering/",
-    "nugget": "Nearly 450,000 people still smoke every day. And it shows: over 90% of never-smokers rate their health good or very good, against 79% of daily smokers.",
+    "category": "Language",
+    "question": "Would you like to improve your Irish?",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "population": "adults in Ireland",
+    "answer": 68,
+    "year": 2025,
+    "source_name": "The Irish Times",
+    "source_url": "https://www.irishtimes.com/ireland/2026/03/03/adults-aged-under-35-and-women-most-enthusiastic-about-learning-irish-language-survey-finds/",
+    "pollster": "Amárach for Údarás na Gaeltachta & Gaelchultúr",
+    "fieldwork": "Dec 2025",
+    "sample": 1000,
+    "nugget": "Women (73%) are keener than men (63%), and 25–34-year-olds are the keenest of all.",
     "difficulty": "medium",
-    "status": "draft"
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "Women",
+        "value": 73
+      },
+      {
+        "label": "Men",
+        "value": 63
+      },
+      {
+        "label": "Aged 18–24",
+        "value": 71
+      },
+      {
+        "label": "Aged 25–34",
+        "value": 74
+      },
+      {
+        "label": "Aged 65+",
+        "value": 62
+      }
+    ],
+    "comparisons_title": "By group"
   },
   {
     "id": "ie-0005",
     "date": "2026-12-01",
     "order": 5,
     "edition": "ie",
-    "category": "Education",
-    "question": "What % of 25–34-year-olds in Ireland have a third-level qualification?",
-    "answer": 63,
-    "year": 2023,
-    "source_name": "Eurostat",
-    "source_url": "https://ec.europa.eu/eurostat/web/products-eurostat-news/w/ddn-20240527-1",
-    "nugget": "Ireland’s young adults are the most educated in the EU. Ireland has nearly three times Romania’s rate (23%) and beats the EU’s 2030 target of 45% by a mile.",
-    "difficulty": "hard",
-    "status": "draft",
-    "comparisons": [
-      {
-        "label": "EU average",
-        "value": 43
-      },
-      {
-        "label": "Cyprus",
-        "value": 62
-      },
-      {
-        "label": "Luxembourg",
-        "value": 60
-      },
-      {
-        "label": "Italy",
-        "value": 31
-      },
-      {
-        "label": "Romania",
-        "value": 23
-      }
-    ]
+    "category": "Food",
+    "question": "Cereal or milk: which goes in the bowl first?",
+    "options": [
+      "Cereal",
+      "Milk"
+    ],
+    "population": "Americans",
+    "answer": 93,
+    "year": 2025,
+    "source_name": "YouGov",
+    "source_url": "https://yougov.com/en-us/articles/53202-accounting-for-taste-12-food-fights-that-split-americans",
+    "pollster": "YouGov",
+    "fieldwork": "Oct 2025",
+    "sample": 1126,
+    "nugget": "Only 4% go milk first. It’s the most one-sided food fight in the whole poll.",
+    "difficulty": "easy",
+    "status": "draft"
   },
   {
     "id": "ie-0006",
     "date": "2026-12-02",
     "order": 1,
     "edition": "ie",
-    "category": "Belief",
-    "question": "What % of people in Ireland identify as Roman Catholic?",
-    "answer": 69,
-    "year": 2022,
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/keyfindings/",
-    "nugget": "In 2016 it was 79%. That’s ten points gone in just six years.",
-    "difficulty": "easy",
-    "status": "draft"
+    "category": "Life",
+    "question": "Should the clocks go back in October?",
+    "options": [
+      "No",
+      "Yes"
+    ],
+    "population": "adults in Ireland",
+    "answer": 47,
+    "year": 2020,
+    "source_name": "TheJournal.ie",
+    "source_url": "https://www.thejournal.ie/poll-winter-clocks-go-back-october-sunday-5243431-Oct2020/",
+    "pollster": "Ireland Thinks",
+    "fieldwork": "Oct 2020",
+    "sample": 1000,
+    "nugget": "Another 20% said go back, but only because Northern Ireland does. Over-65s were far more against the change than 18–24s.",
+    "difficulty": "hard",
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "Aged 18–24",
+        "value": 32
+      },
+      {
+        "label": "Aged 65+",
+        "value": 55
+      }
+    ],
+    "comparisons_title": "By age"
   },
   {
     "id": "ie-0007",
     "date": "2026-12-02",
     "order": 2,
     "edition": "ie",
-    "category": "Home",
-    "question": "What % of households in Ireland have solar panels?",
-    "answer": 6,
-    "year": 2022,
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/dwellingcharacteristics/",
-    "nugget": "Only 6% of all homes have solar panels. But among homes built since 2016, it’s about 30%. New Ireland is going solar.",
+    "category": "Food",
+    "question": "Pineapple on pizza: love it or hate it?",
+    "options": [
+      "Love it",
+      "Hate it"
+    ],
+    "population": "Americans",
+    "answer": 48,
+    "year": 2025,
+    "source_name": "YouGov",
+    "source_url": "https://yougov.com/en-us/articles/53202-accounting-for-taste-12-food-fights-that-split-americans",
+    "pollster": "YouGov",
+    "fieldwork": "Oct 2025",
+    "sample": 1126,
+    "nugget": "The closest split in the whole poll: 44% dislike or hate it. In the Northeast, 59% are against.",
     "difficulty": "hard",
     "status": "draft"
   },
@@ -131,28 +209,54 @@
     "date": "2026-12-02",
     "order": 3,
     "edition": "ie",
-    "category": "People",
-    "question": "What % of people aged 15 and over in Ireland are married?",
-    "answer": 46,
-    "year": 2022,
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/householdsizeandmaritalstatus/",
-    "nugget": "Single is catching up: 43% of adults are single, up from 41% in 2016, while married slipped from 48% to 46%.",
+    "category": "Beliefs",
+    "question": "Is astrology real?",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "population": "people in Britain",
+    "answer": 23,
+    "year": 2025,
+    "source_name": "YouGov",
+    "source_url": "https://yougov.com/en-gb/articles/52619-ghosts-magic-do-britons-believe-in-the-supernatural",
+    "pollster": "YouGov",
+    "fieldwork": "Published Jul 2025",
+    "nugget": "Women are more than twice as likely as men to believe in it. The most believed-in? Hypnosis: 60% think it works.",
     "difficulty": "medium",
-    "status": "draft"
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "Women",
+        "value": 31
+      },
+      {
+        "label": "Men",
+        "value": 14
+      }
+    ],
+    "comparisons_title": "By gender"
   },
   {
     "id": "ie-0009",
     "date": "2026-12-02",
     "order": 4,
     "edition": "ie",
-    "category": "Health",
-    "question": "What % of people in Ireland say their health is good or very good?",
-    "answer": 83,
-    "year": 2022,
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/healthdisabilitycaringandvolunteering/",
-    "nugget": "That’s down from 87% in 2016. The biggest slide was in people aged 35 to 39: only 52% said “very good”, down from 61%.",
+    "category": "Money",
+    "question": "Do you sometimes tip when you’d rather not?",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "population": "adults in Ireland",
+    "answer": 58,
+    "year": 2025,
+    "source_name": "Irish Examiner (Echo)",
+    "source_url": "https://www.echolive.ie/nationalnews/arid-41783609.html",
+    "pollster": "Ipsos B&A for the CCPC",
+    "fieldwork": "Oct 2025",
+    "sample": 1048,
+    "nugget": "One in five had an unexpected charge on a bill in the last six months, and half of those were a mandatory service charge.",
     "difficulty": "medium",
     "status": "draft"
   },
@@ -161,14 +265,22 @@
     "date": "2026-12-02",
     "order": 5,
     "edition": "ie",
-    "category": "Counties",
-    "question": "Mayo has the highest rate in the country. What % of people in Mayo are unpaid carers?",
-    "answer": 7,
-    "year": 2022,
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/healthdisabilitycaringandvolunteering/",
-    "nugget": "Ireland now has over 299,000 unpaid carers, up 53% in six years. Dublin City has the lowest rate, at 5%.",
-    "difficulty": "hard",
+    "category": "Food",
+    "question": "Leftover pizza: warm it up or eat it cold?",
+    "options": [
+      "Warm",
+      "Cold"
+    ],
+    "population": "Americans",
+    "answer": 65,
+    "year": 2025,
+    "source_name": "YouGov",
+    "source_url": "https://yougov.com/en-us/articles/53202-accounting-for-taste-12-food-fights-that-split-americans",
+    "pollster": "YouGov",
+    "fieldwork": "Oct 2025",
+    "sample": 1126,
+    "nugget": "Only 28% prefer it cold.",
+    "difficulty": "easy",
     "status": "draft"
   },
   {
@@ -176,28 +288,51 @@
     "date": "2026-12-03",
     "order": 1,
     "edition": "ie",
-    "category": "Home",
-    "question": "What % of occupied homes in Ireland are lived in by their owners?",
-    "answer": 66,
-    "year": 2022,
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/dwellingcharacteristics/",
-    "nugget": "Eleven years earlier it was almost 70%. Homes rented from private landlords have climbed to 330,632, up 7% since 2016.",
-    "difficulty": "medium",
-    "status": "draft"
+    "category": "Language",
+    "question": "Would you send your child to an Irish-language school if there was one nearby?",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "population": "adults in Ireland",
+    "answer": 49,
+    "year": 2025,
+    "source_name": "The Irish Times",
+    "source_url": "https://www.irishtimes.com/ireland/2026/03/03/adults-aged-under-35-and-women-most-enthusiastic-about-learning-irish-language-survey-finds/",
+    "pollster": "Amárach for Údarás na Gaeltachta & Gaelchultúr",
+    "fieldwork": "Dec 2025",
+    "sample": 1000,
+    "nugget": "In 2015 the ESRI found 23%, though the surveys were done differently. In the Gaeltacht it’s 66% now.",
+    "difficulty": "hard",
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "Gaeltacht",
+        "value": 66
+      }
+    ],
+    "comparisons_title": "Compared with"
   },
   {
     "id": "ie-0012",
     "date": "2026-12-03",
     "order": 2,
     "edition": "ie",
-    "category": "People",
-    "question": "What % of people living in Ireland are not Irish citizens?",
-    "answer": 12,
-    "year": 2022,
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/migrationanddiversity/",
-    "nugget": "Dual Irish citizenship is booming: 170,597 people hold it, up 63% in six years.",
+    "category": "Food",
+    "question": "Is a hamburger a sandwich?",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "population": "Americans",
+    "answer": 73,
+    "year": 2025,
+    "source_name": "YouGov",
+    "source_url": "https://yougov.com/en-us/articles/53202-accounting-for-taste-12-food-fights-that-split-americans",
+    "pollster": "YouGov",
+    "fieldwork": "Oct 2025",
+    "sample": 1126,
+    "nugget": "Yet only 40% say a hot dog is a sandwich. Same bread, different verdict.",
     "difficulty": "medium",
     "status": "draft"
   },
@@ -206,29 +341,55 @@
     "date": "2026-12-03",
     "order": 3,
     "edition": "ie",
-    "category": "Health",
-    "question": "What % of people in Ireland have a long-lasting condition or difficulty?",
-    "answer": 22,
-    "year": 2022,
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/healthdisabilitycaringandvolunteering/",
-    "nugget": "That’s more than 1.1 million people, more than one in five. For 407,342 of them, it affects their life to a great extent or a lot.",
-    "difficulty": "hard",
-    "status": "draft"
+    "category": "Beliefs",
+    "question": "Is karma real?",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "population": "people in Britain",
+    "answer": 38,
+    "year": 2025,
+    "source_name": "YouGov",
+    "source_url": "https://yougov.com/en-gb/articles/52619-ghosts-magic-do-britons-believe-in-the-supernatural",
+    "pollster": "YouGov",
+    "fieldwork": "Published Jul 2025",
+    "nugget": "Just 4% believe in all eight supernatural practices YouGov asked about, from reiki to crystal healing.",
+    "difficulty": "medium",
+    "status": "draft",
+    "comparisons": [
+      {
+        "label": "Women",
+        "value": 48
+      },
+      {
+        "label": "Men",
+        "value": 28
+      }
+    ],
+    "comparisons_title": "By gender"
   },
   {
     "id": "ie-0014",
     "date": "2026-12-03",
     "order": 4,
     "edition": "ie",
-    "category": "Education",
-    "question": "Of people in Ireland who’ve finished full-time education, what % have at least an ordinary degree?",
-    "answer": 34,
-    "year": 2022,
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/educationandirishlanguage/",
-    "nugget": "In 2011 it was 25%. That’s nine points in eleven years.",
-    "difficulty": "medium",
+    "category": "Money",
+    "question": "Should it be easier to say no to a tip?",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "population": "adults in Ireland",
+    "answer": 75,
+    "year": 2025,
+    "source_name": "Irish Examiner (Echo)",
+    "source_url": "https://www.echolive.ie/nationalnews/arid-41783609.html",
+    "pollster": "Ipsos B&A for the CCPC",
+    "fieldwork": "Oct 2025",
+    "sample": 1048,
+    "nugget": "The CCPC estimates almost €500,000 has been tipped by mistake on card machines.",
+    "difficulty": "easy",
     "status": "draft"
   },
   {
@@ -236,13 +397,21 @@
     "date": "2026-12-03",
     "order": 5,
     "edition": "ie",
-    "category": "Work",
-    "question": "What % of people aged 15 and over in Ireland are in the labour force (working or looking for work)?",
-    "answer": 61,
-    "year": 2022,
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/employmentoccupationindustryandcommuting/",
-    "nugget": "Men 67%, women 56%. Women’s participation is rising (55% in 2016) while men’s has dipped (from 68%).",
+    "category": "Food",
+    "question": "Should you rinse rice before cooking it?",
+    "options": [
+      "Yes",
+      "No"
+    ],
+    "population": "Americans",
+    "answer": 53,
+    "year": 2025,
+    "source_name": "YouGov",
+    "source_url": "https://yougov.com/en-us/articles/53202-accounting-for-taste-12-food-fights-that-split-americans",
+    "pollster": "YouGov",
+    "fieldwork": "Oct 2025",
+    "sample": 1126,
+    "nugget": "Only 29% say don’t bother.",
     "difficulty": "hard",
     "status": "draft"
   }
