@@ -91,10 +91,11 @@ describe('validateContent', () => {
     expect(r.warnings.join()).not.toContain('2026-12-15');
   });
 
-  it('the shipped seed file is valid, all drafts, and playable with drafts allowed', () => {
+  it('the shipped content is valid, sourced, and playable with drafts allowed', () => {
     const seed = JSON.parse(readFileSync(new URL('../content/questions.json', import.meta.url), 'utf8'));
     expect(seed).toHaveLength(15);
-    expect(seed.every((q: any) => q.status === 'draft' && JSON.stringify(q).includes('PLACEHOLDER'))).toBe(true);
+    expect(seed.some((q: any) => JSON.stringify(q).includes('PLACEHOLDER'))).toBe(false);
+    expect(seed.every((q: any) => /^https:\/\//.test(q.source_url))).toBe(true);
     expect(run(seed).errors).toEqual([]);
     expect(run(seed, true).errors).toEqual([]);
   });

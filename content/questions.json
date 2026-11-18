@@ -4,342 +4,246 @@
     "date": "2026-12-01",
     "order": 1,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland have never been on a plane?",
-    "answer": 12,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
-    "difficulty": "easy",
-    "status": "draft",
-    "comparisons": [
-      {
-        "label": "PLACEHOLDER country A",
-        "value": 36
-      },
-      {
-        "label": "PLACEHOLDER country B",
-        "value": 65
-      },
-      {
-        "label": "PLACEHOLDER country C",
-        "value": 94
-      }
-    ],
-    "category": "Travel"
+    "category": "Language",
+    "question": "What % of people in Ireland aged 3 and over say they can speak Irish?",
+    "answer": 40,
+    "year": 2022,
+    "source_name": "CSO, Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/educationandirishlanguage/",
+    "nugget": "That’s 1,873,997 people. But only 71,968 said they speak Irish daily outside the education system.",
+    "difficulty": "medium",
+    "status": "draft"
   },
   {
     "id": "ie-0002",
     "date": "2026-12-01",
     "order": 2,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland can speak Irish well enough to hold a conversation?",
-    "answer": 35,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "category": "People",
+    "question": "What % of people living in Ireland were born outside Ireland?",
+    "answer": 20,
+    "year": 2022,
+    "source_name": "CSO, Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/migrationanddiversity/",
+    "nugget": "751,507 people speak a language other than English or Irish at home, up 23% since 2016.",
     "difficulty": "medium",
-    "status": "draft",
-    "category": "Language"
+    "status": "draft"
   },
   {
     "id": "ie-0003",
     "date": "2026-12-01",
     "order": 3,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland cycle to work at least once a week?",
-    "answer": 7,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
-    "difficulty": "medium",
-    "status": "draft",
-    "comparisons": [
-      {
-        "label": "PLACEHOLDER country A",
-        "value": 21
-      },
-      {
-        "label": "PLACEHOLDER country B",
-        "value": 45
-      }
-    ],
-    "category": "Commuting"
+    "category": "Commuting",
+    "question": "What % of primary school children in Ireland go to school by car?",
+    "answer": 55,
+    "year": 2022,
+    "source_name": "CSO, Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/employmentoccupationindustryandcommuting/",
+    "nugget": "For secondary school students it’s 42%. And 88% more primary pupils cycled to school than in 2016.",
+    "difficulty": "easy",
+    "status": "draft"
   },
   {
     "id": "ie-0004",
     "date": "2026-12-01",
     "order": 4,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland own a dog?",
-    "answer": 48,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
-    "difficulty": "easy",
-    "status": "draft",
-    "comparisons": [
-      {
-        "label": "PLACEHOLDER country A",
-        "value": 43
-      },
-      {
-        "label": "PLACEHOLDER country B",
-        "value": 7
-      },
-      {
-        "label": "PLACEHOLDER country C",
-        "value": 72
-      },
-      {
-        "label": "PLACEHOLDER country D",
-        "value": 36
-      },
-      {
-        "label": "PLACEHOLDER country E",
-        "value": 0
-      }
-    ],
-    "category": "Pets"
+    "category": "Health",
+    "question": "What % of people in Ireland smoke, either daily or occasionally?",
+    "answer": 13,
+    "year": 2022,
+    "source_name": "CSO, Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/healthdisabilitycaringandvolunteering/",
+    "nugget": "Almost 80% have either never smoked or have given up. Men (15%) smoke more than women (11%).",
+    "difficulty": "medium",
+    "status": "draft"
   },
   {
     "id": "ie-0005",
     "date": "2026-12-01",
     "order": 5,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland were born outside Ireland?",
-    "answer": 22,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
-    "difficulty": "medium",
+    "category": "Education",
+    "question": "What % of 25–34-year-olds in Ireland have a third-level qualification?",
+    "answer": 63,
+    "year": 2023,
+    "source_name": "Eurostat",
+    "source_url": "https://ec.europa.eu/eurostat/web/products-eurostat-news/w/ddn-20240527-1",
+    "nugget": "The highest share in the EU, and well past the EU’s 2030 target of 45%.",
+    "difficulty": "hard",
     "status": "draft",
-    "category": "People"
+    "comparisons": [
+      {
+        "label": "EU average",
+        "value": 43
+      },
+      {
+        "label": "Cyprus",
+        "value": 62
+      },
+      {
+        "label": "Luxembourg",
+        "value": 60
+      },
+      {
+        "label": "Italy",
+        "value": 31
+      },
+      {
+        "label": "Romania",
+        "value": 23
+      }
+    ]
   },
   {
     "id": "ie-0006",
     "date": "2026-12-02",
     "order": 1,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland drink tea every day?",
-    "answer": 81,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "category": "Belief",
+    "question": "What % of people in Ireland identify as Roman Catholic?",
+    "answer": 69,
+    "year": 2022,
+    "source_name": "CSO, Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/keyfindings/",
+    "nugget": "Down from 79% in 2016: a 10-point drop in just six years.",
     "difficulty": "easy",
-    "status": "draft",
-    "comparisons": [
-      {
-        "label": "PLACEHOLDER country A",
-        "value": 41
-      }
-    ],
-    "category": "Food & drink"
+    "status": "draft"
   },
   {
     "id": "ie-0007",
     "date": "2026-12-02",
     "order": 2,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland have a passport from another EU country?",
-    "answer": 4,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "category": "Home",
+    "question": "What % of households in Ireland have solar panels?",
+    "answer": 6,
+    "year": 2022,
+    "source_name": "CSO, Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/dwellingcharacteristics/",
+    "nugget": "Nearly a quarter of households (23%) use some renewable energy, and about 30% of homes built since 2016 have solar panels.",
     "difficulty": "hard",
-    "status": "draft",
-    "category": "People"
+    "status": "draft"
   },
   {
     "id": "ie-0008",
     "date": "2026-12-02",
     "order": 3,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland live in the same county they were born in?",
-    "answer": 63,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "category": "People",
+    "question": "What % of people aged 15 and over in Ireland are married?",
+    "answer": 46,
+    "year": 2022,
+    "source_name": "CSO, Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/householdsizeandmaritalstatus/",
+    "nugget": "Down from 48% in 2016, while the share who are single rose from 41% to 43%.",
     "difficulty": "medium",
-    "status": "draft",
-    "comparisons": [
-      {
-        "label": "PLACEHOLDER country A",
-        "value": 88
-      },
-      {
-        "label": "PLACEHOLDER country B",
-        "value": 67
-      },
-      {
-        "label": "PLACEHOLDER country C",
-        "value": 46
-      },
-      {
-        "label": "PLACEHOLDER country D",
-        "value": 25
-      },
-      {
-        "label": "PLACEHOLDER country E",
-        "value": 4
-      }
-    ],
-    "category": "Home"
+    "status": "draft"
   },
   {
     "id": "ie-0009",
     "date": "2026-12-02",
     "order": 4,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland work from home at least one day a week?",
-    "answer": 29,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "category": "Health",
+    "question": "What % of people in Ireland say their health is good or very good?",
+    "answer": 83,
+    "year": 2022,
+    "source_name": "CSO, Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/healthdisabilitycaringandvolunteering/",
+    "nugget": "Down from 87% in 2016. Over 90% of people who never smoked reported good or very good health.",
     "difficulty": "medium",
-    "status": "draft",
-    "comparisons": [
-      {
-        "label": "PLACEHOLDER country A",
-        "value": 87
-      },
-      {
-        "label": "PLACEHOLDER country B",
-        "value": 32
-      },
-      {
-        "label": "PLACEHOLDER country C",
-        "value": 78
-      }
-    ],
-    "category": "Work"
+    "status": "draft"
   },
   {
     "id": "ie-0010",
     "date": "2026-12-02",
     "order": 5,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland have swum in the sea in winter?",
-    "answer": 16,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "category": "Counties",
+    "question": "Mayo has the highest rate in the country. What % of people in Mayo are unpaid carers?",
+    "answer": 7,
+    "year": 2022,
+    "source_name": "CSO, Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/healthdisabilitycaringandvolunteering/",
+    "nugget": "Dublin City has the lowest rate, at 5%. Nationally, the number of unpaid carers rose 53% since 2016 to over 299,000.",
     "difficulty": "hard",
-    "status": "draft",
-    "category": "Outdoors"
+    "status": "draft"
   },
   {
     "id": "ie-0011",
     "date": "2026-12-03",
     "order": 1,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland say they trust the news media?",
-    "answer": 41,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
-    "difficulty": "hard",
-    "status": "draft",
-    "comparisons": [
-      {
-        "label": "PLACEHOLDER country A",
-        "value": 22
-      },
-      {
-        "label": "PLACEHOLDER country B",
-        "value": 80
-      }
-    ],
-    "category": "Media"
+    "category": "Home",
+    "question": "What % of occupied homes in Ireland are lived in by their owners?",
+    "answer": 66,
+    "year": 2022,
+    "source_name": "CSO, Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/dwellingcharacteristics/",
+    "nugget": "Down from almost 70% eleven years earlier. Homes rented from private landlords rose 7% since 2016, to 330,632.",
+    "difficulty": "medium",
+    "status": "draft"
   },
   {
     "id": "ie-0012",
     "date": "2026-12-03",
     "order": 2,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland have donated blood?",
-    "answer": 55,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "category": "People",
+    "question": "What % of people living in Ireland are not Irish citizens?",
+    "answer": 12,
+    "year": 2022,
+    "source_name": "CSO, Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/migrationanddiversity/",
+    "nugget": "170,597 people hold dual Irish citizenship, up 63% since 2016.",
     "difficulty": "medium",
-    "status": "draft",
-    "category": "Health"
+    "status": "draft"
   },
   {
     "id": "ie-0013",
     "date": "2026-12-03",
     "order": 3,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland own their home outright?",
-    "answer": 33,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "category": "Health",
+    "question": "What % of people in Ireland have a long-lasting condition or difficulty?",
+    "answer": 22,
+    "year": 2022,
+    "source_name": "CSO, Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/healthdisabilitycaringandvolunteering/",
+    "nugget": "That’s 1,109,557 people. For 8% of the population, it affects them to a great extent or a lot.",
     "difficulty": "hard",
-    "status": "draft",
-    "comparisons": [
-      {
-        "label": "PLACEHOLDER country A",
-        "value": 99
-      },
-      {
-        "label": "PLACEHOLDER country B",
-        "value": 48
-      },
-      {
-        "label": "PLACEHOLDER country C",
-        "value": 98
-      }
-    ],
-    "category": "Home"
+    "status": "draft"
   },
   {
     "id": "ie-0014",
     "date": "2026-12-03",
     "order": 4,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland go to Mass weekly?",
-    "answer": 18,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "category": "Education",
+    "question": "Of people in Ireland who’ve finished full-time education, what % have at least an ordinary degree?",
+    "answer": 34,
+    "year": 2022,
+    "source_name": "CSO, Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/educationandirishlanguage/",
+    "nugget": "Up from 25% in 2011.",
     "difficulty": "medium",
-    "status": "draft",
-    "comparisons": [
-      {
-        "label": "PLACEHOLDER country A",
-        "value": 54
-      }
-    ],
-    "category": "Belief"
+    "status": "draft"
   },
   {
     "id": "ie-0015",
     "date": "2026-12-03",
     "order": 5,
     "edition": "ie",
-    "question": "PLACEHOLDER — What % of adults in Ireland have visited all 32 counties?",
-    "answer": 3,
-    "year": 2024,
-    "source_name": "PLACEHOLDER source (not real data)",
-    "source_url": "https://example.com/PLACEHOLDER",
-    "nugget": "PLACEHOLDER — this figure is made up for testing. A curator will replace it with a real, sourced statistic and a line of context.",
+    "category": "Work",
+    "question": "What % of people aged 15 and over in Ireland are in the labour force (working or looking for work)?",
+    "answer": 61,
+    "year": 2022,
+    "source_name": "CSO, Census 2022",
+    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/employmentoccupationindustryandcommuting/",
+    "nugget": "Unchanged since 2016. The rate is 67% for men and 56% for women.",
     "difficulty": "hard",
-    "status": "draft",
-    "category": "Travel"
+    "status": "draft"
   }
 ]

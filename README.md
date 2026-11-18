@@ -51,7 +51,8 @@ Questions live in `content/questions.json`. Each entry looks like this:
 - `comparisons` holds 0–5 items.
 - Only `approved` questions are served.
 - Every scheduled date needs exactly 5 approved questions, with orders 1–5.
-- The seed's 15 questions are placeholders. Every figure and source is marked PLACEHOLDER, and the validator refuses an approved question that still contains that word.
+- The shipped 15 questions (1–3 December) use real figures from CSO Census 2022 and Eurostat. Each one was checked against the linked source page. They are still `draft`: review them, then set `status` to `approved` for the beta.
+- The validator refuses an approved question that contains the word PLACEHOLDER.
 
 ## Validating content
 
