@@ -1,8 +1,57 @@
 .screen {
-  min-height: 100dvh;
+  /* Pinned to the visual viewport (top/height set from JS), so the keyboard never pushes it off screen. */
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+  padding: env(safe-area-inset-top) max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
   display: flex;
   flex-direction: column;
-  padding-bottom: env(safe-area-inset-bottom);
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* The clues scroll on their own; the newest is kept in view. */
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Keyboard open: drop the chrome, keep the question, newest clue and the input. */
+.compact .head {
+  margin-top: 10px;
+}
+
+.compact .title {
+  font-size: 22px;
+  margin: 2px 0 8px;
+}
+
+.compact .clue:not(.latest) {
+  padding: 8px 12px;
+}
+
+.compact .clue:not(.latest) .clueText {
+  font-size: 15px;
+}
+
+.compact .clue:not(.latest) .clueNo {
+  display: none;
+}
+
+.compact .latest .clueText {
+  font-size: 18px;
+}
+
+.compact .dock {
+  padding: 8px 0 8px;
 }
 
 .head {
@@ -120,45 +169,44 @@
 
 /* Input dock sits at the bottom, suggestions open upwards above the keyboard. */
 .dock {
-  position: sticky;
-  bottom: 0;
-  margin-top: auto;
-  padding: 16px 0 calc(12px + env(safe-area-inset-bottom));
+  flex: none;
+  padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
   background: var(--bg);
 }
 
+/* Suggestions: one horizontal row of chips, so they never cover the clue. */
 .options {
   list-style: none;
-  margin: 0 0 8px;
-  padding: 6px;
-  border-radius: var(--r-card);
-  background: var(--raised);
-  display: grid;
-  gap: 2px;
+  margin: 0 -16px 8px;
+  padding: 0 16px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.options::-webkit-scrollbar {
+  display: none;
 }
 
 .option {
-  min-height: 48px;
+  flex: none;
+  min-height: 44px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 14px;
-  border-radius: 14px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--raised);
   font-family: var(--display);
   font-weight: 700;
-  font-size: 18px;
+  font-size: 17px;
+  white-space: nowrap;
   cursor: pointer;
 }
 
-.option span {
-  font-family: var(--body);
-  font-weight: 500;
-  font-size: 13px;
-  color: var(--muted);
-}
-
 .optionActive {
-  background: var(--line);
+  background: var(--paper);
+  color: var(--ink);
 }
 
 .optionTried {

@@ -122,7 +122,7 @@ export function App() {
   useEffect(() => {
     const t = setTimeout(() => {
       const a = document.activeElement;
-      if (a && a !== document.body && document.querySelector('main')?.contains(a)) return;
+      if (a && a !== document.body && a.isConnected) return; // the user is already somewhere
       document.querySelector<HTMLElement>('[data-autofocus]')?.focus({ preventScroll: true });
     }, 320);
     return () => clearTimeout(t);
