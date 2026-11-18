@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { blockForSolve, buildLadder, pointsFor, verdictForSolve } from '../shared/ladder';
-import { IE_COUNTIES, normalise, resolve, suggest } from '../shared/places';
+import { IE_COUNTIES, normalise, resolve, suggest, WORLD_COUNTRIES } from '../shared/places';
 import { percentileBeaten, percentileFromCounts } from '../shared/scoring';
 
 describe('clue ladder scoring', () => {
@@ -12,15 +12,10 @@ describe('clue ladder scoring', () => {
     expect(verdictForSolve(1)).toBe('First clue!');
     expect(verdictForSolve(0)).toBe('Missed it');
   });
-  it('fills the ladder to four clues with region, first letter, length', () => {
-    expect(buildLadder(IE_COUNTIES, 'kerry', ['Hard clue.'])).toEqual([
-      'Hard clue.',
-      'It’s in Munster.',
-      'It begins with K.',
-      'Its name has 5 letters.',
-    ]);
-    expect(buildLadder(IE_COUNTIES, 'meath', ['A', 'B'])).toEqual(['A', 'B', 'It’s in Leinster.', 'It begins with M.']);
-    expect(() => buildLadder(IE_COUNTIES, 'atlantis', ['x'])).toThrow();
+  it('uses the four hand-written clues; only fills a gap with the region, never letters', () => {
+    expect(buildLadder(WORLD_COUNTRIES, 'finland', ['a', 'b', 'c', 'd'])).toEqual(['a', 'b', 'c', 'd']);
+    expect(buildLadder(WORLD_COUNTRIES, 'finland', ['a', 'b', 'c'])).toEqual(['a', 'b', 'c', 'It’s in Europe.']);
+    expect(() => buildLadder(WORLD_COUNTRIES, 'atlantis', ['x'])).toThrow();
   });
 });
 
@@ -49,6 +44,33 @@ describe('county matching', () => {
     expect(suggest(IE_COUNTIES, 'kil').map((p) => p.name)).toEqual(['Kildare', 'Kilkenny']);
     expect(suggest(IE_COUNTIES, 'w').map((p) => p.name)).toEqual(['Waterford', 'Westmeath', 'Wexford', 'Wicklow']);
     expect(suggest(IE_COUNTIES, '')).toEqual([]);
+  });
+});
+
+describe('world countries', () => {
+  it('has the 193 UN members plus Vatican City and Palestine, with unique ids', () => {
+    expect(WORLD_COUNTRIES.places).toHaveLength(195);
+    expect(new Set(WORLD_COUNTRIES.places.map((p) => p.id)).size).toBe(195);
+    const by = (r: string) => WORLD_COUNTRIES.places.filter((p) => p.region === r).length;
+    expect([by('Africa'), by('Asia'), by('Europe'), by('North America'), by('South America'), by('Oceania')]).toEqual([54, 47, 45, 23, 12, 14]);
+  });
+  it('accepts common alternative names', () => {
+    const r = (t: string) => resolve(WORLD_COUNTRIES, t)?.name;
+    expect(r('USA')).toBe('United States');
+    expect(r('america')).toBe('United States');
+    expect(r('England')).toBe('United Kingdom');
+    expect(r('Holland')).toBe('Netherlands');
+    expect(r('Czech Republic')).toBe('Czechia');
+    expect(r("Côte d'Ivoire")).toBe('Ivory Coast');
+    expect(r('Burma')).toBe('Myanmar');
+    expect(r('Turkiye')).toBe('Turkey');
+    expect(r('Swaziland')).toBe('Eswatini');
+    expect(r('Phillipines')).toBe('Philippines');
+    expect(r('Madagasgar')).toBe('Madagascar');
+  });
+  it('suggests both Koreas and both Congos', () => {
+    expect(suggest(WORLD_COUNTRIES, 'korea').map((p) => p.name).sort()).toEqual(['North Korea', 'South Korea']);
+    expect(suggest(WORLD_COUNTRIES, 'congo').map((p) => p.name)).toEqual(expect.arrayContaining(['DR Congo', 'Republic of the Congo']));
   });
 });
 

@@ -11,7 +11,7 @@ services:
     environment:
       SITE_URL: https://percentle.ie
       LAUNCH_DATE: "2026-12-01"
-      EDITION: ie
+      EDITION: ww
       TZ: Europe/Dublin
       # Local testing only — never in production:
       # ALLOW_DRAFTS: "1"

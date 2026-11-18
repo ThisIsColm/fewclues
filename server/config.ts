@@ -39,7 +39,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
     contentPath: env.CONTENT_PATH || 'content/rounds.json',
     staticDir: env.STATIC_DIR || 'dist/public',
     launchDate,
-    edition: env.EDITION || 'ie',
+    edition: env.EDITION || 'ww',
     siteUrl,
     siteHost: env.SITE_HOST || new URL(siteUrl).host,
     allowDrafts: env.ALLOW_DRAFTS === '1',

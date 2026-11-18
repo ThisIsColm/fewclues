@@ -51,7 +51,7 @@ describe('GET /api/today', () => {
     expect(body.rounds).toHaveLength(5);
     expect(body.rounds[0]).toEqual({ id: `${DAY}-1`, order: 1, category: 'Test', clues: ['Hard clue 1.'], wrong: [], done: false, reveal: null });
     const raw = JSON.stringify(body.rounds);
-    expect(raw).not.toMatch(/kerry|Munster|begins with|letters/i);
+    expect(raw).not.toMatch(/kerry|Medium clue|Easier clue|Easy clue/i);
   });
   it('does not serve drafts unless ALLOW_DRAFTS=1, nor anything before launch', async () => {
     clock = new Date('2026-12-03T12:00:00Z');
@@ -68,10 +68,10 @@ describe('POST /api/guess — the clue ladder', () => {
     const p = randomUUID();
     let r = await g(p, 1, 'cork');
     expect(r.correct).toBe(false);
-    expect(r.round).toMatchObject({ clues: ['Hard clue 1.', 'It’s in Munster.'], wrong: ['cork'], done: false, reveal: null });
+    expect(r.round).toMatchObject({ clues: ['Hard clue 1.', 'Medium clue 1.'], wrong: ['cork'], done: false, reveal: null });
     r = await g(p, 1, 'clare');
     expect(r.round.clues).toHaveLength(3);
-    expect(r.round.clues[2]).toBe('It begins with K.');
+    expect(r.round.clues[2]).toBe('Easier clue 1.');
   });
 
   it('solving on clue 2 scores 60 and reveals everything', async () => {
@@ -117,7 +117,7 @@ describe('POST /api/guess — the clue ladder', () => {
     const p = randomUUID();
     await g(p, 3, 'galway');
     const body = await today(p);
-    expect(body.rounds[2]).toMatchObject({ clues: ['Hard clue 3.', 'It’s in Connacht.'], wrong: ['galway'], done: false });
+    expect(body.rounds[2]).toMatchObject({ clues: ['Hard clue 3.', 'Medium clue 3.'], wrong: ['galway'], done: false });
   });
 
   it('validates input', async () => {

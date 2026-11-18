@@ -1,6 +1,6 @@
 # Percentle
 
-A daily place-guessing game. Five rounds a day: each starts with one clue about an Irish county, and every wrong guess unlocks an easier clue (up to four). The fewer clues you need, the more points: 100, 60, 30 or 10. Then see the fact behind it, how everyone else did, and how you did against friends in a league.
+A daily place-guessing game. Five rounds a day: each starts with the hardest of four hand-written clues about a country, and every wrong guess unlocks an easier one. The fewer clues you need, the more points: 100, 60, 30 or 10. Then see the fact behind it, how everyone else did, and how you did against friends in a league.
 
 > The earlier percentage game is in git history (`main`), and the Read the Room prototype is parked on the `read-the-room` branch.
 

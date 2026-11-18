@@ -1,265 +1,301 @@
 [
   {
-    "id": "ie-c001",
+    "id": "ww-001",
     "date": "2026-12-01",
     "order": 1,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "kerry",
-    "category": "Landscape",
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "finland",
+    "category": "Quirks",
     "clues": [
-      "Home to MacGillycuddy’s Reeks, the highest mountain range in Ireland.",
-      "Carrauntoohil, Ireland’s highest mountain, is here."
+      "It hosts the Wife Carrying World Championships.",
+      "Nokia started here in 1865, as a pulp mill on a set of rapids.",
+      "It has been named the happiest country in the world nine years in a row.",
+      "Its capital is Helsinki."
     ],
-    "fact": "Carrauntoohil stands 1,038.6 metres tall, the central peak of MacGillycuddy’s Reeks on the Iveragh Peninsula.",
-    "source_name": "Wikipedia: Carrauntoohil",
-    "source_url": "https://en.wikipedia.org/wiki/Carrauntoohil",
-    "difficulty": "easy",
+    "fact": "The sport of wife carrying began in Sonkajärvi in 1992 and became a world championship in 1996. The country also has over 180,000 recorded lakes.",
+    "source_name": "Wikipedia: Wife-carrying",
+    "source_url": "https://en.wikipedia.org/wiki/Wife-carrying",
+    "difficulty": "medium",
     "status": "draft"
   },
   {
-    "id": "ie-c002",
+    "id": "ww-002",
     "date": "2026-12-01",
     "order": 2,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "leitrim",
-    "category": "People",
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "madagascar",
+    "category": "Nature",
     "clues": [
-      "Fewer people live here than in any other county on the island: 35,199 in 2022."
+      "Over 90% of its wildlife is found nowhere else on Earth.",
+      "It grows about 42% of the world’s vanilla.",
+      "Lemurs live naturally here and nowhere else.",
+      "It’s the world’s fourth-largest island, off the south-east coast of Africa."
     ],
-    "fact": "Leitrim had 35,199 people in Census 2022. Next smallest: Longford (46,751) and Carlow (61,968).",
-    "source_name": "Wikipedia: Irish counties by population",
-    "source_url": "https://en.wikipedia.org/wiki/List_of_Irish_counties_by_population",
-    "difficulty": "hard",
+    "fact": "Millions of years of isolation let its plants and animals evolve on their own. In 2023 it produced 42% of the world’s vanilla.",
+    "source_name": "Wikipedia: Madagascar",
+    "source_url": "https://en.wikipedia.org/wiki/Madagascar",
+    "difficulty": "medium",
     "status": "draft"
   },
   {
-    "id": "ie-c003",
+    "id": "ww-003",
     "date": "2026-12-01",
     "order": 3,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "antrim",
-    "category": "Landmarks",
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "canada",
+    "category": "Records",
     "clues": [
-      "About 40,000 interlocking basalt columns stand on its north coast.",
-      "The Giant’s Causeway, a UNESCO World Heritage Site since 1986, is here."
+      "It has the world’s largest area of freshwater lakes.",
+      "It has the longest coastline of any country.",
+      "It shares the longest international land border in the world.",
+      "It’s the second-largest country by area, and its capital is Ottawa."
     ],
-    "fact": "The Giant’s Causeway’s roughly 40,000 basalt columns were declared a UNESCO World Heritage Site in 1986.",
-    "source_name": "Wikipedia: Giant’s Causeway",
-    "source_url": "https://en.wikipedia.org/wiki/Giant%27s_Causeway",
+    "fact": "Its lakes are why it ranks only fourth by land area despite being second by total area. Its border with its southern neighbour is the longest land border on Earth.",
+    "source_name": "Wikipedia: Canada",
+    "source_url": "https://en.wikipedia.org/wiki/Canada",
     "difficulty": "easy",
     "status": "draft"
   },
   {
-    "id": "ie-c004",
+    "id": "ww-004",
     "date": "2026-12-01",
     "order": 4,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "kilkenny",
-    "category": "Sport",
-    "clues": [
-      "Its hurlers have won a record 36 All-Ireland senior titles."
-    ],
-    "fact": "Kilkenny’s 36 All-Ireland Senior Hurling Championships are a national record, making it the most successful county in the history of hurling.",
-    "source_name": "Wikipedia: Kilkenny GAA",
-    "source_url": "https://en.wikipedia.org/wiki/Kilkenny_GAA",
-    "difficulty": "medium",
-    "status": "draft"
-  },
-  {
-    "id": "ie-c005",
-    "date": "2026-12-01",
-    "order": 5,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "cork",
-    "category": "Landscape",
-    "clues": [
-      "At 7,508 km², it’s the largest county in Ireland."
-    ],
-    "fact": "Cork covers 7,508 km², well ahead of Galway (6,151 km²) and Mayo (5,588 km²).",
-    "source_name": "Wikipedia: Irish counties by area",
-    "source_url": "https://en.wikipedia.org/wiki/List_of_Irish_counties_by_area",
-    "difficulty": "easy",
-    "status": "draft"
-  },
-  {
-    "id": "ie-c006",
-    "date": "2026-12-02",
-    "order": 1,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "meath",
-    "category": "Landmarks",
-    "clues": [
-      "A 5,000-year-old tomb here lights up for about 17 minutes at the winter solstice.",
-      "Newgrange is here."
-    ],
-    "fact": "Newgrange was built around 3100 BC. At the winter solstice the rising sun shines through its roofbox and floods the inner chamber for about 17 minutes.",
-    "source_name": "Wikipedia: Newgrange",
-    "source_url": "https://en.wikipedia.org/wiki/Newgrange",
-    "difficulty": "medium",
-    "status": "draft"
-  },
-  {
-    "id": "ie-c007",
-    "date": "2026-12-02",
-    "order": 2,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "louth",
-    "category": "Landscape",
-    "clues": [
-      "The smallest county in Ireland, at just 826 km²."
-    ],
-    "fact": "Louth covers just 826 km². Carlow (897 km²) and Dublin (922 km²) are the next smallest.",
-    "source_name": "Wikipedia: Irish counties by area",
-    "source_url": "https://en.wikipedia.org/wiki/List_of_Irish_counties_by_area",
-    "difficulty": "medium",
-    "status": "draft"
-  },
-  {
-    "id": "ie-c008",
-    "date": "2026-12-02",
-    "order": 3,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "fermanagh",
-    "category": "Landmarks",
-    "clues": [
-      "Its caves anchor the world’s first international, cross-border geopark.",
-      "The Marble Arch Caves are here, near Florencecourt."
-    ],
-    "fact": "The Marble Arch Caves Global Geopark joined UNESCO’s geopark network in 2004. In 2008 it stretched across the border into Cavan, becoming the first international geopark in the world.",
-    "source_name": "Wikipedia: Marble Arch Caves",
-    "source_url": "https://en.wikipedia.org/wiki/Marble_Arch_Caves",
-    "difficulty": "hard",
-    "status": "draft"
-  },
-  {
-    "id": "ie-c009",
-    "date": "2026-12-02",
-    "order": 4,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "mayo",
-    "category": "People",
-    "clues": [
-      "It has the highest share of unpaid carers in the Republic: 7% of its people."
-    ],
-    "fact": "In Census 2022, 7% of people in Mayo were unpaid carers, the highest rate in the country. Dublin City was lowest, at 5%.",
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/healthdisabilitycaringandvolunteering/",
-    "difficulty": "hard",
-    "status": "draft"
-  },
-  {
-    "id": "ie-c010",
-    "date": "2026-12-02",
-    "order": 5,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "clare",
-    "category": "Landmarks",
-    "clues": [
-      "Its sea cliffs run for about 14 km and reach 214 metres high.",
-      "The Cliffs of Moher are here, on the edge of the Burren."
-    ],
-    "fact": "The Cliffs of Moher run for about 14 km and peak at 214 metres, just north of O’Brien’s Tower. They get around 1.5 million visits a year.",
-    "source_name": "Wikipedia: Cliffs of Moher",
-    "source_url": "https://en.wikipedia.org/wiki/Cliffs_of_Moher",
-    "difficulty": "easy",
-    "status": "draft"
-  },
-  {
-    "id": "ie-c011",
-    "date": "2026-12-03",
-    "order": 1,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "cavan",
-    "category": "Landscape",
-    "clues": [
-      "The River Shannon traditionally rises here.",
-      "The Shannon Pot is here."
-    ],
-    "fact": "The Shannon Pot, a small pool in the hills, is the traditional source of the River Shannon.",
-    "source_name": "Wikipedia: Shannon Pot",
-    "source_url": "https://en.wikipedia.org/wiki/Shannon_Pot",
-    "difficulty": "hard",
-    "status": "draft"
-  },
-  {
-    "id": "ie-c012",
-    "date": "2026-12-03",
-    "order": 2,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "tipperary",
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "japan",
     "category": "History",
     "clues": [
-      "Brian Boru was crowned King of Munster here in 977.",
-      "The Rock of Cashel is here."
+      "A temple-building company here traces its roots back to the year 578.",
+      "It is made up of 14,125 islands.",
+      "Its highest mountain is an active volcano that last erupted in 1707.",
+      "Its capital is Tokyo."
     ],
-    "fact": "The Rock of Cashel was the seat of the kings of Munster. Legend says it landed there when St Patrick banished Satan from a cave in the Devil’s Bit mountain.",
-    "source_name": "Wikipedia: Rock of Cashel",
-    "source_url": "https://en.wikipedia.org/wiki/Rock_of_Cashel",
+    "fact": "Kongō Gumi, founded in 578 in Osaka, built and repaired shrines and temples for more than 1,400 years. Mount Fuji, 3,776 m, became a World Heritage Site in 2013.",
+    "source_name": "Wikipedia: Kongō Gumi",
+    "source_url": "https://en.wikipedia.org/wiki/Kong%C5%8D_Gumi",
     "difficulty": "medium",
     "status": "draft"
   },
   {
-    "id": "ie-c013",
-    "date": "2026-12-03",
-    "order": 3,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "donegal",
-    "category": "Landscape",
-    "clues": [
-      "The most northerly point of mainland Ireland is here.",
-      "Malin Head is here, on the Inishowen peninsula."
-    ],
-    "fact": "Malin Head is the most northerly point of mainland Ireland. The tiny island of Inishtrahull lies further north still.",
-    "source_name": "Wikipedia: Malin Head",
-    "source_url": "https://en.wikipedia.org/wiki/Malin_Head",
-    "difficulty": "easy",
-    "status": "draft"
-  },
-  {
-    "id": "ie-c014",
-    "date": "2026-12-03",
-    "order": 4,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "offaly",
+    "id": "ww-005",
+    "date": "2026-12-01",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "peru",
     "category": "History",
     "clues": [
-      "St Ciarán founded a monastery on the Shannon here in 544.",
-      "Clonmacnoise is here, south of Athlone."
+      "The Nazca culture flourished on its coast.",
+      "The largest empire in the pre-Columbian Americas ruled from a city here.",
+      "Machu Picchu is here.",
+      "Its capital is Lima."
     ],
-    "fact": "St Ciarán founded Clonmacnoise in 544, on the River Shannon south of Athlone.",
-    "source_name": "Wikipedia: Clonmacnoise",
-    "source_url": "https://en.wikipedia.org/wiki/Clonmacnoise",
+    "fact": "The Inca built the largest empire in the pre-Columbian Americas, with Cusco as its capital. Machu Picchu is the citadel that became its icon.",
+    "source_name": "Wikipedia: Peru",
+    "source_url": "https://en.wikipedia.org/wiki/Peru",
     "difficulty": "hard",
     "status": "draft"
   },
   {
-    "id": "ie-c015",
-    "date": "2026-12-03",
+    "id": "ww-006",
+    "date": "2026-12-02",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "bhutan",
+    "category": "Quirks",
+    "clues": [
+      "It lifted its ban on television and the internet only in 1999.",
+      "Its national anthem is called “The Thunder Dragon Kingdom”.",
+      "About 71% of it is forest, and it famously measures Gross National Happiness.",
+      "It’s a Himalayan kingdom between China and India. Its capital is Thimphu."
+    ],
+    "fact": "It was one of the last countries in the world to introduce television. Its name in its own language means “Land of the Thunder Dragon”.",
+    "source_name": "Wikipedia: Bhutan",
+    "source_url": "https://en.wikipedia.org/wiki/Bhutan",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-007",
+    "date": "2026-12-02",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "australia",
+    "category": "Quirks",
+    "clues": [
+      "In 1932 its army fought a “war” against emus, and abandoned it.",
+      "It has the longest fence in the world: 5,614 km, built to keep dingoes out.",
+      "The world’s largest coral reef system, over 2,300 km long, lies off its coast.",
+      "Its capital is Canberra."
+    ],
+    "fact": "Soldiers with machine guns spent five weeks in the Emu War in 1932. The emus scattered into small groups and the cull was called off.",
+    "source_name": "Wikipedia: Emu War",
+    "source_url": "https://en.wikipedia.org/wiki/Emu_War",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-008",
+    "date": "2026-12-02",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "switzerland",
+    "category": "Politics",
+    "clues": [
+      "Officially it has no capital at all, just a “federal city”.",
+      "It has four language regions: German, French, Italian and Romansh.",
+      "It’s the birthplace of the Red Cross.",
+      "It has been neutral since the 16th century, and hasn’t fought an international war since 1815."
+    ],
+    "fact": "Bern is the seat of government but not, legally, the capital. Its neutrality was recognised by Europe’s powers in 1648.",
+    "source_name": "Wikipedia: Switzerland",
+    "source_url": "https://en.wikipedia.org/wiki/Switzerland",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-009",
+    "date": "2026-12-02",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "brazil",
+    "category": "Nature",
+    "clues": [
+      "It ranks first among the world’s 17 “megadiverse” countries.",
+      "It borders every other country on its continent except Ecuador and Chile.",
+      "It has the largest Portuguese-speaking population in the world.",
+      "It’s the fifth-largest country on Earth by area."
+    ],
+    "fact": "It borders nine countries and one French territory: every neighbour on its continent except Ecuador and Chile. It’s also the world’s fifth-largest country.",
+    "source_name": "Wikipedia: Brazil",
+    "source_url": "https://en.wikipedia.org/wiki/Brazil",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-010",
+    "date": "2026-12-02",
     "order": 5,
-    "edition": "ie",
-    "set": "ie-counties",
-    "answer": "longford",
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "ethiopia",
+    "category": "History",
+    "clues": [
+      "Along with Liberia, it’s the only African country never fully colonised.",
+      "It hosts the headquarters of the African Union Commission.",
+      "It’s the second most populous country in Africa, and has no coastline.",
+      "Its capital is Addis Ababa."
+    ],
+    "fact": "Italy occupied it from 1936 to 1941 but never secured the whole country. Around 138 million people live there.",
+    "source_name": "Wikipedia: Ethiopia",
+    "source_url": "https://en.wikipedia.org/wiki/Ethiopia",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-011",
+    "date": "2026-12-03",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "mongolia",
     "category": "People",
     "clues": [
-      "It had the lowest share of homes with broadband in Census 2022: 72%."
+      "It’s the most sparsely populated sovereign state in the world.",
+      "About 30% of its people are nomadic or semi-nomadic.",
+      "Its capital is the coldest capital city in the world.",
+      "Genghis Khan founded an empire here in 1206. It’s landlocked between Russia and China."
     ],
-    "fact": "Broadband ranged from 91% of homes in Dún Laoghaire-Rathdown to 72% here. Nationally it was almost 80%.",
-    "source_name": "CSO Census 2022",
-    "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-cpsr/censusofpopulation2022-summaryresults/dwellingcharacteristics/",
+    "fact": "Ulaanbaatar averages −1.3 °C over the year, colder than any other capital.",
+    "source_name": "Wikipedia: Mongolia",
+    "source_url": "https://en.wikipedia.org/wiki/Mongolia",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-012",
+    "date": "2026-12-03",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "new-zealand",
+    "category": "Nature",
+    "clues": [
+      "Bats were its only known native land mammals until a fossil find in 2006.",
+      "In 1893 it became the first nation to give all women the vote.",
+      "Its national icon is a flightless bird.",
+      "Its capital is Wellington."
+    ],
+    "fact": "With no mammal predators, several of its birds evolved to lose the power of flight, including the kiwi.",
+    "source_name": "Wikipedia: New Zealand",
+    "source_url": "https://en.wikipedia.org/wiki/New_Zealand",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-013",
+    "date": "2026-12-03",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "iceland",
+    "category": "Politics",
+    "clues": [
+      "It’s the only NATO member with no standing army.",
+      "The English word “geyser” comes from a hot spring here.",
+      "Its parliament, the Althing, dates back to around 930.",
+      "About 35% of its roughly 395,000 people live in its capital, Reykjavík."
+    ],
+    "fact": "Geysir is the oldest known geyser in the world. Its parliament has a claim to being one of the longest-running in the world.",
+    "source_name": "Wikipedia: Iceland",
+    "source_url": "https://en.wikipedia.org/wiki/Iceland",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-014",
+    "date": "2026-12-03",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "indonesia",
+    "category": "People",
+    "clues": [
+      "More than half its people live on one island, the most heavily populated island on Earth.",
+      "It’s the world’s largest archipelagic state, with between 13,000 and 17,000 islands.",
+      "It has the largest Muslim population of any country.",
+      "Its capital is Jakarta."
+    ],
+    "fact": "Java holds more than half of its people. Islam is followed by about 87% of the population.",
+    "source_name": "Wikipedia: Indonesia",
+    "source_url": "https://en.wikipedia.org/wiki/Indonesia",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-015",
+    "date": "2026-12-03",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "chile",
+    "category": "Geography",
+    "clues": [
+      "It claims about 1.25 million km² of Antarctica.",
+      "Easter Island has belonged to it since 1888.",
+      "Its Atacama Desert was the site of the 2010 San José mine collapse.",
+      "Its capital is Santiago."
+    ],
+    "fact": "It also administers the Juan Fernández Islands in the Pacific. Its Antarctic claim is called the Chilean Antarctic Territory.",
+    "source_name": "Wikipedia: Chile",
+    "source_url": "https://en.wikipedia.org/wiki/Chile",
     "difficulty": "hard",
     "status": "draft"
   }

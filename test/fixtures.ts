@@ -10,7 +10,7 @@ export function makeDay(date: string, answers = ['kerry', 'cork', 'mayo', 'meath
     set: 'ie-counties',
     answer,
     category: 'Test',
-    clues: [`Hard clue ${i + 1}.`],
+    clues: [`Hard clue ${i + 1}.`, `Medium clue ${i + 1}.`, `Easier clue ${i + 1}.`, `Easy clue ${i + 1}.`],
     fact: 'Test fact.',
     source_name: 'Test source',
     source_url: 'https://example.com/source',

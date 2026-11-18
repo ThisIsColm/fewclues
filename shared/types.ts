@@ -8,10 +8,10 @@ export interface Round {
   date: string; // YYYY-MM-DD, Europe/Dublin
   order: number; // 1–5
   edition: string;
-  set: string; // place set id, e.g. "ie-counties"
+  set: string; // place set id, e.g. "world-countries"
   answer: string; // place id
   category?: string;
-  /** The round's own clues, hardest first (1–2). Automatic clues fill the ladder to four. */
+  /** Four hand-written clues, hardest first. */
   clues: string[];
   /** Shown on the reveal. */
   fact: string;

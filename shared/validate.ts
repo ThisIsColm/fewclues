@@ -44,8 +44,8 @@ function check(r: unknown, where: string, errors: string[], warnings: string[]):
   if (!set) err(`set must be one of ${Object.keys(PLACE_SETS).join(', ')}`);
   const place = set && typeof r.answer === 'string' ? placeById(set, r.answer) : undefined;
   if (set && !place) err(`answer "${String(r.answer)}" is not a place in ${set.id}`);
-  if (!Array.isArray(r.clues) || r.clues.length < 1 || r.clues.length > 2 || !r.clues.every((c) => nonEmpty(c) && c.length <= 160))
-    err('clues must be 1–2 non-empty strings of at most 160 characters');
+  if (!Array.isArray(r.clues) || r.clues.length !== 4 || !r.clues.every((c) => nonEmpty(c) && c.length <= 160))
+    err('clues must be exactly 4 non-empty strings (hardest first) of at most 160 characters');
   else if (place) {
     // A clue that names the answer gives the game away.
     const names = [place.name, ...(place.aliases ?? [])].map(normalise);

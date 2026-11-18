@@ -6,16 +6,17 @@ export const MAX_CLUES = 4;
 export const CLUE_POINTS = [100, 60, 30, 10] as const;
 export const ROUND_MAX = CLUE_POINTS[0];
 
-/** The full ladder: the round's own clues (1–2), then automatic ones, to four. */
+/**
+ * The full ladder of four clues, hardest first. Rounds normally supply all
+ * four by hand; if a round has fewer, the region is used to fill the gap
+ * (never the first letter or name length — those give the answer away).
+ */
 export function buildLadder(set: PlaceSet, answerId: string, clues: string[]): string[] {
   const p = placeById(set, answerId);
   if (!p) throw new Error(`Unknown place ${answerId}`);
-  const auto = [
-    `It’s in ${p.region}.`,
-    `It begins with ${p.name[0].toUpperCase()}.`,
-    `Its name has ${p.name.length} letters.`,
-  ];
-  return [...clues, ...auto].slice(0, MAX_CLUES);
+  const ladder = clues.slice(0, MAX_CLUES);
+  if (ladder.length < MAX_CLUES) ladder.push(`It’s in ${p.region}.`);
+  return ladder;
 }
 
 /** solvedAt: 1–4 = solved on that clue, 0 = missed. */

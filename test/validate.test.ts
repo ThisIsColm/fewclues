@@ -27,20 +27,20 @@ describe('validateContent (rounds)', () => {
   });
   it('refuses a clue that names the answer', () => {
     const d = makeDay(today);
-    d[0].clues = ['The Kingdom of Kerry, famously.'];
+    d[0].clues = ['The Kingdom of Kerry, famously.', 'b', 'c', 'd'];
     expect(run(d).errors.join()).toMatch(/clue 1 names the answer/);
-    d[0].clues = ['Kerrygold is not a clue word match.'];
+    d[0].clues = ['Kerrygold is not a clue word match.', 'b', 'c', 'd'];
     expect(run(d).errors).toEqual([]); // whole words only
   });
   it('checks clue count, fact, source and enums', () => {
     const d = makeDay(today) as any[];
     d[0].clues = [];
-    d[1].clues = ['a', 'b', 'c'];
+    d[1].clues = ['a', 'b', 'c', 'd', 'e'];
     d[2].source_url = 'javascript:alert(1)';
     d[3].fact = '';
     d[4].status = 'live';
     const e = run(d).errors.join('\n');
-    expect(e).toMatch(/clues must be 1–2/);
+    expect(e).toMatch(/clues must be exactly 4/);
     expect(e).toMatch(/source_url/);
     expect(e).toMatch(/fact must be/);
     expect(e).toMatch(/status must be/);

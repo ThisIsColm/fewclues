@@ -16,6 +16,7 @@ export interface Edition {
 
 export const EDITIONS: Record<string, Edition> = {
   ie: { code: 'ie', name: 'Ireland', flag: '🇮🇪' },
+  ww: { code: 'ww', name: 'World', flag: '🌍' },
 };
 
 export function editionInfo(code: string): Edition {

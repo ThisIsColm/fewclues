@@ -13,7 +13,7 @@ export function TopBar({ puzzle, edition, streak, right }: { puzzle: number; edi
         {right ?? (
           <>
             <Pill>
-              <span aria-label={`${edition === 'ie' ? 'Ireland' : edition} edition`}>{edition.toUpperCase()}</span>
+              <span aria-label={`${editionLabel(edition)} edition`}>{editionLabel(edition)}</span>
             </Pill>
             {streak > 0 && <Pill tone="streak">{streak}-day streak</Pill>}
           </>
@@ -22,3 +22,5 @@ export function TopBar({ puzzle, edition, streak, right }: { puzzle: number; edi
     </header>
   );
 }
+
+export const editionLabel = (code: string) => (code === 'ww' ? 'World' : code.toUpperCase());
