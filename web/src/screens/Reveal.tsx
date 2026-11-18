@@ -173,6 +173,26 @@ export function Reveal(props: {
         </div>
       </motion.section>
 
+      <motion.section
+        className={`${ui.paper} ${s.fact}`}
+        aria-labelledby="dyk-title"
+        initial={skipped ? false : { opacity: 0, y: 12 }}
+        animate={showResult ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }}
+        transition={{ type: 'spring', stiffness: 420, damping: 34, delay: skipped ? 0 : 0.12 }}
+      >
+        <h2 className={ui.paperLabel} id="dyk-title">
+          Did you know?
+        </h2>
+        <p className={s.nugget}>{r.nugget}</p>
+        <a className={s.sourceLink} href={r.source_url} target="_blank" rel="noopener noreferrer">
+          <span>
+            Source: <b>{r.source_name}</b>
+            {r.source_name.includes(String(r.year)) ? '' : ` · ${r.year} data`}
+          </span>
+          <Icon name="external" />
+        </a>
+      </motion.section>
+
       <Card aria-labelledby="hist-title">
         <div className={s.cardHead}>
           <h2 className={ui.cardTitle} id="hist-title">
@@ -189,19 +209,6 @@ export function Reveal(props: {
         </p>
       </Card>
 
-      <section className={ui.paper} aria-labelledby="dyk-title">
-        <h2 className={ui.paperLabel} id="dyk-title">
-          Did you know?
-        </h2>
-        <p className={s.nugget}>{r.nugget}</p>
-        <p className={s.source}>
-          Source:{' '}
-          <a href={r.source_url} target="_blank" rel="noopener noreferrer">
-            {r.source_name}
-          </a>{' '}
-          · {r.year}
-        </p>
-      </section>
 
       {r.comparisons.length > 0 && (
         <Card aria-labelledby="cmp-title">

@@ -25,6 +25,7 @@ const ICONS = {
   league: 'M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
   plus: 'M12 5v14M5 12h14',
   up: 'M12 19V5M5 12l7-7 7 7',
+  external: 'M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5',
   down: 'M12 5v14M19 12l-7 7-7-7',
 } as const;
 export type IconName = keyof typeof ICONS;
