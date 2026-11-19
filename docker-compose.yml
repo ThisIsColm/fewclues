@@ -15,7 +15,7 @@ services:
       TZ: Europe/Dublin
       # Beta: the rounds are still marked draft until they've been reviewed.
       # Remove this once every round is "approved".
-      ALLOW_DRAFTS: "1"
+      ALLOW_DRAFTS: "${ALLOW_DRAFTS:-1}"
       # Local testing only — never in production:
       # DEV_DATE: "2026-11-19"
     volumes:
