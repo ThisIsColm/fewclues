@@ -298,5 +298,1405 @@
     "source_url": "https://en.wikipedia.org/wiki/Bhutan",
     "difficulty": "hard",
     "status": "draft"
+  },
+  {
+    "id": "ww-016",
+    "date": "2026-11-22",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "france",
+    "category": "Landmarks",
+    "clues": [
+      "The Louvre, the world’s most-visited museum, stands in its capital.",
+      "The Eiffel Tower was built as the centrepiece of its 1889 World’s Fair.",
+      "It borders Belgium, Germany, Italy and Spain, and its overseas regions include French Guiana.",
+      "Its capital is Paris."
+    ],
+    "fact": "The Eiffel Tower was completed on 31 March 1889 and is 330 metres tall to its tip. The Louvre had 9.0 million visitors in 2025.",
+    "source_name": "Wikipedia: Eiffel Tower",
+    "source_url": "https://en.wikipedia.org/wiki/Eiffel_Tower",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-017",
+    "date": "2026-11-22",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "egypt",
+    "category": "History",
+    "clues": [
+      "The Great Pyramid, built for the pharaoh Khufu around 2600 BC, stands here.",
+      "It spans two continents: the northeast corner of Africa and, via the Sinai, the southwest corner of Asia.",
+      "It is the most populous country in the Arab world, with over 107 million people.",
+      "Its capital is Cairo."
+    ],
+    "fact": "The Great Pyramid stood 146.6 metres tall when it was built. It’s about 138.5 metres today, because its limestone casing was removed.",
+    "source_name": "Wikipedia: Great Pyramid of Giza",
+    "source_url": "https://en.wikipedia.org/wiki/Great_Pyramid_of_Giza",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-018",
+    "date": "2026-11-22",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "poland",
+    "category": "History",
+    "clues": [
+      "Its 1791 constitution was described as Europe’s first modern one.",
+      "Its statehood is traced to a ruler’s conversion to Christianity in 966.",
+      "The Solidarity movement, credited with helping start the fall of the Iron Curtain, began here.",
+      "Its capital is Warsaw, and it borders Germany to the west."
+    ],
+    "fact": "The state began forming under the Piast dynasty, after the ruler of a tribe called the Polans converted to Christianity in 966.",
+    "source_name": "Wikipedia: Poland",
+    "source_url": "https://en.wikipedia.org/wiki/Poland",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-019",
+    "date": "2026-11-22",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "venezuela",
+    "category": "Nature",
+    "clues": [
+      "It declared independence as a “First Republic” on 11 July 1811.",
+      "Angel Falls, the world’s tallest uninterrupted waterfall at 979 metres, plunges here.",
+      "Its name means “Little Venice”, inspired by stilt houses on Lake Maracaibo.",
+      "It has the world’s largest known oil reserves, and its capital is Caracas."
+    ],
+    "fact": "Angel Falls is named after Jimmie Angel, an American aviator who flew over it in 1933. Its Pemon name, Kerepakupai Merú, means “waterfall of the deepest place”.",
+    "source_name": "Wikipedia: Angel Falls",
+    "source_url": "https://en.wikipedia.org/wiki/Angel_Falls",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-020",
+    "date": "2026-11-22",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "kazakhstan",
+    "category": "Geography",
+    "clues": [
+      "It was the last Soviet republic to declare independence, in 1991.",
+      "In the early 1500s its khanate stretched across the steppes east of the Caspian Sea and north of the Aral Sea.",
+      "It is the ninth-largest country in the world, and the largest landlocked one.",
+      "Its capital is Astana, and it borders Russia to the north and China to the east."
+    ],
+    "fact": "Almaty, its largest city, was the capital until 1997.",
+    "source_name": "Wikipedia: Kazakhstan",
+    "source_url": "https://en.wikipedia.org/wiki/Kazakhstan",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-021",
+    "date": "2026-11-23",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "united-states",
+    "category": "Nature",
+    "clues": [
+      "Yellowstone, widely understood to be the world’s first national park, was established here in 1872.",
+      "The Statue of Liberty, a gift from the people of France, was dedicated here in 1886.",
+      "It consists of 50 states and a federal capital district, and borders Canada and Mexico.",
+      "Its capital is Washington, D.C."
+    ],
+    "fact": "Its economy has been the world’s largest since about 1890.",
+    "source_name": "Wikipedia: Yellowstone National Park",
+    "source_url": "https://en.wikipedia.org/wiki/Yellowstone_National_Park",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-022",
+    "date": "2026-11-23",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "india",
+    "category": "Landmarks",
+    "clues": [
+      "The Taj Mahal, a white marble mausoleum, stands in Agra.",
+      "It is the world’s most populous country, and the seventh-largest by area.",
+      "It shares land borders with Pakistan, China, Nepal, Bhutan, Bangladesh and Myanmar.",
+      "Its capital is New Delhi."
+    ],
+    "fact": "Shah Jahan commissioned the Taj Mahal in 1631 as a tomb for his wife Mumtaz Mahal. The wider complex was complete by 1653, and UNESCO listed it in 1983.",
+    "source_name": "Wikipedia: Taj Mahal",
+    "source_url": "https://en.wikipedia.org/wiki/Taj_Mahal",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-023",
+    "date": "2026-11-23",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "colombia",
+    "category": "Geography",
+    "clues": [
+      "Its name comes from the surname of the Italian navigator Christopher Columbus.",
+      "It is one of the world’s seventeen megadiverse countries, with Amazon rainforest and Andean highlands.",
+      "It has coasts on both the Caribbean Sea and the Pacific Ocean, and declared independence from Spain in 1810.",
+      "Its capital is Bogotá."
+    ],
+    "fact": "Simón Bolívar finally proclaimed its independence in 1819.",
+    "source_name": "Wikipedia: Colombia",
+    "source_url": "https://en.wikipedia.org/wiki/Colombia",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-024",
+    "date": "2026-11-23",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "namibia",
+    "category": "Nature",
+    "clues": [
+      "It became independent on 21 March 1990, though Walvis Bay stayed under South African control until 1994.",
+      "It is the driest country in sub-Saharan Africa.",
+      "It takes its name from the Namib, the oldest desert in the world.",
+      "Its capital is Windhoek, and it was a German colony from 1884."
+    ],
+    "fact": "Before independence it was called German South West Africa.",
+    "source_name": "Wikipedia: Namibia",
+    "source_url": "https://en.wikipedia.org/wiki/Namibia",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-025",
+    "date": "2026-11-23",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "lithuania",
+    "category": "History",
+    "clues": [
+      "It was the first Soviet republic to break away, restoring independence on 11 March 1990.",
+      "In the 14th century its Grand Duchy was the largest country in Europe.",
+      "In 1569 it merged into a Commonwealth with Poland.",
+      "Its capital is Vilnius, on the eastern shore of the Baltic Sea."
+    ],
+    "fact": "A sand peninsula called the Curonian Spit shelters much of its Baltic coast.",
+    "source_name": "Wikipedia: Lithuania",
+    "source_url": "https://en.wikipedia.org/wiki/Lithuania",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-026",
+    "date": "2026-11-24",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "italy",
+    "category": "Landmarks",
+    "clues": [
+      "Two independent microstates are surrounded by it: San Marino and Vatican City.",
+      "It has more UNESCO World Heritage Sites than any other country: 62.",
+      "The Colosseum, built in AD 70–80 for gladiatorial contests, stands in its capital.",
+      "Its capital is Rome, on a peninsula that extends into the Mediterranean Sea."
+    ],
+    "fact": "The Colosseum held an estimated 50,000 to 80,000 spectators, around 65,000 on average.",
+    "source_name": "Wikipedia: Colosseum",
+    "source_url": "https://en.wikipedia.org/wiki/Colosseum",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-027",
+    "date": "2026-11-24",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "kenya",
+    "category": "Nature",
+    "clues": [
+      "Millions of wildebeest and zebra cross the Mara River here in the Great Migration.",
+      "Africa’s second-highest mountain, just south of the equator, gave the country its name.",
+      "Its official languages are Swahili and English.",
+      "Its capital is Nairobi."
+    ],
+    "fact": "That mountain’s highest peak, Batian, is 5,199 metres tall. It became a UNESCO World Heritage Site in 1997.",
+    "source_name": "Wikipedia: Mount Kenya",
+    "source_url": "https://en.wikipedia.org/wiki/Mount_Kenya",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-028",
+    "date": "2026-11-24",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "nepal",
+    "category": "History",
+    "clues": [
+      "It was never colonised, acting as a buffer between Imperial China and British India.",
+      "Lumbini, the Buddha’s birthplace according to Buddhist traditions, is here.",
+      "It has eight of the world’s ten highest mountains, including Everest.",
+      "Its capital is Kathmandu, and it is landlocked between China and India."
+    ],
+    "fact": "On 28 May 2008 it was declared a federal republic, ending its Hindu monarchy.",
+    "source_name": "Wikipedia: Nepal",
+    "source_url": "https://en.wikipedia.org/wiki/Nepal",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-029",
+    "date": "2026-11-24",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "bolivia",
+    "category": "History",
+    "clues": [
+      "Silver from the mines of Potosí once made up over half of the world’s output.",
+      "It lost its Pacific coastline to Chile in 1879.",
+      "It has two capitals: Sucre, the constitutional capital, and La Paz, the seat of government.",
+      "It is named after Simón Bolívar, and is landlocked in central South America."
+    ],
+    "fact": "Its Salar de Uyuni, at 10,582 square kilometres, is the world’s largest salt flat, and holds most of Bolivia’s lithium, about 22% of the world’s known reserves.",
+    "source_name": "Wikipedia: Salar de Uyuni",
+    "source_url": "https://en.wikipedia.org/wiki/Salar_de_Uyuni",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-030",
+    "date": "2026-11-24",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "malaysia",
+    "category": "Politics",
+    "clues": [
+      "Its king is elected to a five-year term by and from among nine hereditary rulers.",
+      "The South China Sea splits it into two regions, one of them on the island of Borneo.",
+      "The Petronas Towers, once the world’s tallest buildings, rise in its capital.",
+      "Its capital is Kuala Lumpur, and it became independent on 31 August 1957."
+    ],
+    "fact": "The Petronas Towers are 451.9 metres tall and remain the world’s tallest twin towers. A double-decker skybridge links them on the 41st and 42nd floors.",
+    "source_name": "Wikipedia: Petronas Towers",
+    "source_url": "https://en.wikipedia.org/wiki/Petronas_Towers",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-031",
+    "date": "2026-11-25",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "mexico",
+    "category": "History",
+    "clues": [
+      "The Maya pyramid El Castillo, at Chichén Itzá, is one of the New Seven Wonders of the World.",
+      "Sixty-eight indigenous languages are co-official here alongside Spanish.",
+      "It borders the United States to the north and Guatemala and Belize to the southeast.",
+      "Its capital and largest city bears the country’s own name."
+    ],
+    "fact": "El Castillo is about 30 metres high, and Chichén Itzá became a UNESCO World Heritage Site in 1988.",
+    "source_name": "Wikipedia: Chichen Itza",
+    "source_url": "https://en.wikipedia.org/wiki/Chichen_Itza",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-032",
+    "date": "2026-11-25",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "sweden",
+    "category": "Quirks",
+    "clues": [
+      "IKEA, founded here in 1943 by Ingvar Kamprad, is the world’s largest furniture retailer.",
+      "The Nobel Prize ceremonies, except the Peace Prize, are held in its capital on 10 December.",
+      "It is the largest and most populous Nordic country, bordering Norway and Finland.",
+      "Its capital is Stockholm."
+    ],
+    "fact": "Alfred Nobel, the Swedish chemist and inventor who created the prizes in his will, died on 10 December, the date of the ceremonies.",
+    "source_name": "Wikipedia: Nobel Prize",
+    "source_url": "https://en.wikipedia.org/wiki/Nobel_Prize",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-033",
+    "date": "2026-11-25",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "czechia",
+    "category": "History",
+    "clues": [
+      "In November 1989 the Velvet Revolution ended communist rule here.",
+      "It is traditionally made up of Bohemia and Moravia, with Silesia in the northeast.",
+      "Czechoslovakia peacefully dissolved at the end of 1992, making it independent on 1 January 1993.",
+      "It is landlocked, bordered by Austria, Germany, Poland and Slovakia, and its capital is Prague."
+    ],
+    "fact": "Its capital was the imperial seat in 1346–1437 and 1583–1611, and the 1618 Defenestration of Prague began the Bohemian Revolt.",
+    "source_name": "Wikipedia: Czech Republic",
+    "source_url": "https://en.wikipedia.org/wiki/Czech_Republic",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-034",
+    "date": "2026-11-25",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "algeria",
+    "category": "Geography",
+    "clues": [
+      "The Sahara covers most of it, except the fertile and mountainous north.",
+      "It is the tenth-largest country in the world.",
+      "It gained independence in 1962, after a war against France that began in 1954.",
+      "Its capital is Algiers, on the Mediterranean coast."
+    ],
+    "fact": "Most of its people live in the northern strip between the Mediterranean Sea and the desert.",
+    "source_name": "Wikipedia: Algeria",
+    "source_url": "https://en.wikipedia.org/wiki/Algeria",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-035",
+    "date": "2026-11-25",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "panama",
+    "category": "History",
+    "clues": [
+      "It seceded from Colombia in 1903, with American backing.",
+      "It sits on a narrow isthmus between two oceans, linking North and South America.",
+      "A canal completed in 1914 connects the Atlantic and Pacific here, and was handed over on 31 December 1999.",
+      "Its capital, home to nearly half its people, shares the country’s name."
+    ],
+    "fact": "The 1977 treaties agreed to transfer the canal from the United States to Panama on 31 December 1999.",
+    "source_name": "Wikipedia: Panama",
+    "source_url": "https://en.wikipedia.org/wiki/Panama",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-036",
+    "date": "2026-11-26",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "germany",
+    "category": "Quirks",
+    "clues": [
+      "Oktoberfest, the world’s largest Volksfest, draws around seven million visitors to Munich each year.",
+      "It is the most populous member state of the European Union.",
+      "East and West were reunited on 3 October 1990.",
+      "Its capital is Berlin, and it has nine neighbours."
+    ],
+    "fact": "The first Oktoberfest was held on 12 October 1810, to celebrate the wedding of Crown Prince Ludwig and Princess Therese.",
+    "source_name": "Wikipedia: Oktoberfest",
+    "source_url": "https://en.wikipedia.org/wiki/Oktoberfest",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-037",
+    "date": "2026-11-26",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "thailand",
+    "category": "History",
+    "clues": [
+      "Its former name was Siam.",
+      "It was the only country in Southeast Asia to avoid colonisation by European powers.",
+      "It is a constitutional monarchy bordering Myanmar, Laos, Cambodia and Malaysia, with a coast on the Andaman Sea.",
+      "Its capital is Bangkok."
+    ],
+    "fact": "It became a parliamentary constitutional monarchy after 1932.",
+    "source_name": "Wikipedia: Thailand",
+    "source_url": "https://en.wikipedia.org/wiki/Thailand",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-038",
+    "date": "2026-11-26",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "tanzania",
+    "category": "Nature",
+    "clues": [
+      "The Ngorongoro Crater, the world’s largest inactive and intact volcanic caldera, is here.",
+      "It was formed in 1964, when Zanzibar merged with Tanganyika.",
+      "Africa’s highest mountain, Kilimanjaro at about 5,895 metres, rises here.",
+      "Its capital is Dodoma, though the former capital, Dar es Salaam, keeps most government offices."
+    ],
+    "fact": "Lake Victoria, Africa’s largest lake, lies to its north and west, and Lake Tanganyika, the continent’s deepest, to its west.",
+    "source_name": "Wikipedia: Tanzania",
+    "source_url": "https://en.wikipedia.org/wiki/Tanzania",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-039",
+    "date": "2026-11-26",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "ecuador",
+    "category": "Geography",
+    "clues": [
+      "Its independence day, 24 May 1822, marks Sucre’s victory at the Battle of Pichincha.",
+      "The Galápagos Islands lie about 1,000 kilometres west of its mainland.",
+      "It is one of 17 megadiverse countries, and the US dollar is its only official currency.",
+      "Its name is Spanish for “Equator”, and its capital is Quito."
+    ],
+    "fact": "The summit of its volcano Chimborazo is widely reported as the point on Earth’s surface farthest from the Earth’s centre, because of the equatorial bulge.",
+    "source_name": "Wikipedia: Chimborazo",
+    "source_url": "https://en.wikipedia.org/wiki/Chimborazo",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-040",
+    "date": "2026-11-26",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "romania",
+    "category": "History",
+    "clues": [
+      "Moldavia and Wallachia united in 1859 to form its modern state.",
+      "Its name comes from the Latin “romanus”, meaning citizen of Rome.",
+      "It lies on the northwestern shore of the Black Sea and borders Ukraine to the north and east and Hungary to the west.",
+      "Its capital is Bucharest, and Transylvania was granted to it by the Treaty of Trianon in 1920."
+    ],
+    "fact": "Transylvania and other former Hungarian territories went to the Kingdom of Romania under the Treaty of Trianon.",
+    "source_name": "Wikipedia: Romania",
+    "source_url": "https://en.wikipedia.org/wiki/Romania",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-041",
+    "date": "2026-11-27",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "spain",
+    "category": "Quirks",
+    "clues": [
+      "In Buñol, thousands of people throw tomatoes at each other at La Tomatina, on the last Wednesday of August.",
+      "Antoni Gaudí’s Sagrada Família, begun in 1882, is still under construction here.",
+      "It covers the majority of the Iberian Peninsula, and includes the Balearic and Canary Islands.",
+      "Its capital is Madrid."
+    ],
+    "fact": "La Tomatina began in 1945, and attendance is capped at 20,000 ticket holders. In 2015 an estimated 145 tonnes of tomatoes were thrown.",
+    "source_name": "Wikipedia: La Tomatina",
+    "source_url": "https://en.wikipedia.org/wiki/La_Tomatina",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-042",
+    "date": "2026-11-27",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "south-africa",
+    "category": "Politics",
+    "clues": [
+      "It has three capital cities: Pretoria, Cape Town and Bloemfontein.",
+      "It completely encloses another country, Lesotho.",
+      "It has twelve official languages.",
+      "It sits at the southern tip of Africa, and Cape Town is its legislative capital."
+    ],
+    "fact": "Pretoria is the administrative capital, Cape Town the legislative one and Bloemfontein the judicial one.",
+    "source_name": "Wikipedia: South Africa",
+    "source_url": "https://en.wikipedia.org/wiki/South_Africa",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-043",
+    "date": "2026-11-27",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "philippines",
+    "category": "History",
+    "clues": [
+      "The explorer Ferdinand Magellan arrived in 1521 and claimed the islands for Spain.",
+      "It was named in honour of King Philip II.",
+      "It is an archipelago of about 7,641 islands in the Pacific Ring of Fire, prone to earthquakes and typhoons.",
+      "Its islands fall into three groups, Luzon, Visayas and Mindanao, and its capital is Manila."
+    ],
+    "fact": "Manila is the capital, but the largest city is Quezon City.",
+    "source_name": "Wikipedia: Philippines",
+    "source_url": "https://en.wikipedia.org/wiki/Philippines",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-044",
+    "date": "2026-11-27",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "uzbekistan",
+    "category": "Geography",
+    "clues": [
+      "It is one of only two doubly landlocked countries in the world, the other being Liechtenstein.",
+      "It is the only Central Asian state to border all four of the others.",
+      "Bukhara and Samarkand grew extremely wealthy on Silk Road trade.",
+      "Timur, or Tamerlane, rose here in the 1380s, and its capital is Tashkent."
+    ],
+    "fact": "The Aral Sea, on its border, was once the fourth-largest inland sea on Earth and has since shrunk to about 10% of its former area.",
+    "source_name": "Wikipedia: Uzbekistan",
+    "source_url": "https://en.wikipedia.org/wiki/Uzbekistan",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-045",
+    "date": "2026-11-27",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "botswana",
+    "category": "Nature",
+    "clues": [
+      "It became independent on 30 September 1966, having been the British-ruled Bechuanaland.",
+      "It produces more diamonds than any other country except Russia.",
+      "About 70% of its territory is part of the Kalahari Desert.",
+      "Its capital is Gaborone, and it is landlocked in Southern Africa."
+    ],
+    "fact": "Its Okavango River spreads across the Kalahari in a large inland delta instead of reaching the sea.",
+    "source_name": "Wikipedia: Botswana",
+    "source_url": "https://en.wikipedia.org/wiki/Botswana",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-046",
+    "date": "2026-11-28",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "china",
+    "category": "Landmarks",
+    "clues": [
+      "A system of fortifications over 21,000 kilometres long, the Great Wall, runs across its north.",
+      "Giant pandas, which are about 99% bamboo-eaters, are found naturally nowhere else.",
+      "It is the world’s second-most populous country, and the third largest by area.",
+      "Its capital is Beijing."
+    ],
+    "fact": "The first walls date to the 7th century BC. The best-known sections were built in the Ming dynasty (1368–1644), and UNESCO listed the Wall in 1987.",
+    "source_name": "Wikipedia: Great Wall of China",
+    "source_url": "https://en.wikipedia.org/wiki/Great_Wall_of_China",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-047",
+    "date": "2026-11-28",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "greece",
+    "category": "History",
+    "clues": [
+      "The Parthenon, a temple to Athena begun in 447 BC, stands on its Acropolis.",
+      "It is often considered the cradle of Western civilisation and the birthplace of democracy.",
+      "It has thousands of islands, with up to 227 of them inhabited.",
+      "Its capital is Athens, and it borders Albania, North Macedonia, Bulgaria and Turkey."
+    ],
+    "fact": "The Parthenon was completed in 438 BC, with its decoration continuing until 432 BC.",
+    "source_name": "Wikipedia: Parthenon",
+    "source_url": "https://en.wikipedia.org/wiki/Parthenon",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-048",
+    "date": "2026-11-28",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "austria",
+    "category": "History",
+    "clues": [
+      "It declared perpetual neutrality in 1955, after Allied occupation.",
+      "It was the heartland of the Habsburg monarchy from the late 13th century.",
+      "It is a landlocked country in the Eastern Alps, bordering Germany, Italy, Switzerland and more.",
+      "Its capital is Vienna, which is also its largest city."
+    ],
+    "fact": "The Compromise of 1867 created the dual monarchy of Austria-Hungary.",
+    "source_name": "Wikipedia: Austria",
+    "source_url": "https://en.wikipedia.org/wiki/Austria",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-049",
+    "date": "2026-11-28",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "costa-rica",
+    "category": "Politics",
+    "clues": [
+      "It permanently abolished its army, having abolished its military force on 1 December 1948.",
+      "It never fought for independence from Spain, and celebrates it on 15 September 1821.",
+      "Its name means “rich coast” in Spanish, and it has 14 known volcanoes.",
+      "Its capital is San José, and it borders Nicaragua and Panama, with coasts on the Caribbean and the Pacific."
+    ],
+    "fact": "It is one of the countries with the greatest biodiversity in all of Latin America.",
+    "source_name": "Wikipedia: Costa Rica",
+    "source_url": "https://en.wikipedia.org/wiki/Costa_Rica",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-050",
+    "date": "2026-11-28",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "singapore",
+    "category": "Geography",
+    "clues": [
+      "It became an independent sovereign country in 1965.",
+      "Its modern era began in 1819.",
+      "It has the second-highest population density of any country, spread over one main island and more than 60 satellite islets.",
+      "This island city-state sits off the southern tip of the Malay Peninsula."
+    ],
+    "fact": "It is both an island country and a city-state.",
+    "source_name": "Wikipedia: Singapore",
+    "source_url": "https://en.wikipedia.org/wiki/Singapore",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-051",
+    "date": "2026-11-29",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "united-kingdom",
+    "category": "Landmarks",
+    "clues": [
+      "Big Ben, the bell in the Elizabeth Tower, hangs beside its Houses of Parliament.",
+      "It was the first industrialised country in the world, in the 18th century.",
+      "Stonehenge, a prehistoric monument of upright stones begun around 3100 BC, stands here.",
+      "Its capital is London, and its head of state is a monarch."
+    ],
+    "fact": "The Palace of Westminster, where the House of Commons and House of Lords meet, has been a UNESCO World Heritage Site since 1987.",
+    "source_name": "Wikipedia: Palace of Westminster",
+    "source_url": "https://en.wikipedia.org/wiki/Palace_of_Westminster",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-052",
+    "date": "2026-11-29",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "argentina",
+    "category": "Nature",
+    "clues": [
+      "Aconcagua, the highest mountain outside Asia, rises in its Mendoza Province.",
+      "It is the second-largest country in South America, and the eighth-largest in the world.",
+      "It shares the bulk of the Southern Cone with Chile to the west.",
+      "Its capital is Buenos Aires."
+    ],
+    "fact": "Aconcagua is about 6,960 metres tall, the highest peak in the Americas.",
+    "source_name": "Wikipedia: Aconcagua",
+    "source_url": "https://en.wikipedia.org/wiki/Aconcagua",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-053",
+    "date": "2026-11-29",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "nigeria",
+    "category": "People",
+    "clues": [
+      "Its name comes from the river that runs through the country.",
+      "More than 250 ethnic groups speaking 500 distinct languages live here.",
+      "It gained full independence from the United Kingdom on 1 October 1960.",
+      "It is Africa’s most populous country, and its capital is Abuja, not its largest city, Lagos."
+    ],
+    "fact": "It lies between the Sahel and the Gulf of Guinea, with over 242 million people.",
+    "source_name": "Wikipedia: Nigeria",
+    "source_url": "https://en.wikipedia.org/wiki/Nigeria",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-054",
+    "date": "2026-11-29",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "iran",
+    "category": "History",
+    "clues": [
+      "It was commonly known as Persia in the Western world until 1935.",
+      "Cyrus the Great founded the Achaemenid Empire here, described as the largest-ever Iranian state.",
+      "The Caspian Sea lies to its north.",
+      "Its capital is Tehran, and a 1979 revolution overthrew its monarchy."
+    ],
+    "fact": "Middle Paleolithic sites are found mainly in its Zagros Mountains.",
+    "source_name": "Wikipedia: Iran",
+    "source_url": "https://en.wikipedia.org/wiki/Iran",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-055",
+    "date": "2026-11-29",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "estonia",
+    "category": "History",
+    "clues": [
+      "The “Singing Revolution” of 1988–1990 protested against Soviet rule here.",
+      "It has over 2,300 islands and islets, including Saaremaa and Hiiumaa.",
+      "It declared independence on 24 February 1918, and restored full independence on 20 August 1991.",
+      "It faces Finland across the Gulf of Finland, and its capital is Tallinn."
+    ],
+    "fact": "Latvia lies to its south and Russia to its east.",
+    "source_name": "Wikipedia: Estonia",
+    "source_url": "https://en.wikipedia.org/wiki/Estonia",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-056",
+    "date": "2026-11-30",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "russia",
+    "category": "Records",
+    "clues": [
+      "It is the largest country in the world, spanning eleven time zones.",
+      "Lake Baikal, the world’s deepest lake at 1,642 metres, is in its Siberia.",
+      "It shares land borders with fourteen countries.",
+      "Its capital is Moscow."
+    ],
+    "fact": "Lake Baikal is also the world’s oldest lake, at roughly 25–30 million years, and holds about 23,600 cubic kilometres of fresh water.",
+    "source_name": "Wikipedia: Lake Baikal",
+    "source_url": "https://en.wikipedia.org/wiki/Lake_Baikal",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-057",
+    "date": "2026-11-30",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "jamaica",
+    "category": "People",
+    "clues": [
+      "Usain Bolt, who set world records of 9.58 seconds for 100 metres and 19.19 for 200 in 2009, was born here.",
+      "It is the third-largest island in the Greater Antilles and the Caribbean.",
+      "It gained independence from the United Kingdom on 6 August 1962.",
+      "Its capital is Kingston, and its tallest mountain is Blue Mountain Peak."
+    ],
+    "fact": "Its original name, Xaymaca, is glossed as “Land of Wood and Water”. England took the island from Spain in 1655.",
+    "source_name": "Wikipedia: Usain Bolt",
+    "source_url": "https://en.wikipedia.org/wiki/Usain_Bolt",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-058",
+    "date": "2026-11-30",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "croatia",
+    "category": "History",
+    "clues": [
+      "It declared independence from Yugoslavia in 1991.",
+      "Its Adriatic coast is dotted with over 1,000 islands and islets.",
+      "It borders Slovenia to the northwest and Hungary to the northeast.",
+      "Its capital is Zagreb, and it uses the euro."
+    ],
+    "fact": "The word “cravat” comes from Croatian mercenaries who served in France in the Thirty Years’ War, and whose knotted neckerchiefs caught Paris’s eye.",
+    "source_name": "Wikipedia: Necktie",
+    "source_url": "https://en.wikipedia.org/wiki/Necktie",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-059",
+    "date": "2026-11-30",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "oman",
+    "category": "Politics",
+    "clues": [
+      "It is an absolute monarchy ruled by a sultan.",
+      "Its Musandam region is bounded by the Strait of Hormuz.",
+      "It lies in the southeastern Arabian Peninsula, sharing land borders with Saudi Arabia, the United Arab Emirates and Yemen.",
+      "Its capital and largest city is Muscat."
+    ],
+    "fact": "The Banu Nabhan controlled the frankincense trade on the overland route through Sohar.",
+    "source_name": "Wikipedia: Oman",
+    "source_url": "https://en.wikipedia.org/wiki/Oman",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-060",
+    "date": "2026-11-30",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "senegal",
+    "category": "Geography",
+    "clues": [
+      "It owes its name to the river that forms its northern and eastern border.",
+      "It nearly surrounds The Gambia.",
+      "It is the westernmost country of mainland West Africa.",
+      "Its capital and largest city is Dakar."
+    ],
+    "fact": "France gained control of Gorée, a minor hub of the Atlantic slave trade, in 1677.",
+    "source_name": "Wikipedia: Senegal",
+    "source_url": "https://en.wikipedia.org/wiki/Senegal",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-061",
+    "date": "2026-12-01",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "turkey",
+    "category": "Geography",
+    "clues": [
+      "Its largest city, Istanbul, is not its capital.",
+      "Anatolia makes up most of it, with a smaller part called East Thrace in Southeast Europe.",
+      "It borders Greece and Bulgaria in the west, and Georgia, Armenia, Azerbaijan and Iran in the east.",
+      "Its capital is Ankara."
+    ],
+    "fact": "Ankara is its second-largest city.",
+    "source_name": "Wikipedia: Turkey",
+    "source_url": "https://en.wikipedia.org/wiki/Turkey",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-062",
+    "date": "2026-12-01",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "netherlands",
+    "category": "Geography",
+    "clues": [
+      "26% of the country lies below sea level.",
+      "Rotterdam, the busiest port in Europe, is here.",
+      "Its capital is only nominal: the government sits in The Hague.",
+      "Its capital is Amsterdam, and it borders Germany and Belgium."
+    ],
+    "fact": "“Holland” is really just two of its twelve provinces, North and South Holland. Its Golden Age made it one of the world’s richest trading nations.",
+    "source_name": "Wikipedia: Netherlands",
+    "source_url": "https://en.wikipedia.org/wiki/Netherlands",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-063",
+    "date": "2026-12-01",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "sri-lanka",
+    "category": "History",
+    "clues": [
+      "It was formerly known as Ceylon, and gained independence in 1948.",
+      "It is separated from India by the Gulf of Mannar and the Palk Strait.",
+      "After coffee plantations were destroyed by disease, the British began cultivating tea instead.",
+      "Its largest city is Colombo, while Sri Jayawardenepura Kotte is its legislative capital."
+    ],
+    "fact": "Buddhism arrived from India under King Devanampiya Tissa.",
+    "source_name": "Wikipedia: Sri Lanka",
+    "source_url": "https://en.wikipedia.org/wiki/Sri_Lanka",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-064",
+    "date": "2026-12-01",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "uruguay",
+    "category": "Politics",
+    "clues": [
+      "It was the first country in the world to fully legalise cannabis.",
+      "It is the second-smallest sovereign nation in South America, after Suriname.",
+      "It secured its independence between 1811 and 1828.",
+      "It lies between Argentina and Brazil on the Río de la Plata, and its capital is Montevideo."
+    ],
+    "fact": "Its capital is home to nearly 2 million of its roughly 3.5 million people.",
+    "source_name": "Wikipedia: Uruguay",
+    "source_url": "https://en.wikipedia.org/wiki/Uruguay",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-065",
+    "date": "2026-12-01",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "cameroon",
+    "category": "Geography",
+    "clues": [
+      "It is often called “Africa in miniature”.",
+      "It became a German colony in 1884, known as Kamerun.",
+      "Its highest point, at almost 4,100 metres, is a mountain that bears its name.",
+      "Its official languages are French and English, and its capital is Yaoundé."
+    ],
+    "fact": "French Cameroun became independent on 1 January 1960, and the British-administered south joined in 1961.",
+    "source_name": "Wikipedia: Cameroon",
+    "source_url": "https://en.wikipedia.org/wiki/Cameroon",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-066",
+    "date": "2026-12-02",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "south-korea",
+    "category": "Culture",
+    "clues": [
+      "Its pop culture wave, including K-pop, has become globally influential.",
+      "Its alphabet, Hangul, was created by Sejong the Great to promote literacy.",
+      "It occupies the southern half of its peninsula, bordering its neighbour along the Demilitarized Zone.",
+      "Its capital is Seoul."
+    ],
+    "fact": "About half its population lives in the Seoul metropolitan area.",
+    "source_name": "Wikipedia: South Korea",
+    "source_url": "https://en.wikipedia.org/wiki/South_Korea",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-067",
+    "date": "2026-12-02",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "cuba",
+    "category": "History",
+    "clues": [
+      "It is the largest country in the Caribbean by area.",
+      "It lies south of both Florida and the Bahamas.",
+      "It remained part of the Spanish Empire until the Spanish–American War of 1898.",
+      "Its capital is Havana, and a revolution overthrew its government in January 1959."
+    ],
+    "fact": "It includes the main island plus 4,195 other islands, islets and cays.",
+    "source_name": "Wikipedia: Cuba",
+    "source_url": "https://en.wikipedia.org/wiki/Cuba",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-068",
+    "date": "2026-12-02",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "hungary",
+    "category": "People",
+    "clues": [
+      "Its language is among the few in Europe outside the Indo-European family.",
+      "It became a Christian kingdom under King Stephen I in the year 1000.",
+      "A revolution failed here in 1956.",
+      "It is landlocked in Central Europe, and its capital is Budapest."
+    ],
+    "fact": "It lies in the Danube’s drainage basin, dominated by great lowland plains.",
+    "source_name": "Wikipedia: Hungary",
+    "source_url": "https://en.wikipedia.org/wiki/Hungary",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-069",
+    "date": "2026-12-02",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "papua-new-guinea",
+    "category": "People",
+    "clues": [
+      "It is the most linguistically diverse country in the world, with about 840 known languages.",
+      "It was granted independence as a Commonwealth realm in 1975.",
+      "It makes up the eastern half of an island that is the world’s second-largest.",
+      "Its capital is Port Moresby, and the Kokoda Track campaign was fought here in 1942."
+    ],
+    "fact": "The Torres Strait Islands to its south were annexed by Queensland in 1878.",
+    "source_name": "Wikipedia: Papua New Guinea",
+    "source_url": "https://en.wikipedia.org/wiki/Papua_New_Guinea",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-070",
+    "date": "2026-12-02",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "serbia",
+    "category": "History",
+    "clues": [
+      "It restored its independence in 2006, after its union with Montenegro was dissolved.",
+      "By the mid-16th century the Ottoman Empire had annexed all of its territory.",
+      "It is landlocked in Southeastern and Central Europe, bordered by Hungary and Romania.",
+      "Its capital, Belgrade, is also its largest city."
+    ],
+    "fact": "It borders eight countries.",
+    "source_name": "Wikipedia: Serbia",
+    "source_url": "https://en.wikipedia.org/wiki/Serbia",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-071",
+    "date": "2026-12-03",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "norway",
+    "category": "Nature",
+    "clues": [
+      "Its coast has nearly 1,200 fjords, which stretch its coastline to about 29,000 kilometres.",
+      "It runs the world’s largest sovereign wealth fund.",
+      "Svalbard, an Arctic archipelago, belongs to it.",
+      "Its capital is Oslo, where the Nobel Peace Prize is awarded."
+    ],
+    "fact": "Sognefjord, at about 226 kilometres, is its longest fjord and the fifth-longest in the world. It is also about 1,308 metres deep.",
+    "source_name": "Wikipedia: Fjord",
+    "source_url": "https://en.wikipedia.org/wiki/Fjord",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-072",
+    "date": "2026-12-03",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "portugal",
+    "category": "History",
+    "clues": [
+      "Vasco da Gama, who reached India by sea in 1498, was one of its explorers.",
+      "It includes the Atlantic archipelagos of Madeira and the Azores.",
+      "Its borders have barely changed since the Treaty of Alcañices in 1297.",
+      "Its capital is Lisbon, on the southwestern Iberian Peninsula."
+    ],
+    "fact": "Lisbon is also its largest city.",
+    "source_name": "Wikipedia: Portugal",
+    "source_url": "https://en.wikipedia.org/wiki/Portugal",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-073",
+    "date": "2026-12-03",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "cambodia",
+    "category": "History",
+    "clues": [
+      "The Khmer Empire was the largest Southeast Asian empire during the 12th century.",
+      "It was a French protectorate from 1863, and gained independence in 1953.",
+      "Southeast Asia’s largest lake, Tonlé Sap, meets the Mekong here.",
+      "Its capital is Phnom Penh, and it is a constitutional monarchy."
+    ],
+    "fact": "It is bordered by Thailand, Laos and Vietnam.",
+    "source_name": "Wikipedia: Cambodia",
+    "source_url": "https://en.wikipedia.org/wiki/Cambodia",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-074",
+    "date": "2026-12-03",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "bangladesh",
+    "category": "Nature",
+    "clues": [
+      "It became a sovereign nation on 16 December 1971, after a nine-month liberation war.",
+      "It lies on the Ganges Delta, the largest river delta in the world.",
+      "It is home to the world’s largest mangrove forest.",
+      "Its capital is Dhaka, and it shares land borders with India to the north, west and east."
+    ],
+    "fact": "It is one of the most densely populated countries on Earth.",
+    "source_name": "Wikipedia: Bangladesh",
+    "source_url": "https://en.wikipedia.org/wiki/Bangladesh",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-075",
+    "date": "2026-12-03",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "zambia",
+    "category": "History",
+    "clues": [
+      "It was Northern Rhodesia until 24 October 1964.",
+      "Copper is its principal export.",
+      "David Livingstone named the Victoria Falls, on its southern border, in 1855.",
+      "Its capital is Lusaka, and it has eight neighbouring countries."
+    ],
+    "fact": "Victoria Falls is 1,708 metres wide. Its local name, Mosi-oa-Tunya, means “the smoke that thunders”.",
+    "source_name": "Wikipedia: Victoria Falls",
+    "source_url": "https://en.wikipedia.org/wiki/Victoria_Falls",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-076",
+    "date": "2026-12-04",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "morocco",
+    "category": "History",
+    "clues": [
+      "It was the first nation to recognise the United States as independent, in 1777.",
+      "It has coastlines on both the Mediterranean Sea and the Atlantic Ocean.",
+      "The Alawi dynasty has ruled it since 1631.",
+      "Its capital is Rabat, and Casablanca is its largest city."
+    ],
+    "fact": "It regained its independence in 1956 under Sultan Mohammed V, and its Idrisid dynasty dates to 788.",
+    "source_name": "Wikipedia: Morocco",
+    "source_url": "https://en.wikipedia.org/wiki/Morocco",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-077",
+    "date": "2026-12-04",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "vietnam",
+    "category": "History",
+    "clues": [
+      "It achieved independence in 939, after a millennium of Chinese domination.",
+      "It lies along the Gulf of Thailand to the southwest and the South China Sea to the east.",
+      "It is the world’s 16th-most populous country.",
+      "Its capital is Hanoi, and its largest city is Ho Chi Minh City."
+    ],
+    "fact": "It is bordered by China to the north, and Laos and Cambodia to the west.",
+    "source_name": "Wikipedia: Vietnam",
+    "source_url": "https://en.wikipedia.org/wiki/Vietnam",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-078",
+    "date": "2026-12-04",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "belgium",
+    "category": "Politics",
+    "clues": [
+      "It became independent in 1830, after a revolution.",
+      "Its capital hosts NATO’s headquarters and many other international organisations.",
+      "It has Dutch-speaking, French-speaking and German-speaking communities.",
+      "Its capital is Brussels."
+    ],
+    "fact": "It is a parliamentary constitutional monarchy, bordered by the Netherlands, Germany, Luxembourg and France.",
+    "source_name": "Wikipedia: Belgium",
+    "source_url": "https://en.wikipedia.org/wiki/Belgium",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-079",
+    "date": "2026-12-04",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "uganda",
+    "category": "Geography",
+    "clues": [
+      "It is historically known as the “Pearl of Africa”.",
+      "It shares Lake Victoria with Kenya and Tanzania.",
+      "Mount Stanley, in the Rwenzori Mountains, is its highest peak.",
+      "Its capital is Kampala, and it gained independence from the United Kingdom on 9 October 1962."
+    ],
+    "fact": "It is landlocked in East Africa.",
+    "source_name": "Wikipedia: Uganda",
+    "source_url": "https://en.wikipedia.org/wiki/Uganda",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-080",
+    "date": "2026-12-04",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "bulgaria",
+    "category": "History",
+    "clues": [
+      "Its first empire was recognised by treaty with the Byzantine Empire in 681 AD.",
+      "The Cyrillic alphabet was developed in its early capital, Preslav.",
+      "The Thracians are one of the three main ancestral groups of its people.",
+      "Its capital is Sofia, and it joined the European Union in 2007."
+    ],
+    "fact": "The Black Sea coast is its lowest point. It borders Romania, Serbia, North Macedonia, Greece and Turkey.",
+    "source_name": "Wikipedia: Bulgaria",
+    "source_url": "https://en.wikipedia.org/wiki/Bulgaria",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-081",
+    "date": "2026-12-05",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "saudi-arabia",
+    "category": "Culture",
+    "clues": [
+      "Mecca and Medina, the two holiest cities in Islam, are here.",
+      "It occupies the bulk of the Arabian Peninsula.",
+      "It is the world’s second-largest oil producer.",
+      "Its capital is Riyadh, and it was founded in 1932 by King Abdulaziz."
+    ],
+    "fact": "It is the twelfth-largest country in the world.",
+    "source_name": "Wikipedia: Saudi Arabia",
+    "source_url": "https://en.wikipedia.org/wiki/Saudi_Arabia",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-082",
+    "date": "2026-12-05",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "denmark",
+    "category": "Quirks",
+    "clues": [
+      "LEGO bricks, named from “leg godt”, meaning “play well”, come from Billund here.",
+      "It consists of the northern Jutland peninsula and an archipelago of 406 islands.",
+      "It shares a 68-kilometre border with Germany to the south.",
+      "Its capital is Copenhagen."
+    ],
+    "fact": "LEGO is the world’s largest toy manufacturer by sales, and makes about 36 billion bricks a year. The Danish monarchy traces back to Gorm the Old.",
+    "source_name": "Wikipedia: Lego",
+    "source_url": "https://en.wikipedia.org/wiki/Lego",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-083",
+    "date": "2026-12-05",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "pakistan",
+    "category": "History",
+    "clues": [
+      "It was established as a modern state on 14 August 1947.",
+      "It is the world’s fifth-most populous country.",
+      "The Indus Valley Civilisation of the Bronze Age flourished in its lands.",
+      "Its capital is Islamabad, and its largest city, Karachi, lies on the Arabian Sea."
+    ],
+    "fact": "It is a declared nuclear-weapon state.",
+    "source_name": "Wikipedia: Pakistan",
+    "source_url": "https://en.wikipedia.org/wiki/Pakistan",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-084",
+    "date": "2026-12-05",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "laos",
+    "category": "History",
+    "clues": [
+      "Its 14th-century kingdom was called “a million elephants”.",
+      "In 1893 its kingdoms were unified under French rule.",
+      "It is the only landlocked country in Southeast Asia.",
+      "Its capital is Vientiane, and it is the most heavily bombed country in history per head of population."
+    ],
+    "fact": "It regained full independence in 1953, and the communist republic was established in 1975.",
+    "source_name": "Wikipedia: Laos",
+    "source_url": "https://en.wikipedia.org/wiki/Laos",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-085",
+    "date": "2026-12-05",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "myanmar",
+    "category": "Politics",
+    "clues": [
+      "It moved its capital to Naypyidaw in 2005.",
+      "Its military government officially changed the English names of places in 1989, including the country’s own.",
+      "It gained independence from Britain on 4 January 1948, and did not join the Commonwealth.",
+      "Its largest city is Yangon, formerly Rangoon."
+    ],
+    "fact": "Bagan, founded by the Bamar as a small settlement in the 9th century, later became the capital of the Pagan Kingdom, known for its many temples.",
+    "source_name": "Wikipedia: Myanmar",
+    "source_url": "https://en.wikipedia.org/wiki/Myanmar",
+    "difficulty": "hard",
+    "status": "draft"
   }
 ]

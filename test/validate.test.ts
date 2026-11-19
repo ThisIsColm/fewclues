@@ -62,10 +62,16 @@ describe('validateContent (rounds)', () => {
   it('warns about empty dates in the next 14 days', () => {
     expect(run(makeDay(today)).warnings.join()).toMatch(/13 of the next 14 days/);
   });
-  it('the shipped rounds are valid, sourced, with 15 distinct answers', () => {
+  it('the shipped rounds are valid, sourced, never repeat a country, and build easy → hard every day', () => {
     const rounds = JSON.parse(readFileSync(new URL('../content/rounds.json', import.meta.url), 'utf8'));
-    expect(rounds).toHaveLength(15);
-    expect(new Set(rounds.map((r: any) => r.answer)).size).toBe(15);
     expect(run(rounds, true).errors).toEqual([]);
+    expect(new Set(rounds.map((r: any) => r.answer)).size).toBe(rounds.length); // no country twice, ever
+    expect(rounds.every((r: any) => r.clues.length === 4 && /^https:\/\//.test(r.source_url))).toBe(true);
+    const days = new Map<string, any[]>();
+    for (const r of rounds) days.set(r.date, [...(days.get(r.date) ?? []), r]);
+    for (const [date, list] of days) {
+      const pattern = list.sort((a, b) => a.order - b.order).map((r) => r.difficulty).join(',');
+      expect(pattern, `${date} should run easy,easy,medium,hard,hard`).toBe('easy,easy,medium,hard,hard');
+    }
   });
 });
