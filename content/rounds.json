@@ -1,107 +1,7 @@
 [
   {
-    "id": "ww-006",
-    "date": "2026-11-19",
-    "order": 1,
-    "edition": "ww",
-    "set": "world-countries",
-    "answer": "bhutan",
-    "category": "Quirks",
-    "clues": [
-      "It lifted its ban on television and the internet only in 1999.",
-      "Its national anthem is called “The Thunder Dragon Kingdom”.",
-      "About 71% of it is forest, and it famously measures Gross National Happiness.",
-      "It’s a Himalayan kingdom between China and India. Its capital is Thimphu."
-    ],
-    "fact": "It was one of the last countries in the world to introduce television. Its name in its own language means “Land of the Thunder Dragon”.",
-    "source_name": "Wikipedia: Bhutan",
-    "source_url": "https://en.wikipedia.org/wiki/Bhutan",
-    "difficulty": "hard",
-    "status": "draft"
-  },
-  {
-    "id": "ww-007",
-    "date": "2026-11-19",
-    "order": 2,
-    "edition": "ww",
-    "set": "world-countries",
-    "answer": "australia",
-    "category": "Quirks",
-    "clues": [
-      "In 1932 its army fought a “war” against emus, and abandoned it.",
-      "It has the longest fence in the world: 5,614 km, built to keep dingoes out.",
-      "The world’s largest coral reef system, over 2,300 km long, lies off its coast.",
-      "Its capital is Canberra."
-    ],
-    "fact": "Soldiers with machine guns spent five weeks in the Emu War in 1932. The emus scattered into small groups and the cull was called off.",
-    "source_name": "Wikipedia: Emu War",
-    "source_url": "https://en.wikipedia.org/wiki/Emu_War",
-    "difficulty": "easy",
-    "status": "draft"
-  },
-  {
-    "id": "ww-008",
-    "date": "2026-11-19",
-    "order": 3,
-    "edition": "ww",
-    "set": "world-countries",
-    "answer": "switzerland",
-    "category": "Politics",
-    "clues": [
-      "Officially it has no capital at all, just a “federal city”.",
-      "It has four language regions: German, French, Italian and Romansh.",
-      "It’s the birthplace of the Red Cross.",
-      "It has been neutral since the 16th century, and hasn’t fought an international war since 1815."
-    ],
-    "fact": "Bern is the seat of government but not, legally, the capital. Its neutrality was recognised by Europe’s powers in 1648.",
-    "source_name": "Wikipedia: Switzerland",
-    "source_url": "https://en.wikipedia.org/wiki/Switzerland",
-    "difficulty": "medium",
-    "status": "draft"
-  },
-  {
-    "id": "ww-009",
-    "date": "2026-11-19",
-    "order": 4,
-    "edition": "ww",
-    "set": "world-countries",
-    "answer": "brazil",
-    "category": "Nature",
-    "clues": [
-      "It ranks first among the world’s 17 “megadiverse” countries.",
-      "It borders every other country on its continent except Ecuador and Chile.",
-      "It has the largest Portuguese-speaking population in the world.",
-      "It’s the fifth-largest country on Earth by area."
-    ],
-    "fact": "It borders nine countries and one French territory: every neighbour on its continent except Ecuador and Chile. It’s also the world’s fifth-largest country.",
-    "source_name": "Wikipedia: Brazil",
-    "source_url": "https://en.wikipedia.org/wiki/Brazil",
-    "difficulty": "easy",
-    "status": "draft"
-  },
-  {
-    "id": "ww-010",
-    "date": "2026-11-19",
-    "order": 5,
-    "edition": "ww",
-    "set": "world-countries",
-    "answer": "ethiopia",
-    "category": "History",
-    "clues": [
-      "Along with Liberia, it’s the only African country never fully colonised.",
-      "It hosts the headquarters of the African Union Commission.",
-      "It’s the second most populous country in Africa, and has no coastline.",
-      "Its capital is Addis Ababa."
-    ],
-    "fact": "Italy occupied it from 1936 to 1941 but never secured the whole country. Around 138 million people live there.",
-    "source_name": "Wikipedia: Ethiopia",
-    "source_url": "https://en.wikipedia.org/wiki/Ethiopia",
-    "difficulty": "hard",
-    "status": "draft"
-  },
-  {
     "id": "ww-003",
-    "date": "2026-11-20",
+    "date": "2026-11-19",
     "order": 1,
     "edition": "ww",
     "set": "world-countries",
@@ -121,7 +21,7 @@
   },
   {
     "id": "ww-004",
-    "date": "2026-11-20",
+    "date": "2026-11-19",
     "order": 2,
     "edition": "ww",
     "set": "world-countries",
@@ -141,7 +41,7 @@
   },
   {
     "id": "ww-013",
-    "date": "2026-11-20",
+    "date": "2026-11-19",
     "order": 3,
     "edition": "ww",
     "set": "world-countries",
@@ -161,7 +61,7 @@
   },
   {
     "id": "ww-014",
-    "date": "2026-11-20",
+    "date": "2026-11-19",
     "order": 4,
     "edition": "ww",
     "set": "world-countries",
@@ -181,7 +81,7 @@
   },
   {
     "id": "ww-011",
-    "date": "2026-11-20",
+    "date": "2026-11-19",
     "order": 5,
     "edition": "ww",
     "set": "world-countries",
@@ -201,7 +101,7 @@
   },
   {
     "id": "ww-012",
-    "date": "2026-11-21",
+    "date": "2026-11-20",
     "order": 1,
     "edition": "ww",
     "set": "world-countries",
@@ -221,7 +121,7 @@
   },
   {
     "id": "ww-001",
-    "date": "2026-11-21",
+    "date": "2026-11-20",
     "order": 2,
     "edition": "ww",
     "set": "world-countries",
@@ -241,7 +141,7 @@
   },
   {
     "id": "ww-002",
-    "date": "2026-11-21",
+    "date": "2026-11-20",
     "order": 3,
     "edition": "ww",
     "set": "world-countries",
@@ -261,7 +161,7 @@
   },
   {
     "id": "ww-005",
-    "date": "2026-11-21",
+    "date": "2026-11-20",
     "order": 4,
     "edition": "ww",
     "set": "world-countries",
@@ -281,7 +181,7 @@
   },
   {
     "id": "ww-015",
-    "date": "2026-11-21",
+    "date": "2026-11-20",
     "order": 5,
     "edition": "ww",
     "set": "world-countries",
@@ -296,6 +196,106 @@
     "fact": "It also administers the Juan Fernández Islands in the Pacific. Its Antarctic claim is called the Chilean Antarctic Territory.",
     "source_name": "Wikipedia: Chile",
     "source_url": "https://en.wikipedia.org/wiki/Chile",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-007",
+    "date": "2026-11-21",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "australia",
+    "category": "Quirks",
+    "clues": [
+      "The world’s largest coral reef system, over 2,300 km long, lies off its coast.",
+      "It has the longest fence in the world: 5,614 km, built to keep dingoes out.",
+      "In 1932 its army fought a “war” against emus, and abandoned it.",
+      "Its capital is Canberra."
+    ],
+    "fact": "Soldiers with machine guns spent five weeks in the Emu War in 1932. The emus scattered into small groups and the cull was called off.",
+    "source_name": "Wikipedia: Emu War",
+    "source_url": "https://en.wikipedia.org/wiki/Emu_War",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-009",
+    "date": "2026-11-21",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "brazil",
+    "category": "Nature",
+    "clues": [
+      "It has the largest Portuguese-speaking population in the world.",
+      "It’s the fifth-largest country on Earth by area.",
+      "It borders every other country on its continent except Ecuador and Chile.",
+      "Its capital is Brasília."
+    ],
+    "fact": "It ranks first among the world’s 17 “megadiverse” countries, and borders nine countries plus one French territory.",
+    "source_name": "Wikipedia: Brazil",
+    "source_url": "https://en.wikipedia.org/wiki/Brazil",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-008",
+    "date": "2026-11-21",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "switzerland",
+    "category": "Politics",
+    "clues": [
+      "Officially it has no capital at all, just a “federal city”.",
+      "It has four language regions: German, French, Italian and Romansh.",
+      "It’s the birthplace of the Red Cross.",
+      "It has been neutral since the 16th century, and hasn’t fought an international war since 1815."
+    ],
+    "fact": "Bern is the seat of government but not, legally, the capital. Its neutrality was recognised by Europe’s powers in 1648.",
+    "source_name": "Wikipedia: Switzerland",
+    "source_url": "https://en.wikipedia.org/wiki/Switzerland",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-010",
+    "date": "2026-11-21",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "ethiopia",
+    "category": "History",
+    "clues": [
+      "Along with Liberia, it’s the only African country never fully colonised.",
+      "It hosts the headquarters of the African Union Commission.",
+      "It’s the second most populous country in Africa, and has no coastline.",
+      "Its capital is Addis Ababa."
+    ],
+    "fact": "Italy occupied it from 1936 to 1941 but never secured the whole country. Around 138 million people live there.",
+    "source_name": "Wikipedia: Ethiopia",
+    "source_url": "https://en.wikipedia.org/wiki/Ethiopia",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-006",
+    "date": "2026-11-21",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "bhutan",
+    "category": "Quirks",
+    "clues": [
+      "It lifted its ban on television and the internet only in 1999.",
+      "Its national anthem is called “The Thunder Dragon Kingdom”.",
+      "About 71% of it is forest, and it famously measures Gross National Happiness.",
+      "It’s a Himalayan kingdom between China and India. Its capital is Thimphu."
+    ],
+    "fact": "It was one of the last countries in the world to introduce television. Its name in its own language means “Land of the Thunder Dragon”.",
+    "source_name": "Wikipedia: Bhutan",
+    "source_url": "https://en.wikipedia.org/wiki/Bhutan",
     "difficulty": "hard",
     "status": "draft"
   }
