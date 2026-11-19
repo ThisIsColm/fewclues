@@ -18,11 +18,7 @@ export function Start({ today, started, onPlay }: { today: TodayResponse; starte
         <h1 className={s.title} tabIndex={-1} data-autofocus>
           How few clues do you need?
         </h1>
-        <p className={s.sub}>
-          5 countries a day.
-          <br />
-          Every miss unlocks an easier clue.
-        </p>
+        <p className={s.sub}>Every miss unlocks an easier clue.</p>
         <Example />
       </div>
 
