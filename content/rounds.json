@@ -1,7 +1,7 @@
 [
   {
     "id": "ww-001",
-    "date": "2026-11-19",
+    "date": "2026-11-21",
     "order": 1,
     "edition": "ww",
     "set": "world-countries",
@@ -21,7 +21,7 @@
   },
   {
     "id": "ww-002",
-    "date": "2026-11-19",
+    "date": "2026-11-21",
     "order": 2,
     "edition": "ww",
     "set": "world-countries",
@@ -41,7 +41,7 @@
   },
   {
     "id": "ww-003",
-    "date": "2026-11-19",
+    "date": "2026-11-21",
     "order": 3,
     "edition": "ww",
     "set": "world-countries",
@@ -61,7 +61,7 @@
   },
   {
     "id": "ww-004",
-    "date": "2026-11-19",
+    "date": "2026-11-21",
     "order": 4,
     "edition": "ww",
     "set": "world-countries",
@@ -81,7 +81,7 @@
   },
   {
     "id": "ww-005",
-    "date": "2026-11-19",
+    "date": "2026-11-21",
     "order": 5,
     "edition": "ww",
     "set": "world-countries",
@@ -101,7 +101,7 @@
   },
   {
     "id": "ww-006",
-    "date": "2026-11-20",
+    "date": "2026-11-19",
     "order": 1,
     "edition": "ww",
     "set": "world-countries",
@@ -121,7 +121,7 @@
   },
   {
     "id": "ww-007",
-    "date": "2026-11-20",
+    "date": "2026-11-19",
     "order": 2,
     "edition": "ww",
     "set": "world-countries",
@@ -141,7 +141,7 @@
   },
   {
     "id": "ww-008",
-    "date": "2026-11-20",
+    "date": "2026-11-19",
     "order": 3,
     "edition": "ww",
     "set": "world-countries",
@@ -161,7 +161,7 @@
   },
   {
     "id": "ww-009",
-    "date": "2026-11-20",
+    "date": "2026-11-19",
     "order": 4,
     "edition": "ww",
     "set": "world-countries",
@@ -181,7 +181,7 @@
   },
   {
     "id": "ww-010",
-    "date": "2026-11-20",
+    "date": "2026-11-19",
     "order": 5,
     "edition": "ww",
     "set": "world-countries",
@@ -201,7 +201,7 @@
   },
   {
     "id": "ww-011",
-    "date": "2026-11-21",
+    "date": "2026-11-20",
     "order": 1,
     "edition": "ww",
     "set": "world-countries",
@@ -221,7 +221,7 @@
   },
   {
     "id": "ww-012",
-    "date": "2026-11-21",
+    "date": "2026-11-20",
     "order": 2,
     "edition": "ww",
     "set": "world-countries",
@@ -241,7 +241,7 @@
   },
   {
     "id": "ww-013",
-    "date": "2026-11-21",
+    "date": "2026-11-20",
     "order": 3,
     "edition": "ww",
     "set": "world-countries",
@@ -261,7 +261,7 @@
   },
   {
     "id": "ww-014",
-    "date": "2026-11-21",
+    "date": "2026-11-20",
     "order": 4,
     "edition": "ww",
     "set": "world-countries",
@@ -281,7 +281,7 @@
   },
   {
     "id": "ww-015",
-    "date": "2026-11-21",
+    "date": "2026-11-20",
     "order": 5,
     "edition": "ww",
     "set": "world-countries",
