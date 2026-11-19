@@ -159,8 +159,8 @@
 }
 
 .me .avatar {
-  background: var(--tangerine);
-  color: var(--ink);
+  background: var(--hero);
+  color: var(--on-hero);
 }
 
 .name {

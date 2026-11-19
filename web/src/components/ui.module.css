@@ -171,7 +171,7 @@
 }
 
 .sheet::backdrop {
-  background: rgb(15 17 21 / 0.75);
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
 }
 
 @keyframes sheetIn {
@@ -223,7 +223,7 @@
 }
 
 .error {
-  color: #ff9a8a;
+  color: var(--error);
   font-size: 14px;
   margin: -4px 0 12px;
 }

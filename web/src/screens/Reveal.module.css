@@ -55,14 +55,15 @@
 /* Tiers follow the closeness scale: clue 1 cyan, clue 2 dark cyan, clue 3–4 grey, missed outline. */
 .tier_c1 {
   background: var(--c1);
-  color: var(--ink);
+  color: var(--on-c1);
 }
 .tier_c2 {
   background: var(--c2);
-  color: var(--ink);
+  color: var(--on-c2);
 }
 .tier_c3 {
-  background: #3a3f49;
+  background: var(--c3);
+  color: var(--on-c3);
 }
 .tier_c4 {
   box-shadow: inset 0 0 0 2px var(--c4-line);
@@ -71,13 +72,15 @@
   color: var(--tangerine);
 }
 .tier_c1 .pts,
-.tier_c2 .pts {
-  color: var(--ink);
+.tier_c2 .pts,
+.tier_c3 .pts {
+  color: inherit;
 }
 .tier_c1 .tries,
-.tier_c2 .tries {
-  color: var(--ink);
-  border-top-color: rgb(15 17 21 / 0.2);
+.tier_c2 .tries,
+.tier_c3 .tries {
+  color: inherit;
+  border-top-color: color-mix(in srgb, currentColor 22%, transparent);
 }
 
 .dist {
@@ -160,8 +163,8 @@
 }
 
 .ladderHit .ladderNo {
-  background: var(--cyan);
-  color: var(--ink);
+  background: var(--c1);
+  color: var(--on-c1);
 }
 
 @media (max-width: 370px) {

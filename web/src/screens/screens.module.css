@@ -157,7 +157,7 @@
 .source {
   margin-top: 12px;
   font-size: 13px;
-  color: #3d4250;
+  color: var(--paper-muted);
 }
 
 .source a {
@@ -181,8 +181,8 @@
 
 .hero {
   margin-top: 8px;
-  background: var(--tangerine);
-  color: var(--ink);
+  background: var(--hero);
+  color: var(--on-hero);
   border-radius: var(--r-hero);
   padding: 20px 22px 18px;
 }
@@ -204,8 +204,8 @@
   align-items: center;
   padding: 0 12px;
   border-radius: 999px;
-  background: var(--ink);
-  color: var(--tangerine);
+  background: var(--on-hero);
+  color: var(--hero);
   font-weight: 600;
   font-size: 14px;
 }
@@ -261,9 +261,9 @@
   font-variant-numeric: tabular-nums;
 }
 
-.tileBox.c1 { background: var(--c1); color: var(--ink); }
-.tileBox.c2 { background: var(--c2); color: var(--ink); }
-.tileBox.c3 { background: var(--c3); color: var(--text); }
+.tileBox.c1 { background: var(--c1); color: var(--on-c1); }
+.tileBox.c2 { background: var(--c2); color: var(--on-c2); }
+.tileBox.c3 { background: var(--c3); color: var(--on-c3); }
 .tileBox.c4 { box-shadow: inset 0 0 0 2px var(--c4-line); color: var(--text); }
 
 .tileOff {
@@ -604,7 +604,7 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: rgb(244 241 234 / 0.12);
+  background: color-mix(in srgb, var(--text) 12%, transparent);
 }
 
 .arrow svg {
@@ -641,7 +641,7 @@
 
 /* ≤20: grey card */
 .tier_c3 {
-  background: #3a3f49;
+  background: var(--c3);
 }
 
 /* >20: stays dark, gets a hard outline */
@@ -658,12 +658,12 @@
 
 .tier_c1 .legendList,
 .tier_c2 .legendList {
-  border-top-color: rgb(15 17 21 / 0.25);
+  border-top-color: color-mix(in srgb, currentColor 25%, transparent);
 }
 
 .tier_c1 .arrow,
 .tier_c2 .arrow {
-  background: rgb(15 17 21 / 0.14);
+  background: color-mix(in srgb, currentColor 14%, transparent);
 }
 
 .tier_c1 .swAnswer,
@@ -699,9 +699,9 @@
   min-height: 48px;
   margin: 10px -18px 0;
   padding: 0 18px;
-  border-top: 1px solid rgb(15 17 21 / 0.12);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
   font-size: 13px;
-  color: #3d4250;
+  color: var(--paper-muted);
   text-decoration: none;
 }
 
