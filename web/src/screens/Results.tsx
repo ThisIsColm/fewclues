@@ -65,7 +65,7 @@ export function Results(props: {
   }
 
   return (
-    <div className={`${s.screen} ${s.stack}`} onPointerDownCapture={skip}>
+    <div className={`${s.screen} ${s.stack}`} onPointerDownCapture={skip} data-layout="wide">
       <TopBar
         puzzle={today.puzzle}
         edition={today.edition}
@@ -79,6 +79,9 @@ export function Results(props: {
         }
       />
 
+      {/* Two columns on wide screens; a single column (same order) on phones. */}
+      <div className={s.cols}>
+      <div className={s.col}>
       <section className={s.hero} aria-labelledby="score-title">
         <div className={s.heroTop}>
           <h1 className={s.heroLabel} id="score-title" tabIndex={-1} data-autofocus>
@@ -113,7 +116,9 @@ export function Results(props: {
           );
         })}
       </ol>
+      </div>
 
+      <div className={s.col}>
       <div className={s.stats2}>
         <Card>
           <p className={s.statLabel}>Streak</p>
@@ -146,6 +151,8 @@ export function Results(props: {
         <Button variant="secondary" onClick={props.onLeagues}>
           Challenge a friend
         </Button>
+      </div>
+      </div>
       </div>
       <Countdown to={today.nextRolloverAt} />
       <p className={s.privacy}>

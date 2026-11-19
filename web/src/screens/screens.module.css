@@ -972,3 +972,57 @@
     padding-top: 8px;
   }
 }
+
+/* ---------------------------------------------------------------- desktop: two columns
+   Phones: the wrappers vanish (display: contents) so the single column is unchanged.
+   Wide screens (laptops at work): side-by-side columns so a screen fits without scrolling. */
+
+.cols,
+.col {
+  display: contents;
+}
+
+@media (min-width: 900px) {
+  .cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+    margin-top: 14px;
+  }
+  .col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+  .cols .col > :first-child {
+    margin-top: 0;
+  }
+  .stickyNext {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 14px;
+  }
+  .stickyNext > button {
+    max-width: 420px;
+  }
+}
+
+/* Small "press Enter" hint, only where there is a real keyboard and mouse. */
+.kbd {
+  display: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .kbd {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 1px 7px;
+    border-radius: 6px;
+    border: 1px solid color-mix(in srgb, currentColor 30%, transparent);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.7;
+  }
+}

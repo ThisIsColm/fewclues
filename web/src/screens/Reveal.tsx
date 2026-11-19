@@ -41,6 +41,22 @@ export function Reveal(props: {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Desk players: Enter goes to the next round, so hands can stay on the keyboard.
+  // Ignored for a moment after the reveal appears, so a double-pressed Enter can't skip it.
+  useEffect(() => {
+    const armedAt = Date.now() + 450;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Enter' || e.repeat || e.isComposing || Date.now() < armedAt) return;
+      const t = e.target as HTMLElement | null;
+      if (t?.closest('a, button, input, textarea, select, [role=dialog]')) return;
+      e.preventDefault();
+      props.onNext();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const total = rv.crowd.players;
   const labels = ['Clue 1', 'Clue 2', 'Clue 3', 'Clue 4', 'Missed'];
   const mine = rv.solvedAt === 0 ? 4 : rv.solvedAt - 1;
@@ -49,9 +65,13 @@ export function Reveal(props: {
   const verdict = verdictForSolve(rv.solvedAt);
 
   return (
-    <div className={`${s.screen} ${s.stack}`}>
+    <div className={`${s.screen} ${s.stack}`} data-layout="wide">
       <TopBar puzzle={props.puzzle} edition={props.edition} streak={props.streak} />
       <Progress blocks={props.blocks} current={index} />
+
+      {/* Two columns on wide screens; a single column (same order) on phones. */}
+      <div className={s.cols}>
+      <div className={s.col}>
 
       <motion.section
         className={`${r.hero} ${r[`tier_${tier}`]}`}
@@ -114,7 +134,9 @@ export function Reveal(props: {
           <Icon name="external" />
         </a>
       </motion.section>
+      </div>
 
+      <div className={s.col}>
       <Card aria-labelledby="crowd-title">
         <div className={s.cardHead}>
           <h2 className={ui.cardTitle} id="crowd-title">
@@ -168,9 +190,16 @@ export function Reveal(props: {
           ))}
         </ol>
       </Card>
+      </div>
+      </div>
 
       <div className={s.stickyNext}>
-        <Button onClick={props.onNext}>{props.review ? 'Back to results' : last ? 'See results' : 'Next round'}</Button>
+        <Button onClick={props.onNext}>
+          {props.review ? 'Back to results' : last ? 'See results' : 'Next round'}
+          <kbd className={s.kbd} aria-hidden="true">
+            Enter ↵
+          </kbd>
+        </Button>
       </div>
     </div>
   );

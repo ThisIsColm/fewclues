@@ -275,3 +275,10 @@
   padding: 18px 4px;
   color: var(--muted);
 }
+
+/* Laptops/desktops: a wider column, so long clues take fewer lines and all four fit. */
+@media (min-width: 900px) {
+  .screen {
+    max-width: 640px;
+  }
+}

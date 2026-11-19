@@ -322,3 +322,10 @@ number-flow-react {
   text-underline-offset: 3px;
   cursor: pointer;
 }
+
+/* Laptops/desktops: screens marked data-layout="wide" (reveal, results) get room for two columns. */
+@media (min-width: 900px) {
+  #root:has([data-layout='wide']) {
+    max-width: 880px;
+  }
+}
