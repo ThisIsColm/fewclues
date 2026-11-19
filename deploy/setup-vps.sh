@@ -17,6 +17,19 @@
 set -euo pipefail
 
 [ "$(id -u)" -eq 0 ] || { echo "Run as root (sudo bash setup-vps.sh)"; exit 1; }
+
+# SAFETY: this script is for a FRESH server only. It sets the firewall to "deny all
+# incoming except SSH", runs a full system upgrade and rewrites the SSH settings. On a
+# server that already hosts websites that would take them offline. So refuse if
+# anything looks already in use, unless told otherwise.
+busy=""
+ss -ltn 2>/dev/null | grep -qE ':(80|443)\s' && busy="something is listening on port 80/443"
+for svc in nginx apache2 httpd caddy; do systemctl is-active --quiet "$svc" 2>/dev/null && busy="$svc is running"; done
+if [ -n "$busy" ] && [ "${I_KNOW_THIS_IS_A_FRESH_SERVER:-}" != "yes" ]; then
+  echo "STOP: this server looks like it is already hosting websites ($busy)."
+  echo "This script would block their traffic. Use the 'Shared server' section of deploy/RUNBOOK.md instead."
+  exit 1
+fi
 [ -s /root/.ssh/authorized_keys ] || { echo "No SSH key in /root/.ssh/authorized_keys. Add one before running this, or you'll lock yourself out."; exit 1; }
 
 export DEBIAN_FRONTEND=noninteractive

@@ -3,6 +3,12 @@
 About 1–2 hours, and **no downtime** if you follow the cutover order (the Cloudflare
 tunnel runs on both machines for a few minutes, then you stop the old one).
 
+## Is the server shared with other websites?
+
+If the VPS already hosts other sites, **do not run `setup-vps.sh`** (it refuses to anyway).
+It would block their web ports, run a full system upgrade and change SSH settings. Follow
+**"Shared server"** at the bottom instead. Everything else in this runbook still applies.
+
 ## 0. Before you start
 
 - **Code location.** The repo only exists on the home server. Work is on the
@@ -126,3 +132,48 @@ gunzip -c ~/backups/fewclues-<stamp>.db.gz > ~/restore.db
 docker run --rm -v fewclues-data:/data -v "$HOME":/in alpine sh -c 'cp /in/restore.db /data/fewclues.db && rm -f /data/fewclues.db-wal /data/fewclues.db-shm && chown 1000:1000 /data/fewclues.db'
 docker compose up -d
 ```
+
+## Shared server (the VPS already hosts other sites)
+
+The tunnel makes this easy: the game needs **no public ports and no changes to
+nginx/Apache/Caddy**, so it can't collide with your other sites' web setup. Leave the
+firewall, SSH config and system updates alone. Only add:
+
+1. **Check headroom and the port.**
+   ```sh
+   free -h; df -h /; ss -ltnp | grep ':8787' || echo "8787 is free"
+   ```
+   The game idles around 21 MB and is capped at 192 MB (`mem_limit` in compose). If 8787 is
+   taken, change the left side of `"127.0.0.1:8787:8787"` in the compose file and the
+   tunnel's service URL to match.
+2. **Docker.** Use what's there; if absent, `sudo apt-get install -y docker.io docker-compose-v2`
+   (installing it doesn't touch your sites; if Docker is already running other
+   containers, they're unaffected by a new project).
+3. **Don't build on the shared box.** The build (`npm ci`, bundling, tests) spikes CPU and
+   memory and could slow your other sites. Build on the home server and ship the image:
+   ```sh
+   # home server
+   cd ~/percentle && docker build -t fewclues:latest . && docker save fewclues:latest | gzip | ssh <user>@<vps> 'gunzip | docker load'
+   # vps (project folder with docker-compose.yml, content/ copied or git-cloned)
+   docker compose up -d --no-build
+   ```
+4. **The tunnel connector.** If the box already runs `cloudflared` for another tunnel,
+   don't use `cloudflared service install` (it would clash). Run this tunnel's connector
+   as its own container, with the token in a private file:
+   ```sh
+   umask 077 && printf 'TUNNEL_TOKEN=%s\n' "<paste token>" > ~/.fewclues-tunnel.env
+   docker run -d --name fewclues-tunnel --restart unless-stopped --network host \
+     --env-file ~/.fewclues-tunnel.env cloudflare/cloudflared:latest tunnel --no-autoupdate run
+   ```
+   (`--network host` lets it reach `localhost:8787`.) If there's no other cloudflared,
+   `sudo apt-get install cloudflared` then `sudo cloudflared service install <token>` is fine.
+5. Then continue from **step 4 (data)** onwards. Backups and the uptime check apply the same.
+
+**Shared-box caveats**
+- **Blast radius.** Anyone who can run Docker (or root) on the box can read the game's
+  database and the tunnel token. A compromised neighbouring site is a risk to it, and the
+  reverse. Keep the other sites patched, and don't give the game's user more access than needed.
+- **Updates.** The game's image isn't touched by system updates, so nothing you do for the
+  other sites breaks it, apart from a Docker upgrade, which restarts containers briefly.
+- **Rate limiting** trusts the `CF-Connecting-IP` header. The game listens on localhost only,
+  so only processes on the box itself could spoof it, which at worst skews rate limits.
