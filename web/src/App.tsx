@@ -181,7 +181,6 @@ export function App() {
         today={today}
         started={rounds.filter((r) => r.done).length}
         onPlay={() => go({ name: 'round', index: Math.max(0, rounds.findIndex((r) => !r.done)) })}
-        onHelp={() => setSheet('help')}
       />
     );
   else if (today && route.name === 'round' && rounds[route.index])

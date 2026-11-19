@@ -4,7 +4,7 @@ import { editionLabel } from '../components/TopBar';
 import { Button, Icon, Pill, Wordmark } from '../components/ui';
 import s from './screens.module.css';
 
-export function Start({ today, started, onPlay, onHelp }: { today: TodayResponse; started: number; onPlay: () => void; onHelp: () => void }) {
+export function Start({ today, started, onPlay }: { today: TodayResponse; started: number; onPlay: () => void }) {
   return (
     <div className={s.screen}>
       <div className={s.start}>
@@ -45,15 +45,9 @@ export function Start({ today, started, onPlay, onHelp }: { today: TodayResponse
               </span>
             </li>
           </ol>
-          <p className={s.exPoints}>
-            Points by clue: <b>100</b> · <b>60</b> · <b>30</b> · <b>10</b>
-          </p>
         </section>
         <Button variant="accent" onClick={onPlay}>
           {started ? `Continue (${started}/5)` : 'Play today’s five'}
-        </Button>
-        <Button variant="ghost" onClick={onHelp}>
-          How to play
         </Button>
       </div>
       <p className={s.privacy}>

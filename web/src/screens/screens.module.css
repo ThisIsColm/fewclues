@@ -359,8 +359,16 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 12px;
-  padding: 28px 0 20px;
+  gap: 22px;
+  padding: 32px 0 28px;
+}
+
+.start .startTitle {
+  margin-top: 0;
+}
+
+.start .startMeta {
+  margin-top: -10px;
 }
 
 .startTitle {
@@ -808,8 +816,8 @@
 /* ---------------------------------------------------------------- start: worked example */
 
 .example {
-  margin: 10px 0 6px;
-  padding: 16px 16px 14px;
+  margin: 4px 0 10px;
+  padding: 18px 18px 20px;
   border-radius: var(--r-card);
   border: 1.5px dashed var(--outline);
   background: transparent;
@@ -819,7 +827,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .exampleHead h2 {
@@ -848,18 +856,18 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 12px;
+  gap: 18px;
 }
 
 .exSteps li {
   display: grid;
-  gap: 6px;
+  gap: 8px;
 }
 
 .exClue {
   display: grid;
-  gap: 2px;
-  padding: 10px 14px;
+  gap: 4px;
+  padding: 12px 14px;
   border-radius: 14px;
   background: var(--surface);
   font-family: var(--display);
@@ -935,8 +943,8 @@
 /* Short phones: keep the whole example and the Play button above the fold. */
 @media (max-height: 720px) {
   .start {
-    padding: 14px 0 12px;
-    gap: 10px;
+    padding: 16px 0 14px;
+    gap: 16px;
   }
   .startTitle {
     font-size: 24px;
@@ -950,10 +958,10 @@
     margin-bottom: 8px;
   }
   .exSteps {
-    gap: 8px;
+    gap: 12px;
   }
   .exClue {
-    padding: 7px 12px;
+    padding: 9px 12px;
     font-size: 15px;
   }
   .exGuess {
