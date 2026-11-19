@@ -69,17 +69,17 @@
   text-transform: uppercase;
 }
 
-/* Fixed height so the loop never makes the page jump. */
 .exBody {
-  min-height: 198px;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
 .exClue {
-  display: grid;
-  gap: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   padding: 10px 14px;
   border-radius: 14px;
   background: var(--paper);
@@ -88,6 +88,30 @@
   font-weight: 700;
   font-size: 16px;
   transition: background-color 200ms ease, color 200ms ease, padding 200ms ease, font-size 200ms ease;
+}
+
+.exText {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* Red ✕: this clue's guess was wrong. */
+.exMiss {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--wrong) 18%, transparent);
+  color: var(--wrong);
+}
+
+.exMiss svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 3;
 }
 
 .exClue i {
@@ -113,7 +137,6 @@
 }
 
 .exInput {
-  margin-top: auto;
   height: 46px;
   display: flex;
   align-items: center;
@@ -230,9 +253,6 @@
   .example {
     margin-top: 18px;
     padding: 12px 12px 10px;
-  }
-  .exBody {
-    min-height: 180px;
   }
   .bottom {
     gap: 6px;

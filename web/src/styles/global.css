@@ -28,6 +28,8 @@
   --hero: var(--tangerine);
   --on-hero: var(--ink);
   --error: #ff9a8a;
+  /* "Wrong" red for example markers (5.6:1 on the surface colour). */
+  --wrong: #ff5c5c;
 
   /* closeness scale (clue 1 · clue 2 · clue 3–4 · missed) */
   --c1: var(--cyan);
