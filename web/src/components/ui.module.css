@@ -30,6 +30,11 @@
   color: var(--ink);
 }
 
+.accent {
+  background: var(--hero);
+  color: var(--on-hero);
+}
+
 .secondary {
   background: transparent;
   color: var(--text);

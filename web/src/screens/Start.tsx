@@ -1,14 +1,14 @@
 import { formatLongDate } from '../../../shared/day';
 import type { TodayResponse } from '../../../shared/types';
 import { editionLabel } from '../components/TopBar';
-import { Button, Pill, Wordmark } from '../components/ui';
+import { Button, Icon, Pill, Wordmark } from '../components/ui';
 import s from './screens.module.css';
 
 export function Start({ today, started, onPlay, onHelp }: { today: TodayResponse; started: number; onPlay: () => void; onHelp: () => void }) {
   return (
     <div className={s.screen}>
       <div className={s.start}>
-        <Wordmark size={44} />
+        <Wordmark size={40} />
         <h1 className={s.startTitle} tabIndex={-1} data-autofocus>
           Five countries. Four clues each. How few do you need?
         </h1>
@@ -18,15 +18,40 @@ export function Start({ today, started, onPlay, onHelp }: { today: TodayResponse
             #{today.puzzle} · {formatLongDate(today.date)}
           </span>
         </p>
-        <ol className={s.startClues} aria-hidden="true">
-          <li>
-            <span>Clue 1</span>Its national emblem is a harp.
-          </li>
-          <li>
-            <span>Clue 4</span>Its capital is Dublin.
-          </li>
-        </ol>
-        <Button onClick={onPlay}>{started ? `Continue (${started}/5)` : 'Play'}</Button>
+        <section className={s.example} aria-labelledby="example-title">
+          <div className={s.exampleHead}>
+            <h2 id="example-title">How it works</h2>
+            <span className={s.exampleTag}>Example</span>
+          </div>
+          <ol className={s.exSteps}>
+            <li>
+              <span className={s.exClue}>
+                <i>Clue 1</i>Its national emblem is a harp.
+              </span>
+              <span className={s.exGuess}>
+                You guess <b className={s.exWrong}>Wales</b>
+                <Icon name="close" />
+                <em>Wrong, so an easier clue appears</em>
+              </span>
+            </li>
+            <li>
+              <span className={s.exClue}>
+                <i>Clue 2</i>Its capital is Dublin.
+              </span>
+              <span className={s.exGuess}>
+                You guess <b>Ireland</b>
+                <Icon name="check" />
+                <em>Got it on clue 2: +60 pts</em>
+              </span>
+            </li>
+          </ol>
+          <p className={s.exPoints}>
+            Points by clue: <b>100</b> · <b>60</b> · <b>30</b> · <b>10</b>
+          </p>
+        </section>
+        <Button variant="accent" onClick={onPlay}>
+          {started ? `Continue (${started}/5)` : 'Play today’s five'}
+        </Button>
         <Button variant="ghost" onClick={onHelp}>
           How to play
         </Button>

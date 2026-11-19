@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ButtonHTMLAttributes, type ReactNode } from 'react';
 import s from './ui.module.css';
 
-type BtnProps = ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'ghost' };
+type BtnProps = ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'accent' | 'secondary' | 'ghost' };
 
 export function Button({ variant = 'primary', className = '', ...rest }: BtnProps) {
   return <button type="button" className={`${s.btn} ${s[variant]} ${className}`} {...rest} />;
@@ -26,6 +26,7 @@ const ICONS = {
   plus: 'M12 5v14M5 12h14',
   up: 'M12 19V5M5 12l7-7 7 7',
   external: 'M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5',
+  check: 'M20 6 9 17l-5-5',
   down: 'M12 5v14M19 12l-7 7-7-7',
 } as const;
 export type IconName = keyof typeof ICONS;
