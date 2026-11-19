@@ -10,12 +10,14 @@ services:
       - "127.0.0.1:8787:8787"
     environment:
       SITE_URL: https://fewclues.app
-      LAUNCH_DATE: "2026-12-01"
+      LAUNCH_DATE: "2026-11-19"
       EDITION: ww
       TZ: Europe/Dublin
+      # Beta: the rounds are still marked draft until they've been reviewed.
+      # Remove this once every round is "approved".
+      ALLOW_DRAFTS: "1"
       # Local testing only — never in production:
-      # ALLOW_DRAFTS: "1"
-      # DEV_DATE: "2026-12-01"
+      # DEV_DATE: "2026-11-19"
     volumes:
       - fewclues-data:/data
       # Edit questions without rebuilding; the server re-reads the file on change.

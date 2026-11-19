@@ -28,7 +28,7 @@ function int(v: string | undefined, def: number): number {
 
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
   const siteUrl = (env.SITE_URL || 'https://fewclues.app').replace(/\/+$/, '');
-  const launchDate = env.LAUNCH_DATE || '2026-12-01';
+  const launchDate = env.LAUNCH_DATE || '2026-11-19';
   if (!isIsoDate(launchDate)) throw new Error(`LAUNCH_DATE must be YYYY-MM-DD, got "${launchDate}"`);
   const devDate = env.DEV_DATE || null;
   if (devDate && !isIsoDate(devDate)) throw new Error(`DEV_DATE must be YYYY-MM-DD, got "${devDate}"`);
