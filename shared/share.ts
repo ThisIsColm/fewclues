@@ -25,7 +25,9 @@ export function editionInfo(code: string): Edition {
 
 /**
  * Spoiler-free share text. Contains only the puzzle number, flag, total and
- * colour blocks — never questions, guesses or answers.
+ * colour blocks — never questions, guesses or answers. The last line is a full
+ * https:// URL, because chat apps such as WhatsApp only make a link tappable
+ * when they recognise it as one (a bare "fewclues.app" often isn't).
  */
 export function shareText(opts: {
   puzzle: number;
@@ -37,6 +39,6 @@ export function shareText(opts: {
   return [
     `Few Clues #${opts.puzzle} ${opts.flag} ${opts.total}/${MAX_TOTAL}`,
     opts.blocks.map((b) => EMOJI[b]).join(''),
-    opts.siteHost,
+    `https://${opts.siteHost}`,
   ].join('\n');
 }

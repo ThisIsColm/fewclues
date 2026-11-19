@@ -6,7 +6,7 @@ describe('shareText', () => {
   it('matches the spec format exactly', () => {
     expect(
       shareText({ puzzle: 12, flag: '🇮🇪', total: 734, blocks: ['green', 'green', 'yellow', 'red', 'green'], siteHost: 'fewclues.app' }),
-    ).toBe('Few Clues #12 🇮🇪 734/1000\n🟩🟩🟨🟥🟩\nfewclues.app');
+    ).toBe('Few Clues #12 🇮🇪 734/1000\n🟩🟩🟨🟥🟩\nhttps://fewclues.app');
   });
   it('uses all four block colours', () => {
     const t = shareText({ puzzle: 1, flag: '🇮🇪', total: 0, blocks: ['green', 'yellow', 'orange', 'red', 'red'], siteHost: 'x.ie' });
@@ -31,5 +31,15 @@ describe('streaks', () => {
   });
   it('handles no games', () => {
     expect(streaks([], '2026-12-05')).toEqual({ current: 0, max: 0 });
+  });
+});
+
+describe('share link', () => {
+  it('ends with a full https URL so chat apps make it tappable', () => {
+    const t = shareText({ puzzle: 1, flag: '🌍', total: 500, blocks: ['green', 'green', 'green', 'green', 'green'], siteHost: 'fewclues.app' });
+    const last = t.split('\n').at(-1)!;
+    expect(last).toBe('https://fewclues.app');
+    expect(() => new URL(last)).not.toThrow();
+    expect(last).not.toMatch(/\s/);
   });
 });

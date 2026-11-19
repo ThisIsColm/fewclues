@@ -89,7 +89,7 @@ Configuration (environment variables):
 
 | Var | Default | |
 |---|---|---|
-| `SITE_URL` | `https://fewclues.app` | Used for og:image and og:url. The share text uses its host. |
+| `SITE_URL` | `https://fewclues.app` | Used for og:image and og:url. The share text ends with `https://` + its host, so chat apps make it tappable. |
 | `LAUNCH_DATE` | `2026-12-01` | Puzzle #1. Earlier dates show "Coming soon". |
 | `EDITION` | `ie` | |
 | `PERCENTILE_MIN_PLAYERS` | `20` | |
