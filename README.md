@@ -1,8 +1,8 @@
-# Percentle
+# Few Clues  ·  fewclues.app
 
 A daily place-guessing game. Five rounds a day: each starts with the hardest of four hand-written clues about a country, and every wrong guess unlocks an easier one. The fewer clues you need, the more points: 100, 60, 30 or 10. Then see the fact behind it, how everyone else did, and how you did against friends in a league.
 
-> The earlier percentage game is in git history (`main`), and the Read the Room prototype is parked on the `read-the-room` branch.
+> Formerly “Percentle”. The earlier percentage game is in git history (`main`), and the Read the Room prototype is parked on the `read-the-room` branch.
 
 - **Frontend:** React 19 + Vite + TypeScript, CSS modules. Uses `motion`, `@number-flow/react`, `web-haptics`, and `canvas-confetti` (lazy-loaded). Fonts (Bricolage Grotesque, Inter) are self-hosted. There are no runtime CDNs and no trackers.
 - **Backend:** one Node service (Hono + better-sqlite3) that also serves the built frontend.
@@ -79,7 +79,7 @@ The running server re-reads the file within 30 s when it changes. A bad edit is 
 docker compose up -d --build
 ```
 
-- The SQLite database lives in the named volume `percentle-data`.
+- The SQLite database lives in the named volume `fewclues-data`.
 - `./content` is mounted read-only, so you can add questions without rebuilding.
 - The port is bound to `127.0.0.1:8787` only.
 - The image build runs the validator and the full test suite.
@@ -88,7 +88,7 @@ Configuration (environment variables):
 
 | Var | Default | |
 |---|---|---|
-| `SITE_URL` | `https://percentle.ie` | Used for og:image and og:url. The share text uses its host. |
+| `SITE_URL` | `https://fewclues.app` | Used for og:image and og:url. The share text uses its host. |
 | `LAUNCH_DATE` | `2026-12-01` | Puzzle #1. Earlier dates show "Coming soon". |
 | `EDITION` | `ie` | |
 | `PERCENTILE_MIN_PLAYERS` | `20` | |
@@ -103,22 +103,22 @@ The health check is at `GET /api/health`.
 The container only listens on localhost, so the tunnel is the only way in. That is also why the server can trust `CF-Connecting-IP` for rate limiting.
 
 ```sh
-cloudflared tunnel create percentle
-cloudflared tunnel route dns percentle percentle.ie
+cloudflared tunnel create fewclues
+cloudflared tunnel route dns fewclues fewclues.app
 ```
 
 `~/.cloudflared/config.yml`:
 
 ```yaml
-tunnel: percentle
+tunnel: fewclues
 credentials-file: /home/<you>/.cloudflared/<tunnel-id>.json
 ingress:
-  - hostname: percentle.ie
+  - hostname: fewclues.app
     service: http://127.0.0.1:8787
   - service: http_status:404
 ```
 
-Run it with `cloudflared tunnel run percentle`, or install it as a service. If cloudflared runs in Docker, put it on the same Docker network and point it at `http://percentle:8787`, rather than publishing the port.
+Run it with `cloudflared tunnel run fewclues`, or install it as a service. If cloudflared runs in Docker, put it on the same Docker network and point it at `http://fewclues:8787`, rather than publishing the port.
 
 ## API
 

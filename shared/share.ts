@@ -35,7 +35,7 @@ export function shareText(opts: {
   siteHost: string;
 }): string {
   return [
-    `Percentle #${opts.puzzle} ${opts.flag} ${opts.total}/${MAX_TOTAL}`,
+    `Few Clues #${opts.puzzle} ${opts.flag} ${opts.total}/${MAX_TOTAL}`,
     opts.blocks.map((b) => EMOJI[b]).join(''),
     opts.siteHost,
   ].join('\n');

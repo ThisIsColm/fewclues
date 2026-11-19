@@ -1,15 +1,15 @@
 services:
-  percentle:
+  fewclues:
     build: .
-    image: percentle:latest
-    container_name: percentle
+    image: fewclues:latest
+    container_name: fewclues
     restart: unless-stopped
     # Bound to localhost only: Cloudflare Tunnel (cloudflared on this host) is
     # the only way in, so the CF-Connecting-IP header can be trusted.
     ports:
       - "127.0.0.1:8787:8787"
     environment:
-      SITE_URL: https://percentle.ie
+      SITE_URL: https://fewclues.app
       LAUNCH_DATE: "2026-12-01"
       EDITION: ww
       TZ: Europe/Dublin
@@ -17,7 +17,7 @@ services:
       # ALLOW_DRAFTS: "1"
       # DEV_DATE: "2026-12-01"
     volumes:
-      - percentle-data:/data
+      - fewclues-data:/data
       # Edit questions without rebuilding; the server re-reads the file on change.
       - ./content:/app/content:ro
     mem_limit: 192m
@@ -26,4 +26,4 @@ services:
       - /tmp
 
 volumes:
-  percentle-data:
+  fewclues-data:

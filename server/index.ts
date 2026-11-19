@@ -44,7 +44,7 @@ if (existsSync(indexPath)) {
 }
 
 const server = serve({ fetch: app.fetch, port: config.port, hostname: config.host }, (info) =>
-  console.log(`Percentle listening on http://${info.address}:${info.port}`),
+  console.log(`Few Clues listening on http://${info.address}:${info.port}`),
 );
 
 function shutdown() {

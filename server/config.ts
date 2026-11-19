@@ -27,7 +27,7 @@ function int(v: string | undefined, def: number): number {
 }
 
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
-  const siteUrl = (env.SITE_URL || 'https://percentle.ie').replace(/\/+$/, '');
+  const siteUrl = (env.SITE_URL || 'https://fewclues.app').replace(/\/+$/, '');
   const launchDate = env.LAUNCH_DATE || '2026-12-01';
   if (!isIsoDate(launchDate)) throw new Error(`LAUNCH_DATE must be YYYY-MM-DD, got "${launchDate}"`);
   const devDate = env.DEV_DATE || null;
@@ -35,7 +35,7 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): Config {
   return {
     port: int(env.PORT, 8787),
     host: env.HOST || '0.0.0.0',
-    dbPath: env.DB_PATH || 'data/percentle.db',
+    dbPath: env.DB_PATH || 'data/fewclues.db',
     contentPath: env.CONTENT_PATH || 'content/rounds.json',
     staticDir: env.STATIC_DIR || 'dist/public',
     launchDate,

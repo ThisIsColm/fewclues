@@ -5,15 +5,15 @@ import { streaks } from '../shared/streak';
 describe('shareText', () => {
   it('matches the spec format exactly', () => {
     expect(
-      shareText({ puzzle: 12, flag: '🇮🇪', total: 412, blocks: ['green', 'green', 'yellow', 'red', 'green'], siteHost: 'percentle.ie' }),
-    ).toBe('Percentle #12 🇮🇪 412/500\n🟩🟩🟨🟥🟩\npercentle.ie');
+      shareText({ puzzle: 12, flag: '🇮🇪', total: 412, blocks: ['green', 'green', 'yellow', 'red', 'green'], siteHost: 'fewclues.app' }),
+    ).toBe('Few Clues #12 🇮🇪 412/500\n🟩🟩🟨🟥🟩\nfewclues.app');
   });
   it('uses all four block colours', () => {
     const t = shareText({ puzzle: 1, flag: '🇮🇪', total: 0, blocks: ['green', 'yellow', 'orange', 'red', 'red'], siteHost: 'x.ie' });
     expect(t.split('\n')[1]).toBe('🟩🟨🟧🟥🟥');
   });
   it('contains nothing but the header, blocks and host', () => {
-    const t = shareText({ puzzle: 3, flag: '🇮🇪', total: 250, blocks: ['red', 'red', 'red', 'red', 'red'], siteHost: 'percentle.ie' });
+    const t = shareText({ puzzle: 3, flag: '🇮🇪', total: 250, blocks: ['red', 'red', 'red', 'red', 'red'], siteHost: 'fewclues.app' });
     expect(t.split('\n')).toHaveLength(3);
     expect(t).not.toMatch(/%/);
   });

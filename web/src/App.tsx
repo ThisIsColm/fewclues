@@ -79,7 +79,7 @@ export function App() {
       try {
         t = await getToday(st.playerId);
       } catch (e) {
-        setRoute({ name: 'message', title: 'Percentle', body: (e as Error).message, retry: true });
+        setRoute({ name: 'message', title: 'Few Clues', body: (e as Error).message, retry: true });
         return;
       }
       setToday(t);
@@ -98,7 +98,7 @@ export function App() {
           .catch(() => setInvite({ code: join.toUpperCase(), name: '', members: 0, full: false }));
       }
       if (t.date < t.launchDate) {
-        setRoute({ name: 'message', title: 'Coming soon', body: `The first Percentle is on ${formatLongDate(t.launchDate)}.` });
+        setRoute({ name: 'message', title: 'Coming soon', body: `The first Few Clues is on ${formatLongDate(t.launchDate)}.` });
         return;
       }
       if (!t.rounds.length) {

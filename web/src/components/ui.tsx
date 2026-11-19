@@ -41,7 +41,7 @@ export function Icon({ name }: { name: IconName }) {
 export function Wordmark({ size = 22 }: { size?: number }) {
   return (
     <span className={s.wordmark} style={{ fontSize: size }}>
-      percentle<span>%</span>
+      <span>few</span>clues
     </span>
   );
 }

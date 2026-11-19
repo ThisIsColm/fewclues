@@ -1,6 +1,8 @@
 import type { Block } from '../../../shared/types';
 
-const KEY = 'percentle.v1';
+const KEY = 'fewclues.v1';
+/** Saved under the game's earlier name; migrated on first load so streaks carry over. */
+const OLD_KEY = 'percentle.v1';
 
 export interface DayRecord {
   puzzle: number;
@@ -41,7 +43,7 @@ function uuid(): string {
 
 export function load(): Saved {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = localStorage.getItem(KEY) ?? localStorage.getItem(OLD_KEY);
     if (raw) {
       const s = JSON.parse(raw) as Saved;
       if (s && s.v === 1 && typeof s.playerId === 'string') return { ...s, history: s.history ?? {} };

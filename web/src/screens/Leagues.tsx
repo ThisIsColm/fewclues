@@ -59,7 +59,7 @@ export function Leagues(props: {
   async function invite() {
     if (!league) return;
     const url = `${location.origin}/?join=${league.code}`;
-    const res = await shareOrCopy({ title: 'Percentle league', text: `Join my Percentle league “${league.name}”`, url });
+    const res = await shareOrCopy({ title: 'Few Clues league', text: `Join my Few Clues league “${league.name}”`, url });
     if (res === 'copied') toast('Invite link copied');
     if (res === 'failed') toast(`Couldn't copy. The code is ${league.code}`);
   }

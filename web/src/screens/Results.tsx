@@ -166,7 +166,7 @@ function Countdown({ to }: { to: string }) {
   if (ms <= 0)
     return (
       <p className={s.countdown}>
-        A new Percentle is ready.{' '}
+        A new Few Clues is ready.{' '}
         <button type="button" className="link-btn" onClick={() => location.reload()}>
           Play it
         </button>
@@ -176,7 +176,7 @@ function Countdown({ to }: { to: string }) {
   const hms = [sec / 3600, (sec % 3600) / 60, sec % 60].map((n) => String(Math.floor(n)).padStart(2, '0')).join(':');
   return (
     <p className={s.countdown}>
-      Next Percentle in <strong>{hms}</strong>
+      Next Few Clues in <strong>{hms}</strong>
     </p>
   );
 }

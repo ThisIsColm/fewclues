@@ -12,7 +12,7 @@ RUN npm run validate-content -- --allow-drafts && npm test && npm run build \
 FROM node:22-alpine
 ENV NODE_ENV=production \
     PORT=8787 \
-    DB_PATH=/data/percentle.db \
+    DB_PATH=/data/fewclues.db \
     CONTENT_PATH=/app/content/rounds.json \
     STATIC_DIR=/app/dist/public \
     NODE_OPTIONS=--max-old-space-size=96

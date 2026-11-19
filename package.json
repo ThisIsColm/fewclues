@@ -1,9 +1,9 @@
 {
-  "name": "percentle",
+  "name": "fewclues",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Percentle — a daily percentage-guessing game",
+  "description": "Few Clues \u2014 guess it from the fewest clues",
   "engines": {
     "node": ">=20"
   },
