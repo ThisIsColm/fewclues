@@ -46,9 +46,9 @@ export function Start({ today, started, onPlay }: { today: TodayResponse; starte
 }
 
 /**
- * A mini round that plays itself: clue 1, a wrong guess, an easier clue, the
- * right guess. One card instead of a wall of steps. Reduced motion shows the
- * finished example, still.
+ * A mini round that plays itself once: clue 1, a wrong guess, an easier clue,
+ * the right guess, then it stays on the finished state. Reduced motion shows
+ * the finished example straight away.
  */
 const STEPS = [1800, 900, 1000, 1800, 900, 2600]; // clue 1 · typing Wales · Wales ✕ · clue 2 · typing Ireland · Ireland ✓
 
@@ -56,8 +56,8 @@ function Example() {
   const reduced = useReducedMotion() ?? false;
   const [step, setStep] = useState(reduced ? 5 : 0);
   useEffect(() => {
-    if (reduced) return;
-    const t = setTimeout(() => setStep((x) => (x + 1) % STEPS.length), STEPS[step]);
+    if (reduced || step >= STEPS.length - 1) return; // play once, then rest on the answer
+    const t = setTimeout(() => setStep((x) => x + 1), STEPS[step]);
     return () => clearTimeout(t);
   }, [step, reduced]);
 
