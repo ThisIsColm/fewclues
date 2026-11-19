@@ -87,7 +87,7 @@ export function Leagues(props: {
 
       {leagues && leagues.length === 0 && (
         <div className={s.stack}>
-          <p className={s.lede}>Start a league, send the link, and see who really knows Ireland. Scores only — nobody sees answers before they've played.</p>
+          <p className={s.lede}>Start a league, send the link, and see who needs the fewest clues. Scores only — nobody sees answers before they've played.</p>
           <LeagueForms playerId={props.playerId} displayName={props.displayName} onDone={created} />
         </div>
       )}
