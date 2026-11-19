@@ -1,105 +1,5 @@
 [
   {
-    "id": "ww-001",
-    "date": "2026-11-21",
-    "order": 1,
-    "edition": "ww",
-    "set": "world-countries",
-    "answer": "finland",
-    "category": "Quirks",
-    "clues": [
-      "It hosts the Wife Carrying World Championships.",
-      "Nokia started here in 1865, as a pulp mill on a set of rapids.",
-      "It has been named the happiest country in the world nine years in a row.",
-      "Its capital is Helsinki."
-    ],
-    "fact": "The sport of wife carrying began in Sonkajärvi in 1992 and became a world championship in 1996. The country also has over 180,000 recorded lakes.",
-    "source_name": "Wikipedia: Wife-carrying",
-    "source_url": "https://en.wikipedia.org/wiki/Wife-carrying",
-    "difficulty": "medium",
-    "status": "draft"
-  },
-  {
-    "id": "ww-002",
-    "date": "2026-11-21",
-    "order": 2,
-    "edition": "ww",
-    "set": "world-countries",
-    "answer": "madagascar",
-    "category": "Nature",
-    "clues": [
-      "Over 90% of its wildlife is found nowhere else on Earth.",
-      "It grows about 42% of the world’s vanilla.",
-      "Lemurs live naturally here and nowhere else.",
-      "It’s the world’s fourth-largest island, off the south-east coast of Africa."
-    ],
-    "fact": "Millions of years of isolation let its plants and animals evolve on their own. In 2023 it produced 42% of the world’s vanilla.",
-    "source_name": "Wikipedia: Madagascar",
-    "source_url": "https://en.wikipedia.org/wiki/Madagascar",
-    "difficulty": "medium",
-    "status": "draft"
-  },
-  {
-    "id": "ww-003",
-    "date": "2026-11-21",
-    "order": 3,
-    "edition": "ww",
-    "set": "world-countries",
-    "answer": "canada",
-    "category": "Records",
-    "clues": [
-      "It has the world’s largest area of freshwater lakes.",
-      "It has the longest coastline of any country.",
-      "It shares the longest international land border in the world.",
-      "It’s the second-largest country by area, and its capital is Ottawa."
-    ],
-    "fact": "Its lakes are why it ranks only fourth by land area despite being second by total area. Its border with its southern neighbour is the longest land border on Earth.",
-    "source_name": "Wikipedia: Canada",
-    "source_url": "https://en.wikipedia.org/wiki/Canada",
-    "difficulty": "easy",
-    "status": "draft"
-  },
-  {
-    "id": "ww-004",
-    "date": "2026-11-21",
-    "order": 4,
-    "edition": "ww",
-    "set": "world-countries",
-    "answer": "japan",
-    "category": "History",
-    "clues": [
-      "A temple-building company here traces its roots back to the year 578.",
-      "It is made up of 14,125 islands.",
-      "Its highest mountain is an active volcano that last erupted in 1707.",
-      "Its capital is Tokyo."
-    ],
-    "fact": "Kongō Gumi, founded in 578 in Osaka, built and repaired shrines and temples for more than 1,400 years. Mount Fuji, 3,776 m, became a World Heritage Site in 2013.",
-    "source_name": "Wikipedia: Kongō Gumi",
-    "source_url": "https://en.wikipedia.org/wiki/Kong%C5%8D_Gumi",
-    "difficulty": "medium",
-    "status": "draft"
-  },
-  {
-    "id": "ww-005",
-    "date": "2026-11-21",
-    "order": 5,
-    "edition": "ww",
-    "set": "world-countries",
-    "answer": "peru",
-    "category": "History",
-    "clues": [
-      "The Nazca culture flourished on its coast.",
-      "The largest empire in the pre-Columbian Americas ruled from a city here.",
-      "Machu Picchu is here.",
-      "Its capital is Lima."
-    ],
-    "fact": "The Inca built the largest empire in the pre-Columbian Americas, with Cusco as its capital. Machu Picchu is the citadel that became its icon.",
-    "source_name": "Wikipedia: Peru",
-    "source_url": "https://en.wikipedia.org/wiki/Peru",
-    "difficulty": "hard",
-    "status": "draft"
-  },
-  {
     "id": "ww-006",
     "date": "2026-11-19",
     "order": 1,
@@ -200,43 +100,43 @@
     "status": "draft"
   },
   {
-    "id": "ww-011",
+    "id": "ww-003",
     "date": "2026-11-20",
     "order": 1,
     "edition": "ww",
     "set": "world-countries",
-    "answer": "mongolia",
-    "category": "People",
+    "answer": "canada",
+    "category": "Records",
     "clues": [
-      "It’s the most sparsely populated sovereign state in the world.",
-      "About 30% of its people are nomadic or semi-nomadic.",
-      "Its capital is the coldest capital city in the world.",
-      "Genghis Khan founded an empire here in 1206. It’s landlocked between Russia and China."
+      "It has the longest coastline of any country.",
+      "It has the world’s largest area of freshwater lakes.",
+      "It shares the longest international land border in the world.",
+      "It’s the second-largest country by area, and its capital is Ottawa."
     ],
-    "fact": "Ulaanbaatar averages −1.3 °C over the year, colder than any other capital.",
-    "source_name": "Wikipedia: Mongolia",
-    "source_url": "https://en.wikipedia.org/wiki/Mongolia",
-    "difficulty": "medium",
+    "fact": "Its lakes are why it ranks only fourth by land area despite being second by total area. Its border with its southern neighbour is the longest land border on Earth.",
+    "source_name": "Wikipedia: Canada",
+    "source_url": "https://en.wikipedia.org/wiki/Canada",
+    "difficulty": "easy",
     "status": "draft"
   },
   {
-    "id": "ww-012",
+    "id": "ww-004",
     "date": "2026-11-20",
     "order": 2,
     "edition": "ww",
     "set": "world-countries",
-    "answer": "new-zealand",
-    "category": "Nature",
+    "answer": "japan",
+    "category": "History",
     "clues": [
-      "Bats were its only known native land mammals until a fossil find in 2006.",
-      "In 1893 it became the first nation to give all women the vote.",
-      "Its national icon is a flightless bird.",
-      "Its capital is Wellington."
+      "It is made up of 14,125 islands.",
+      "Its highest mountain is an active volcano that last erupted in 1707.",
+      "That mountain is Mount Fuji, 3,776 metres tall.",
+      "Its capital is Tokyo."
     ],
-    "fact": "With no mammal predators, several of its birds evolved to lose the power of flight, including the kiwi.",
-    "source_name": "Wikipedia: New Zealand",
-    "source_url": "https://en.wikipedia.org/wiki/New_Zealand",
-    "difficulty": "medium",
+    "fact": "Kongō Gumi, a temple-building company founded here in 578, built and repaired shrines and temples for more than 1,400 years. Mount Fuji became a World Heritage Site in 2013.",
+    "source_name": "Wikipedia: Kongō Gumi",
+    "source_url": "https://en.wikipedia.org/wiki/Kong%C5%8D_Gumi",
+    "difficulty": "easy",
     "status": "draft"
   },
   {
@@ -280,8 +180,108 @@
     "status": "draft"
   },
   {
-    "id": "ww-015",
+    "id": "ww-011",
     "date": "2026-11-20",
+    "order": 5,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "mongolia",
+    "category": "People",
+    "clues": [
+      "It’s the most sparsely populated sovereign state in the world.",
+      "About 30% of its people are nomadic or semi-nomadic.",
+      "Its capital is the coldest capital city in the world.",
+      "Genghis Khan founded an empire here in 1206. It’s landlocked between Russia and China."
+    ],
+    "fact": "Ulaanbaatar averages −1.3 °C over the year, colder than any other capital.",
+    "source_name": "Wikipedia: Mongolia",
+    "source_url": "https://en.wikipedia.org/wiki/Mongolia",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-012",
+    "date": "2026-11-21",
+    "order": 1,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "new-zealand",
+    "category": "Nature",
+    "clues": [
+      "In 1893 it became the first nation to give all women the vote.",
+      "Its national icon is a flightless bird.",
+      "That bird is the kiwi.",
+      "Its capital is Wellington."
+    ],
+    "fact": "Bats were its only known native land mammals until a fossil find in 2006. With no mammal predators, several of its birds lost the power of flight, the kiwi among them.",
+    "source_name": "Wikipedia: New Zealand",
+    "source_url": "https://en.wikipedia.org/wiki/New_Zealand",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-001",
+    "date": "2026-11-21",
+    "order": 2,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "finland",
+    "category": "Quirks",
+    "clues": [
+      "It has been named the happiest country in the world nine years in a row.",
+      "It has over 180,000 recorded lakes.",
+      "Nokia started here in 1865, as a pulp mill.",
+      "Its capital is Helsinki."
+    ],
+    "fact": "It also hosts the Wife Carrying World Championships, held in Sonkajärvi since 1996.",
+    "source_name": "Wikipedia: Wife-carrying",
+    "source_url": "https://en.wikipedia.org/wiki/Wife-carrying",
+    "difficulty": "easy",
+    "status": "draft"
+  },
+  {
+    "id": "ww-002",
+    "date": "2026-11-21",
+    "order": 3,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "madagascar",
+    "category": "Nature",
+    "clues": [
+      "Over 90% of its wildlife is found nowhere else on Earth.",
+      "It grows about 42% of the world’s vanilla.",
+      "Lemurs live naturally here and nowhere else.",
+      "It’s the world’s fourth-largest island, off the south-east coast of Africa."
+    ],
+    "fact": "Millions of years of isolation let its plants and animals evolve on their own. In 2023 it produced 42% of the world’s vanilla.",
+    "source_name": "Wikipedia: Madagascar",
+    "source_url": "https://en.wikipedia.org/wiki/Madagascar",
+    "difficulty": "medium",
+    "status": "draft"
+  },
+  {
+    "id": "ww-005",
+    "date": "2026-11-21",
+    "order": 4,
+    "edition": "ww",
+    "set": "world-countries",
+    "answer": "peru",
+    "category": "History",
+    "clues": [
+      "The Nazca culture flourished on its coast.",
+      "The largest empire in the pre-Columbian Americas ruled from a city here.",
+      "Machu Picchu is here.",
+      "Its capital is Lima."
+    ],
+    "fact": "The Inca built the largest empire in the pre-Columbian Americas, with Cusco as its capital. Machu Picchu is the citadel that became its icon.",
+    "source_name": "Wikipedia: Peru",
+    "source_url": "https://en.wikipedia.org/wiki/Peru",
+    "difficulty": "hard",
+    "status": "draft"
+  },
+  {
+    "id": "ww-015",
+    "date": "2026-11-21",
     "order": 5,
     "edition": "ww",
     "set": "world-countries",

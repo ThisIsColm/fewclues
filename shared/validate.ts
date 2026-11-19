@@ -90,6 +90,10 @@ export function validateContent(data: unknown, opts: ValidateOptions): Validatio
     }
     const orders = list.map((r) => r.order).sort((a, b) => a - b).join(',');
     if (orders !== '1,2,3,4,5') errors.push(`${date}: orders must be 1–5 with no repeats (got ${orders})`);
+    const rank = { easy: 0, medium: 1, hard: 2 } as const;
+    const byOrder = [...list].sort((a, b) => a.order - b.order);
+    if (byOrder.some((r, i) => i > 0 && rank[r.difficulty] < rank[byOrder[i - 1].difficulty]))
+      warnings.push(`${date}: rounds should build from easy to hard (got ${byOrder.map((r) => r.difficulty).join(', ')})`);
     const answers = new Set(list.map((r) => r.answer));
     if (answers.size !== list.length) errors.push(`${date}: the same answer appears twice`);
   }

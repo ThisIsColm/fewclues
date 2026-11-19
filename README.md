@@ -52,6 +52,7 @@ Questions live in `content/questions.json`. Each entry looks like this:
 - `category` is optional. It is shown as "Question 3 of 5 · Travel".
 - `comparisons` holds 0–5 items.
 - Only `approved` questions are served.
+- **Build each day from easy to hard:** rounds 1–2 `easy`, round 3 `medium`, rounds 4–5 `hard`. Harder rounds also carry bigger multipliers, so the day builds to its biggest points. Easy rounds should open with a clue many people will recognise; save the obscure ones for rounds 4–5. The validator warns when a day doesn't build.
 - Every scheduled date needs exactly 5 approved questions, with orders 1–5.
 - The shipped 15 questions (1–3 December) use real figures from CSO Census 2022 and Eurostat. Each one was checked against the linked source page. They are still `draft`: review them, then set `status` to `approved` for the beta.
 - The validator refuses an approved question that contains the word PLACEHOLDER.

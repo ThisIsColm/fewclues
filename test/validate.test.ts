@@ -52,6 +52,13 @@ describe('validateContent (rounds)', () => {
     expect(run(makeDay(today, undefined, 'draft')).errors).toEqual([]);
     expect(run(makeDay(today, undefined, 'draft')).warnings.join()).toMatch(/only draft rounds/);
   });
+  it('warns when a day does not build from easy to hard', () => {
+    const d = makeDay(today);
+    d[0].difficulty = 'hard';
+    expect(run(d).warnings.join()).toMatch(/build from easy to hard/);
+    expect(run(makeDay(today)).warnings.join()).not.toMatch(/build from easy/);
+  });
+
   it('warns about empty dates in the next 14 days', () => {
     expect(run(makeDay(today)).warnings.join()).toMatch(/13 of the next 14 days/);
   });
