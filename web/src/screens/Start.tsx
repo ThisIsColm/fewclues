@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { formatShortDate } from '../../../shared/day';
 import type { TodayResponse } from '../../../shared/types';
 import { editionLabel } from '../components/TopBar';
-import { Button, Icon, Sheet, Wordmark } from '../components/ui';
+import { Button, Sheet, Wordmark } from '../components/ui';
 import s from './Start.module.css';
 import sc from './screens.module.css';
 
@@ -19,7 +19,6 @@ export function Start({ today, started, onPlay }: { today: TodayResponse; starte
           How few clues do you need?
         </h1>
         <p className={s.sub}>Every miss unlocks an easier clue.</p>
-        <Example />
       </div>
 
       <div className={s.bottom}>
@@ -41,43 +40,6 @@ export function Start({ today, started, onPlay }: { today: TodayResponse; starte
         </p>
       </Sheet>
     </div>
-  );
-}
-
-/** A still, finished example round: clue 1 was missed (red ✕), clue 2 got it. */
-function Example() {
-  return (
-    <section className={s.example} aria-labelledby="ex-title">
-      <div className={s.exHead}>
-        <h2 id="ex-title">Example round</h2>
-        <span className={s.exTag}>Example</span>
-      </div>
-      <p className="visually-hidden">
-        Clue 1: Its national emblem is a harp. A wrong guess reveals clue 2: Its capital is Dublin. The answer, Ireland, is found on clue 2.
-      </p>
-      <div className={s.exBody} aria-hidden="true">
-        <div className={`${s.exClue} ${s.exOld}`}>
-          <span className={s.exText}>
-            <i>Clue 1</i>
-            <span>Its national emblem is a harp.</span>
-          </span>
-          <span className={s.exMiss}>
-            <Icon name="close" />
-          </span>
-        </div>
-        <div className={s.exClue}>
-          <span className={s.exText}>
-            <i>Clue 2</i>
-            <span>Its capital is Dublin.</span>
-          </span>
-        </div>
-        <div className={`${s.exInput} ${s.exRight}`}>
-          <span className={s.exTyped}>Ireland</span>
-          <Icon name="check" />
-        </div>
-        <p className={s.exNote}>Got it on clue 2</p>
-      </div>
-    </section>
   );
 }
 
