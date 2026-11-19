@@ -196,6 +196,11 @@ export function App() {
         streak={streak.current}
         playerId={st.playerId}
         onUpdate={apply(route.index)}
+        onOpened={(rv) => {
+          const next = [...rounds];
+          next[route.index] = rv;
+          setRounds(next);
+        }}
         onDone={(res) => {
           apply(route.index)(res);
           go({ name: 'reveal', index: route.index });

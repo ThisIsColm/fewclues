@@ -28,6 +28,9 @@ const post = (body: unknown): RequestInit => ({ method: 'POST', body: JSON.strin
 
 export const getToday = (playerId: string) => request<TodayResponse>('/api/today', who(playerId));
 
+export const startRound = (playerId: string, roundId: string) =>
+  request<{ round: import('../../../shared/types').RoundView }>('/api/start', post({ player_id: playerId, round_id: roundId }));
+
 export const postGuess = (playerId: string, roundId: string, place: string) =>
   request<GuessResponse>('/api/guess', post({ player_id: playerId, round_id: roundId, place }));
 

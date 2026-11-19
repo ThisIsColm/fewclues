@@ -34,6 +34,11 @@ export interface RoundView {
   id: string;
   order: number;
   category?: string;
+  difficulty: Difficulty;
+  /** Most this round can score today (harder rounds are worth more; the day sums to 1000). */
+  max: number;
+  /** When this player opened the round (ISO); null until they do. Clue 1 is only sent once opened. */
+  startedAt: string | null;
   clues: string[]; // revealed so far
   wrong: string[]; // wrong place ids so far, in order
   done: boolean;
@@ -45,6 +50,9 @@ export interface RoundReveal {
   answerName: string;
   solvedAt: number; // 1–4, 0 = missed
   points: number;
+  /** Time from opening the round to the right answer, and the speed bonus it earned (0.75–1). */
+  timeMs: number | null;
+  speed: number | null;
   block: Block;
   ladder: string[]; // all four clues
   fact: string;

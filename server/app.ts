@@ -2,7 +2,7 @@ import { randomInt, randomUUID } from 'node:crypto';
 import { Hono, type Context } from 'hono';
 import { NONCE, secureHeaders } from 'hono/secure-headers';
 import { addDays, dublinDate, nextRollover, puzzleNumber, startOfDublinDay, weekStart } from '../shared/day';
-import { blockForSolve, buildLadder, MAX_CLUES, pointsFor } from '../shared/ladder';
+import { blockForSolve, buildLadder, MAX_CLUES, roundMaxes, roundPoints, SPEED_FLOOR_MS, speedFactor } from '../shared/ladder';
 import { PLACE_SETS, placeById } from '../shared/places';
 import { percentileFromCounts } from '../shared/scoring';
 import { editionInfo } from '../shared/share';
@@ -39,12 +39,18 @@ export function cleanName(v: unknown, max: number): string | null {
 }
 
 /** A player's progress on one round, from their attempts (ordered by n). */
-export function roundProgress(attempts: { n: number; place: string; correct: number }[]) {
+export function roundProgress(attempts: { n: number; place: string; correct: number; created_at?: number }[]) {
   const sorted = [...attempts].sort((a, b) => a.n - b.n);
   const hit = sorted.find((a) => a.correct === 1);
   const solvedAt = hit ? hit.n : 0;
   const done = !!hit || sorted.length >= MAX_CLUES;
-  return { solvedAt, done, wrong: sorted.filter((a) => a.correct === 0).map((a) => a.place), tries: sorted.length };
+  return {
+    solvedAt,
+    solvedTime: hit?.created_at ?? null,
+    done,
+    wrong: sorted.filter((a) => a.correct === 0).map((a) => a.place),
+    tries: sorted.length,
+  };
 }
 
 export interface AppDeps {
@@ -63,7 +69,36 @@ export function createApp({ config, store, content, now = () => new Date(), remo
   const edition = editionInfo(config.edition);
   const today = () => config.devDate ?? dublinDate(now());
 
+  // ---- Per-round maximums for a day (harder rounds worth more; the day sums to 1000).
+  const maxCache = new Map<string, Map<string, number>>();
+  function maxFor(r: Round): number {
+    let m = maxCache.get(r.date);
+    if (!m) {
+      const day = content.forDate(r.date);
+      const maxes = roundMaxes(day.map((x) => x.difficulty));
+      m = new Map(day.map((x, i) => [x.id, maxes[i]]));
+      maxCache.set(r.date, m);
+      if (maxCache.size > 10) maxCache.delete(maxCache.keys().next().value!);
+    }
+    return m.get(r.id) ?? 0;
+  }
+  /** Time from opening the round to solving it; a missing start counts as slowest. */
+  const solveMs = (p: ReturnType<typeof roundProgress>, startedAt: number | undefined) =>
+    p.solvedAt && p.solvedTime !== null && startedAt !== undefined ? Math.max(0, p.solvedTime - startedAt) : SPEED_FLOOR_MS;
+  const pointsOf = (r: Round, p: ReturnType<typeof roundProgress>, startedAt: number | undefined) =>
+    roundPoints(maxFor(r), p.solvedAt, solveMs(p, startedAt));
+
   // ---- Crowd stats per round, cached 30 s (and dropped when that round changes).
+  const pointsCache = new Map<string, { list: number[]; at: number }>();
+  function crowdPoints(r: Round): number[] {
+    const hit = pointsCache.get(r.id);
+    if (hit && Date.now() - hit.at < CROWD_TTL_MS) return hit.list;
+    const max = maxFor(r);
+    const list = store.roundResults(r.id).map((x) => roundPoints(max, x.solvedAt, x.ms ?? SPEED_FLOOR_MS));
+    pointsCache.set(r.id, { list, at: Date.now() });
+    if (pointsCache.size > 200) pointsCache.delete(pointsCache.keys().next().value!);
+    return list;
+  }
   const crowdCache = new Map<string, { stats: CrowdStats; at: number }>();
   function crowd(r: Round): CrowdStats {
     const hit = crowdCache.get(r.id);
@@ -80,36 +115,52 @@ export function createApp({ config, store, content, now = () => new Date(), remo
     return stats;
   }
 
-  /** Share of other finishers with a worse outcome (missed counts as worst). */
-  function beat(stats: CrowdStats, solvedAt: number): number | null {
-    const rank = (s: number) => (s === 0 ? 5 : s); // lower is better
-    const worse = stats.dist.reduce((acc, n, i) => acc + (rank(i === 4 ? 0 : i + 1) > rank(solvedAt) ? n : 0), 0);
-    return percentileFromCounts(worse, stats.players, config.percentileMinPlayers);
+  /** Share of other finishers on this round who scored fewer points. */
+  function beat(r: Round, points: number): number | null {
+    const list = crowdPoints(r);
+    return percentileFromCounts(list.filter((x) => x < points).length, list.length, config.percentileMinPlayers);
   }
 
-  function view(r: Round, attempts: AttemptRow[]): RoundView {
+  function view(r: Round, attempts: AttemptRow[], startedAt: number | undefined): RoundView {
     const set = PLACE_SETS[r.set];
     const ladder = buildLadder(set, r.answer, r.clues);
     const p = roundProgress(attempts);
-    const shown = p.done ? ladder : ladder.slice(0, Math.min(MAX_CLUES, p.tries + 1));
+    // Clues are only sent once the player has opened the round.
+    const opened = startedAt !== undefined || p.tries > 0;
+    const shown = p.done ? ladder : opened ? ladder.slice(0, Math.min(MAX_CLUES, p.tries + 1)) : [];
     let reveal: RoundView['reveal'] = null;
     if (p.done) {
       const stats = crowd(r);
+      const points = pointsOf(r, p, startedAt);
+      const ms = p.solvedAt ? solveMs(p, startedAt) : null;
       reveal = {
         answer: r.answer,
         answerName: placeById(set, r.answer)!.name,
         solvedAt: p.solvedAt,
-        points: pointsFor(p.solvedAt),
+        points,
+        timeMs: ms,
+        speed: ms === null ? null : Math.round(speedFactor(ms) * 100) / 100,
         block: blockForSolve(p.solvedAt),
         ladder,
         fact: r.fact,
         source_name: r.source_name,
         source_url: r.source_url,
         crowd: stats,
-        beat: beat(stats, p.solvedAt),
+        beat: beat(r, points),
       };
     }
-    return { id: r.id, order: r.order, category: r.category, clues: shown, wrong: p.wrong, done: p.done, reveal };
+    return {
+      id: r.id,
+      order: r.order,
+      category: r.category,
+      difficulty: r.difficulty,
+      max: maxFor(r),
+      startedAt: startedAt !== undefined ? new Date(startedAt).toISOString() : null,
+      clues: shown,
+      wrong: p.wrong,
+      done: p.done,
+      reveal,
+    };
   }
 
   // ---- Gap of the day: the round with the highest share of misses.
@@ -197,6 +248,7 @@ export function createApp({ config, store, content, now = () => new Date(), remo
     const playerId = c.req.header('x-player-id') ?? '';
     const rounds = date >= config.launchDate ? content.forDate(date) : [];
     const mine = UUID.test(playerId) ? byRound(store.playerAttempts(playerId, date)) : new Map<string, AttemptRow[]>();
+    const starts = UUID.test(playerId) ? store.playerStarts(playerId, date) : new Map<string, number>();
     const body: TodayResponse = {
       date,
       puzzle: Math.max(0, puzzleNumber(date, config.launchDate)),
@@ -207,10 +259,24 @@ export function createApp({ config, store, content, now = () => new Date(), remo
       siteHost: config.siteHost,
       nextRolloverAt: nextRollover(now()).toISOString(),
       set: rounds[0]?.set ?? 'ie-counties',
-      rounds: rounds.map((r) => view(r, mine.get(r.id) ?? [])),
+      rounds: rounds.map((r) => view(r, mine.get(r.id) ?? [], starts.get(r.id))),
       completion: UUID.test(playerId) ? completion(playerId, date) : null,
     };
     return c.json(body);
+  });
+
+  /** Open a round: records the start time (once) and returns clue 1. */
+  app.post('/api/start', async (c) => {
+    const b = await body(c);
+    const playerId = b?.player_id;
+    if (typeof playerId !== 'string' || !UUID.test(playerId)) return c.json({ error: 'Invalid player_id.' }, 400);
+    const r = typeof b?.round_id === 'string' ? content.get(b.round_id) : undefined;
+    if (!r) return c.json({ error: 'Unknown round.' }, 404);
+    if (!openDates().includes(r.date) || !content.forDate(r.date).some((x) => x.id === r.id))
+      return c.json({ error: 'That puzzle is closed — a new one is ready.', code: 'stale' }, 409);
+    store.insertStart(playerId, r.date, r.id, now().getTime());
+    const attempts = byRound(store.playerAttempts(playerId, r.date)).get(r.id) ?? [];
+    return c.json({ round: view(r, attempts, store.playerStarts(playerId, r.date).get(r.id)) });
   });
 
   app.post('/api/guess', async (c) => {
@@ -230,23 +296,29 @@ export function createApp({ config, store, content, now = () => new Date(), remo
       const before = byRound(store.playerAttempts(playerId, r.date)).get(r.id) ?? [];
       const p = roundProgress(before);
       if (p.done) return { alreadyDone: true, correct: p.solvedAt > 0 };
+      // Guessing without opening the round first means guessing blind; start the clock now.
+      store.insertStart(playerId, r.date, r.id, t);
       const correct = place.id === r.answer;
       store.insertAttempt(playerId, r.date, r.id, p.tries + 1, place.id, correct, t);
       // Finished all five rounds? Record the day's total once.
       const all = byRound(store.playerAttempts(playerId, r.date));
       const day = content.forDate(r.date);
       const states = day.map((x) => roundProgress(all.get(x.id) ?? []));
-      if (states.length === ROUNDS_PER_DAY && states.every((s) => s.done) && store.getCompletion(playerId, r.date) === undefined)
-        store.insertCompletion(playerId, r.date, states.reduce((sum, s) => sum + pointsFor(s.solvedAt), 0), t);
+      if (states.length === ROUNDS_PER_DAY && states.every((s) => s.done) && store.getCompletion(playerId, r.date) === undefined) {
+        const starts = store.playerStarts(playerId, r.date);
+        const total = day.reduce((sum, x, i) => sum + pointsOf(x, states[i], starts.get(x.id)), 0);
+        store.insertCompletion(playerId, r.date, total, t);
+      }
       return { alreadyDone: false, correct };
     });
     if (!out.alreadyDone) {
       crowdCache.delete(r.id);
+      pointsCache.delete(r.id);
       gapCache.delete(r.date);
     }
     const attempts = byRound(store.playerAttempts(playerId, r.date)).get(r.id) ?? [];
     const res: GuessResponse = {
-      round: view(r, attempts),
+      round: view(r, attempts, store.playerStarts(playerId, r.date).get(r.id)),
       completion: completion(playerId, r.date),
       correct: out.correct,
       alreadyDone: out.alreadyDone,

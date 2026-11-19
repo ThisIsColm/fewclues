@@ -72,6 +72,7 @@
   height: 28px;
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   padding: 0 12px;
   border-radius: 999px;
   background: var(--tangerine-deep);
@@ -258,4 +259,19 @@
   .latest .clueText {
     font-size: 19px;
   }
+}
+
+.worth b {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.mult {
+  padding-right: 8px;
+  border-right: 1px solid color-mix(in srgb, var(--tangerine) 35%, transparent);
+}
+
+.opening {
+  padding: 18px 4px;
+  color: var(--muted);
 }

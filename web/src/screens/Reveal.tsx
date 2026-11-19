@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react';
 import { useEffect } from 'react';
-import { verdictForSolve } from '../../../shared/ladder';
+import { DIFFICULTY_LABEL, verdictForSolve } from '../../../shared/ladder';
 import { PLACE_SETS, placeById } from '../../../shared/places';
 import type { Block, RoundView } from '../../../shared/types';
 import { Num } from '../components/Num';
@@ -67,11 +67,21 @@ export function Reveal(props: {
         transition={{ duration: 0.42, ease: 'easeOut' }}
       >
         <p className={r.verdict}>{verdict}</p>
-        <h1 className={r.answer} tabIndex={-1} data-autofocus data-reveal aria-label={`${verdict} The answer is ${rv.answerName}. ${rv.points} points.`}>
+        <h1 className={r.answer} tabIndex={-1} data-autofocus data-reveal aria-label={`${verdict} The answer is ${rv.answerName}. ${rv.points} of ${round.max} points.`}>
           {rv.answerName}
         </h1>
         <p className={r.pts} aria-hidden="true">
-          +<Num value={rv.points} /> pts
+          +<Num value={rv.points} /> <span className={r.ptsOf}>/ {round.max}</span>
+        </p>
+        <p className={r.breakdown}>
+          {[
+            round.difficulty !== 'easy' ? DIFFICULTY_LABEL[round.difficulty] : 'Easy',
+            rv.solvedAt ? `clue ${rv.solvedAt}` : 'missed',
+            rv.timeMs !== null ? `${Math.max(1, Math.round(rv.timeMs / 1000))}s` : null,
+            rv.speed !== null && rv.speed < 1 ? `speed ${Math.round(rv.speed * 100)}%` : rv.speed === 1 ? 'full speed bonus' : null,
+          ]
+            .filter(Boolean)
+            .join(' · ')}
         </p>
         {round.wrong.length > 0 && (
           <p className={r.tries}>

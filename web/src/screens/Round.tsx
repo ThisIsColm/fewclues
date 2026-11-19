@@ -1,13 +1,13 @@
 import { AnimatePresence, motion, useAnimationControls, useReducedMotion } from 'motion/react';
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
 import { createPortal } from 'react-dom';
-import { CLUE_POINTS } from '../../../shared/ladder';
+import { DIFFICULTY_LABEL, worthNow } from '../../../shared/ladder';
 import { PLACE_SETS, placeById, resolve, suggest, type Place } from '../../../shared/places';
 import type { Block, GuessResponse, RoundView } from '../../../shared/types';
 import { Progress } from '../components/Progress';
 import { TopBar } from '../components/TopBar';
 import { Button, Icon, toast } from '../components/ui';
-import { ApiError, postGuess } from '../lib/api';
+import { ApiError, clockSkew, postGuess, startRound } from '../lib/api';
 import { haptic } from '../lib/haptics';
 import { useVisualViewport } from '../lib/viewport';
 import s from './Round.module.css';
@@ -22,6 +22,7 @@ export function Round(props: {
   streak: number;
   playerId: string;
   onUpdate: (res: GuessResponse) => void;
+  onOpened: (round: RoundView) => void;
   onDone: (res: GuessResponse) => void;
   onStale: () => void;
 }) {
@@ -78,7 +79,22 @@ export function Round(props: {
 
   const tried = new Set(round.wrong);
   const options = useMemo(() => suggest(set, text, 6), [set, text]);
-  const worth = CLUE_POINTS[Math.min(round.clues.length, 4) - 1];
+
+  // Open the round on the server: that sends clue 1 and starts the clock for the speed bonus.
+  useEffect(() => {
+    if (round.startedAt || round.done) return;
+    let live = true;
+    startRound(props.playerId, round.id)
+      .then((res) => live && props.onOpened(res.round))
+      .catch((e) => {
+        if (e instanceof ApiError && e.code === 'stale') props.onStale();
+        else toast(e instanceof Error ? e.message : 'Something went wrong.');
+      });
+    return () => {
+      live = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [round.id]);
 
   useEffect(() => setActive(0), [text]);
 
@@ -151,15 +167,14 @@ export function Round(props: {
         <p className={s.label}>
           Round {index + 1} of 5{round.category && !compact ? ` · ${round.category}` : ''}
         </p>
-        <span className={s.worth} aria-live="polite">
-          Worth {worth} pts
-        </span>
+        <Worth max={round.max} clues={round.clues.length} startedAt={round.startedAt} difficulty={round.difficulty} compact={compact} />
       </div>
       <h1 className={s.title} tabIndex={-1} data-autofocus>
         Which {set.noun}?
       </h1>
 
       <div className={s.scroll} ref={scrollRef}>
+        {!round.clues.length && <p className={s.opening}>Opening the round…</p>}
         <ol className={s.clues} aria-label="Clues" aria-live="polite">
           <AnimatePresence initial={false}>
             {round.clues.map((c, i) => (
@@ -258,4 +273,22 @@ export function Round(props: {
 
   // Rendered at <body> level so no animated (transformed) ancestor can break position: fixed.
   return createPortal(body, document.body);
+}
+
+/** "Hard ×2 · worth 243": what the round is worth right now, easing down as time passes. */
+function Worth({ max, clues, startedAt, difficulty, compact }: { max: number; clues: number; startedAt: string | null; difficulty: RoundView['difficulty']; compact: boolean }) {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 250);
+    return () => clearInterval(t);
+  }, []);
+  const elapsed = startedAt ? now + clockSkew - Date.parse(startedAt) : 0;
+  const worth = worthNow(max, clues || 1, elapsed);
+  return (
+    <span className={s.worth}>
+      {!compact && difficulty !== 'easy' && <span className={s.mult}>{DIFFICULTY_LABEL[difficulty]}</span>}
+      <span aria-hidden="true">Worth <b className="num">{worth}</b></span>
+      <span className="visually-hidden">Worth up to {max} points; fewer clues and faster answers score more.</span>
+    </span>
+  );
 }

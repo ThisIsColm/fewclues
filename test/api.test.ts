@@ -28,6 +28,14 @@ const guess = (p: string, round: number | string, place: string, headers: Record
     body: JSON.stringify({ player_id: p, round_id: typeof round === 'number' ? `${DAY}-${round}` : round, place }),
   });
 const g = async (p: string, round: number, place: string) => (await guess(p, round, place)).json();
+const start = async (p: string, round: number) =>
+  (
+    await app.request('/api/start', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ player_id: p, round_id: `${DAY}-${round}` }),
+    })
+  ).json();
 
 /** Solve round `n` on clue `at` (1–4), or miss it (0). */
 async function play(p: string, n: number, at: number) {
@@ -44,14 +52,31 @@ beforeEach(() => {
 });
 
 describe('GET /api/today', () => {
-  it('shows only the first clue and never the answer or later clues', async () => {
-    const body = await today(randomUUID());
+  it('sends no clues until a round is opened, then only the first', async () => {
+    const p = randomUUID();
+    const body = await today(p);
     expect(body.puzzle).toBe(1);
     expect(body.set).toBe('ie-counties');
     expect(body.rounds).toHaveLength(5);
-    expect(body.rounds[0]).toEqual({ id: `${DAY}-1`, order: 1, category: 'Test', clues: ['Hard clue 1.'], wrong: [], done: false, reveal: null });
-    const raw = JSON.stringify(body.rounds);
-    expect(raw).not.toMatch(/kerry|Medium clue|Easier clue|Easy clue/i);
+    expect(body.rounds[0]).toEqual({
+      id: `${DAY}-1`, order: 1, category: 'Test', difficulty: 'easy', max: 200, startedAt: null, clues: [], wrong: [], done: false, reveal: null,
+    });
+    expect(JSON.stringify(body.rounds)).not.toMatch(/Hard clue|kerry/i);
+    const opened = await start(p, 1);
+    expect(opened.round).toMatchObject({ clues: ['Hard clue 1.'], startedAt: '2026-12-01T12:00:00.000Z' });
+    expect(JSON.stringify(opened)).not.toMatch(/kerry|Medium clue|Easier clue|Easy clue/i);
+    // Opening again doesn't restart the clock.
+    clock = new Date('2026-12-01T12:05:00Z');
+    expect((await start(p, 1)).round.startedAt).toBe('2026-12-01T12:00:00.000Z');
+    expect((await today(p)).rounds[1].clues).toEqual([]);
+  });
+
+  it('speed bonus is measured from opening the round', async () => {
+    const p = randomUUID();
+    await start(p, 1);
+    clock = new Date('2026-12-01T12:00:47.500Z'); // 47.5 s → 87.5%
+    const r = await g(p, 1, 'kerry');
+    expect(r.round.reveal).toMatchObject({ solvedAt: 1, points: 175, timeMs: 47_500, speed: 0.88 });
   });
   it('does not serve drafts unless ALLOW_DRAFTS=1, nor anything before launch', async () => {
     clock = new Date('2026-12-03T12:00:00Z');
@@ -80,7 +105,7 @@ describe('POST /api/guess — the clue ladder', () => {
     const r = await g(p, 1, 'kerry');
     expect(r.correct).toBe(true);
     expect(r.round.done).toBe(true);
-    expect(r.round.reveal).toMatchObject({ answer: 'kerry', answerName: 'Kerry', solvedAt: 2, points: 60, block: 'yellow', fact: 'Test fact.' });
+    expect(r.round.reveal).toMatchObject({ answer: 'kerry', answerName: 'Kerry', solvedAt: 2, points: 120, block: 'yellow', fact: 'Test fact.', speed: 1 });
     expect(r.round.reveal.ladder).toHaveLength(4);
     expect(r.round.reveal.crowd).toMatchObject({ dist: [0, 1, 0, 0, 0], players: 1, topWrong: [{ place: 'cork', name: 'Cork', n: 1 }] });
   });
@@ -94,7 +119,7 @@ describe('POST /api/guess — the clue ladder', () => {
     const p = randomUUID();
     await g(p, 1, 'kerry');
     const again = await g(p, 1, 'cork');
-    expect(again).toMatchObject({ alreadyDone: true, correct: true, round: { reveal: { solvedAt: 1, points: 100 } } });
+    expect(again).toMatchObject({ alreadyDone: true, correct: true, round: { reveal: { solvedAt: 1, points: 200 } } });
   });
 
   it('completion: total, percentile and gap of the day across two players', async () => {
@@ -102,12 +127,12 @@ describe('POST /api/guess — the clue ladder', () => {
     const b = randomUUID();
     let last: any;
     for (const [n, at] of [[1, 1], [2, 2], [3, 3], [4, 4], [5, 0]] as const) last = await play(a, n, at);
-    expect(last.completion).toMatchObject({ total: 200, players: 1, percentile: null }); // 100+60+30+10+0
+    expect(last.completion).toMatchObject({ total: 420, players: 1, percentile: null }); // 200+120+70+30+0
     for (let n = 1; n <= 5; n++) last = await play(b, n, n === 5 ? 0 : 1);
-    expect(last.completion).toMatchObject({ total: 400, players: 2, percentile: 100 });
+    expect(last.completion).toMatchObject({ total: 800, players: 2, percentile: 100 });
     expect(last.completion.gapOfDay).toMatchObject({ order: 5, missedPct: 100 });
     const ra = await today(a);
-    expect(ra.completion).toMatchObject({ total: 200, percentile: 0 });
+    expect(ra.completion).toMatchObject({ total: 420, percentile: 0 });
     expect(ra.rounds.every((r: any) => r.done)).toBe(true);
     // b beat a on round 2 (clue 1 vs clue 2).
     expect((await today(b)).rounds[1].reveal.beat).toBe(100);
@@ -118,6 +143,7 @@ describe('POST /api/guess — the clue ladder', () => {
     await g(p, 3, 'galway');
     const body = await today(p);
     expect(body.rounds[2]).toMatchObject({ clues: ['Hard clue 3.', 'Medium clue 3.'], wrong: ['galway'], done: false });
+    expect(body.rounds[2].startedAt).not.toBeNull(); // guessing blind starts the clock
   });
 
   it('validates input', async () => {

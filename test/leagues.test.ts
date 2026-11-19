@@ -107,21 +107,21 @@ describe('leagues', () => {
     await post('/api/leagues/join', { player_id: b, code: league.code, display_name: 'Niamh' });
     expect((await app.request(`/api/leagues/${league.id}/standings`, { headers: { 'X-Player-Id': outsider } })).status).toBe(404);
 
-    await play(b, [1, 1, 1, 1, 2]); // 460
+    await play(b, [1, 1, 1, 1, 2]); // 4 × 200 + 120 = 920
     let s = await get(`/api/leagues/${league.id}/standings`, a);
     expect(s.viewerFinished).toBe(false);
     expect(s.headToHead).toBeNull();
     expect(s.rows).toEqual([
-      { rank: 1, name: 'Niamh', isMe: false, total: 460, blocks: ['green', 'green', 'green', 'green', 'yellow'] },
+      { rank: 1, name: 'Niamh', isMe: false, total: 920, blocks: ['green', 'green', 'green', 'green', 'yellow'] },
       { rank: null, name: 'Colm', isMe: true, total: null, blocks: null },
     ]);
     // Nothing in standings carries answers or guesses.
     expect(JSON.stringify(s)).not.toMatch(/answer|kerry|place/);
 
-    await play(a, [0, 1, 1, 1, 1]); // missed round 1 → 400
+    await play(a, [0, 1, 1, 1, 1]); // missed round 1 → 800
     s = await get(`/api/leagues/${league.id}/standings`, a);
     expect(s.viewerFinished).toBe(true);
-    expect(s.rows.map((r: any) => [r.rank, r.name, r.total])).toEqual([[1, 'Niamh', 460], [2, 'Colm', 400]]);
+    expect(s.rows.map((r: any) => [r.rank, r.name, r.total])).toEqual([[1, 'Niamh', 920], [2, 'Colm', 800]]);
     expect(s.rows[1].blocks).toEqual(['red', 'green', 'green', 'green', 'green']);
     expect(s.headToHead).toEqual({ mate: 'Niamh', order: 1, mySolved: 0, mateSolved: 1, mateBetter: true });
   });
@@ -148,13 +148,13 @@ describe('leagues', () => {
     await play(a, [1, 1, 1, 1, 1]);
     clock = new Date('2026-11-23T12:00:00Z');
     await play(a, [1, 1, 1, 1, 1]);
-    await play(b, [2, 1, 1, 1, 1]); // 460
+    await play(b, [2, 1, 1, 1, 1]); // 920
     clock = new Date('2026-11-24T12:00:00Z');
-    await play(a, [2, 1, 1, 1, 1]); // 460
+    await play(a, [2, 1, 1, 1, 1]); // 920
     await play(b, [1, 1, 1, 1, 1]);
     let s = await get(`/api/leagues/${league.id}/standings?period=week`, a);
     expect(s).toMatchObject({ period: 'week', from: '2026-11-23', to: '2026-11-24' });
-    expect(s.rows.map((r: any) => [r.rank, r.name, r.total, r.daysPlayed])).toEqual([[1, 'Colm', 960, 2], [1, 'Niamh', 960, 2]]);
+    expect(s.rows.map((r: any) => [r.rank, r.name, r.total, r.daysPlayed])).toEqual([[1, 'Colm', 1920, 2], [1, 'Niamh', 1920, 2]]);
 
     // Sunday 29 Nov 23:59 GMT is still the same week; 30 Nov 00:00 starts a new one.
     clock = new Date('2026-11-29T23:59:00Z');

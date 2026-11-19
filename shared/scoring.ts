@@ -1,6 +1,6 @@
-/** Rounds per day and the day's maximum score (5 × 100). */
+/** Rounds per day and the day’s maximum score. */
 export const QUESTIONS_PER_DAY = 5;
-export const MAX_TOTAL = 500;
+export const MAX_TOTAL = 1000;
 
 /**
  * "You beat X% of players": the share of *other* players with a strictly

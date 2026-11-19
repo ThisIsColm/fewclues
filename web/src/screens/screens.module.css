@@ -216,7 +216,8 @@
   margin-top: 6px;
   font-family: var(--display);
   font-weight: 800;
-  font-size: 112px;
+  /* Scales down on narrow phones so a perfect 1000 still fits. */
+  font-size: min(112px, 24vw);
   line-height: 0.9;
   letter-spacing: -0.06em;
 }
@@ -228,9 +229,7 @@
   opacity: 0.8;
 }
 
-@media (max-width: 370px) {
-  .score { font-size: 96px; }
-}
+
 
 .tiles {
   display: grid;

@@ -7,6 +7,7 @@ export interface AttemptRow {
   n: number;
   place: string;
   correct: number;
+  created_at?: number;
 }
 
 export interface LeagueRow {
@@ -78,6 +79,16 @@ export class Store {
       ) WITHOUT ROWID;
       CREATE INDEX IF NOT EXISTS attempts_by_round ON attempts (round_id, correct, n);
       CREATE INDEX IF NOT EXISTS attempts_by_player_date ON attempts (player_id, date);
+
+      -- When each player opened each round (clue 1 is only sent then); drives the speed bonus.
+      CREATE TABLE IF NOT EXISTS round_starts (
+        player_id  TEXT    NOT NULL,
+        date       TEXT    NOT NULL,
+        round_id   TEXT    NOT NULL,
+        started_at INTEGER NOT NULL,
+        PRIMARY KEY (player_id, round_id)
+      ) WITHOUT ROWID;
+      CREATE INDEX IF NOT EXISTS round_starts_by_player_date ON round_starts (player_id, date);
     `);
     this.stmts = {
       insertCompletion: this.db.prepare(
@@ -94,7 +105,20 @@ export class Store {
         'INSERT OR IGNORE INTO attempts (player_id, date, round_id, n, place, correct, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
       ),
       playerAttempts: this.db.prepare<[string, string], AttemptRow>(
-        'SELECT round_id, n, place, correct FROM attempts WHERE player_id = ? AND date = ? ORDER BY round_id, n',
+        'SELECT round_id, n, place, correct, created_at FROM attempts WHERE player_id = ? AND date = ? ORDER BY round_id, n',
+      ),
+      insertStart: this.db.prepare('INSERT OR IGNORE INTO round_starts (player_id, date, round_id, started_at) VALUES (?, ?, ?, ?)'),
+      playerStarts: this.db.prepare<[string, string], { round_id: string; started_at: number }>(
+        'SELECT round_id, started_at FROM round_starts WHERE player_id = ? AND date = ?',
+      ),
+      // Every finisher's outcome on a round: clue solved on (0 = missed) and time taken.
+      roundResults: this.db.prepare<[string], { solved: number | null; solved_at: number | null; started_at: number | null }>(
+        `SELECT MIN(CASE WHEN a.correct = 1 THEN a.n END) AS solved,
+                MAX(CASE WHEN a.correct = 1 THEN a.created_at END) AS solved_at,
+                s.started_at AS started_at
+           FROM attempts a LEFT JOIN round_starts s ON s.player_id = a.player_id AND s.round_id = a.round_id
+          WHERE a.round_id = ? GROUP BY a.player_id
+         HAVING MAX(a.correct) = 1 OR COUNT(*) >= 4`,
       ),
       // Outcome per player who finished a round: solved on clue n, or missed (4 wrong).
       roundOutcomes: this.db.prepare<[string], { solved: number; n: number }>(
@@ -210,6 +234,19 @@ export class Store {
   }
   topWrong(roundId: string) {
     return this.stmts.topWrong.all(roundId);
+  }
+  /** Record that a player opened a round; the first call wins. */
+  insertStart(playerId: string, date: string, roundId: string, at: number) {
+    this.stmts.insertStart.run(playerId, date, roundId, at);
+  }
+  playerStarts(playerId: string, date: string): Map<string, number> {
+    return new Map(this.stmts.playerStarts.all(playerId, date).map((r) => [r.round_id, r.started_at]));
+  }
+  roundResults(roundId: string) {
+    return this.stmts.roundResults.all(roundId).map((r) => ({
+      solvedAt: r.solved ?? 0,
+      ms: r.solved_at !== null && r.started_at !== null ? Math.max(0, r.solved_at - r.started_at) : null,
+    }));
   }
   leagueAttempts(leagueId: string, date: string) {
     return this.stmts.leagueAttempts.all(leagueId, date);

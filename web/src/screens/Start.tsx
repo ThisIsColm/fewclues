@@ -41,7 +41,7 @@ export function Start({ today, started, onPlay }: { today: TodayResponse; starte
               <span className={s.exGuess}>
                 You guess <b>Ireland</b>
                 <Icon name="check" />
-                <em>Got it on clue 2: +60 pts</em>
+                <em>Got it on clue 2</em>
               </span>
             </li>
           </ol>
@@ -63,7 +63,7 @@ export function HowTo() {
     <ol className={s.howto}>
       <li>Each day there are five rounds. Each one is a country somewhere in the world, and you start with its hardest clue.</li>
       <li>Type your guess. Every wrong guess reveals an easier clue, up to four.</li>
-      <li>The fewer clues you need, the more points: 100, 60, 30 or 10. 500 is a perfect day.</li>
+      <li>Fewer clues, faster answers and harder rounds score more. A perfect day is 1000.</li>
     </ol>
   );
 }

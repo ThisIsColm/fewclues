@@ -1,11 +1,34 @@
 import { describe, expect, it } from 'vitest';
-import { blockForSolve, buildLadder, pointsFor, verdictForSolve } from '../shared/ladder';
+import { blockForSolve, buildLadder, roundMaxes, roundPoints, speedFactor, verdictForSolve, worthNow } from '../shared/ladder';
 import { IE_COUNTIES, normalise, resolve, suggest, WORLD_COUNTRIES } from '../shared/places';
 import { percentileBeaten, percentileFromCounts } from '../shared/scoring';
 
 describe('clue ladder scoring', () => {
-  it('scores 100 / 60 / 30 / 10 / 0', () => {
-    expect([1, 2, 3, 4, 0].map(pointsFor)).toEqual([100, 60, 30, 10, 0]);
+  it('splits 1000 across the day by difficulty (easy ×1, medium ×1.5, hard ×2)', () => {
+    expect(roundMaxes(['easy', 'easy', 'easy', 'easy', 'easy'])).toEqual([200, 200, 200, 200, 200]);
+    const m = roundMaxes(['medium', 'medium', 'easy', 'medium', 'hard']);
+    expect(m).toEqual([200, 200, 133, 200, 267]);
+    expect(m.reduce((a, b) => a + b)).toBe(1000);
+    const odd = roundMaxes(['easy', 'medium', 'medium', 'hard', 'hard']); // 8 weights → 125, 187.5 …
+    expect(odd.reduce((a, b) => a + b)).toBe(1000);
+    expect(odd).toEqual([125, 188, 187, 250, 250]);
+  });
+  it('keeps 100 / 60 / 35 / 15% of the round by clue, 0 for a miss', () => {
+    expect([1, 2, 3, 4, 0].map((c) => roundPoints(200, c, 0))).toEqual([200, 120, 70, 30, 0]);
+  });
+  it('speed bonus: full within 5 s, easing to 75% at 90 s, then flat', () => {
+    expect(speedFactor(0)).toBe(1);
+    expect(speedFactor(5_000)).toBe(1);
+    expect(speedFactor(47_500)).toBeCloseTo(0.875, 5);
+    expect(speedFactor(90_000)).toBeCloseTo(0.75, 5);
+    expect(speedFactor(600_000)).toBeCloseTo(0.75, 5);
+    expect(roundPoints(250, 1, 12_000)).toBe(245); // 250 × (1 − 0.25 × 7/85)
+    expect(roundPoints(250, 1, 13_000)).toBe(244); // a second later, a point less: close finishes
+  });
+  it('the live worth label follows clues and time', () => {
+    expect(worthNow(250, 1, 0)).toBe(250);
+    expect(worthNow(250, 2, 0)).toBe(150);
+    expect(worthNow(250, 0, 0)).toBe(250); // before clue 1 arrives
   });
   it('maps outcomes to share blocks and verdicts', () => {
     expect([1, 2, 3, 4, 0].map(blockForSolve)).toEqual(['green', 'yellow', 'orange', 'orange', 'red']);

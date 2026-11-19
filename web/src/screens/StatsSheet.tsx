@@ -8,11 +8,11 @@ export function StatsBody({ history, today, current, max }: { history: Record<st
   const solves = days.flatMap(([, r]) => r.solved ?? []);
   const firstRate = solves.length ? Math.round((solves.filter((x) => x === 1).length / solves.length) * 100) : null;
   const missRate = solves.length ? Math.round((solves.filter((x) => x === 0).length / solves.length) * 100) : null;
-  const bands = ['0–99', '100–199', '200–299', '300–399', '400–500'];
+  const bands = ['0–199', '200–399', '400–599', '600–799', '800–1000'];
   const counts = bands.map(() => 0);
-  for (const [, r] of days) counts[Math.min(4, Math.floor(r.total / 100))]++;
+  for (const [, r] of days) counts[Math.min(4, Math.floor(r.total / 200))]++;
   const top = Math.max(1, ...counts);
-  const todayBand = history[today] ? Math.min(4, Math.floor(history[today].total / 100)) : -1;
+  const todayBand = history[today] ? Math.min(4, Math.floor(history[today].total / 200)) : -1;
   const tile = (v: string | number, label: string) => (
     <div>
       <p className={s.statValue}>{v}</p>
